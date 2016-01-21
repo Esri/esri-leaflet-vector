@@ -7,6 +7,7 @@ This is a proof of concept for using the [ArcGIS Online Vector Basemaps](http://
 * Mostly untested. Works against the basemap styles listed https://developers.arcgis.com/javascript/beta/api-reference/esri-layers-VectorTileLayer.html#url
 * Slight flickering around the edges when "flick-panning"
 * Leaflet 0.7.7 only
+* No proper handling of attribution
 
 ### Licensing
 Copyright 2015 Esri
