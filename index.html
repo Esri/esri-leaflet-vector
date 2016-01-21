@@ -1,0 +1,89 @@
+<html>
+<head>
+    <title>WebGL</title>
+    <meta charset="utf-8">
+    <style>#map { width: 800px; height: 600px; }</style>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+    <!-- Mapbox GL -->
+    <script src="./mapbox-gl-js/mapbox-gl.js"></script>
+
+    <!-- Mapbox GL Leaflet Bindings -->
+    <script src="./leaflet-mapbox-gl.js"></script>
+
+    <!-- Esri Leaflet -->
+    <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.2/esri-leaflet.js"></script>
+
+    <style>
+      html, body {
+        margin: 0;
+      }
+
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+</head>
+
+<body>
+<div id="map"></div>
+<script>
+
+var map = L.map('map').setView([37.76, -122.38], 12);
+
+var styles = {
+  'Hybrid Reference': 'http://www.arcgis.com/sharing/rest/content/items/1854498c7e35420b963a514a32689c80/resources/styles/root.json',
+  'Light Gray Canvas': 'http://www.arcgis.com/sharing/rest/content/items/bdf1eec3fa79456c8c7c2bb62f86dade/resources/styles/root.json',
+  'Dark Gray Canvas': 'layer	http://www.arcgis.com/sharing/rest/content/items/3e3099d7302f4d99bc6f916dcc07ed59/resources/styles/root.json',
+  'World Navigation': 'http://www.arcgis.com/sharing/rest/content/items/00cd8e843bae49b3a040423e5d65416b/resources/styles/root.json',
+  'World Streets': 'http://www.arcgis.com/sharing/rest/content/items/3b8814f6ddbd485cae67e8018992246e/resources/styles/root.json',
+  'World Streets (Night)': 'http://www.arcgis.com/sharing/rest/content/items/f96366254a564adda1dc468b447ed956/resources/styles/root.json',
+  'World Streets (with relief)': 'http://www.arcgis.com/sharing/rest/content/items/ad06088bd1174866aad2dddbf5ec9642/resources/styles/root.json',
+  'World Topographic': 'http://www.arcgis.com/sharing/rest/content/items/be44936bcdd24db588a1ae5076e36f34/resources/styles/root.json'
+};
+
+var url = styles['World Streets (Night)'];
+
+L.esri.request(url, {}, function (error, style) {
+
+  console.log('style', style);
+
+  L.esri.request(style.sources.esri.url, {}, function (error, metadata) {
+
+    console.log('metadata', metadata);
+
+    style.sources.esri = {
+      type: "vector",
+      scheme: "xyz",
+      tilejson: metadata.tilejson || '2.0.0',
+      format: (metadata.tileInfo && metadata.tileInfo.format) || 'pbf',
+      index: metadata.tileMap ? style.sources.esri.url + metadata.tileMap : null,
+      tiles: [
+        style.sources.esri.url + metadata.tiles[0]
+      ],
+      description: metadata.description,
+      name: metadata.name
+    };
+
+    //set paths to sprite and glyphs
+    style.glyphs = url.replace('styles/root.json', style.glyphs.replace('../', ''));
+    style.sprite = url.replace('styles/root.json', style.sprite.replace('../', ''));
+
+    // set index
+    style.index = metadata.tileInfo.tileMap;
+
+    var gl = L.mapboxGL({
+        accessToken: 'Esri Leaflet',
+        style: style
+    }).addTo(map);
+  });
+});
+
+
+</script>
+</body>
+</html>
