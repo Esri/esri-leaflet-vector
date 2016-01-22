@@ -1,13 +1,7 @@
-L.MapboxGL = L.Class.extend({
+L.MapboxGL = L.Layer.extend({
 
     initialize: function (options) {
         L.setOptions(this, options);
-
-        if (options.accessToken) {
-            mapboxgl.accessToken = options.accessToken;
-        } else {
-            throw new Error('You should provide a Mapbox GL access token as a token option.');
-        }
     },
 
     onAdd: function (map) {
@@ -18,18 +12,21 @@ L.MapboxGL = L.Class.extend({
         }
 
         map._panes.tilePane.appendChild(this._glContainer);
-        map.on('zoomanim', this._animateZoom, this);
-        map.on('move', this._update, this);
 
         this._initGL();
     },
 
     onRemove: function (map) {
         map.getPanes().tilePane.removeChild(this._glContainer);
-        map.off('zoomanim', this._animateZoom, this);
-        map.off('move', this._update, this);
         this._glMap.remove();
         this._glMap = null;
+    },
+
+    getEvents: function () {
+      return {
+        move: this._update,
+        zoomanim: this._animateZoom
+      }
     },
 
     addTo: function (map) {
@@ -88,10 +85,16 @@ L.MapboxGL = L.Class.extend({
     },
 
     _animateZoom: function (e) {
-        var origin = e.origin.add(this._map._getMapPanePos()).subtract(this._map.getSize().divideBy(2));
+        // borrowed from the Leaflet 0.7.7 origin calcuation
+        // https://github.com/Leaflet/Leaflet/blob/v0.7.7/src/map/anim/Map.ZoomAnimation.js#L47-L50
+  		  var scale = this._map.getZoomScale(e.zoom),
+  		    offset = this._map._getCenterOffset(e.center)._divideBy(1 - 1 / scale),
+  			  origin = this._map._getCenterLayerPoint()._add(offset);
+          zoomOffset = origin.add(this._map._getMapPanePos()).subtract(this._map.getSize().divideBy(2));
+
         this._glMap.zoomTo(e.zoom - 1, {
             duration: 250,
-            offset: [origin.x, origin.y],
+            offset: [zoomOffset.x, zoomOffset.y],
             easing: [0, 0, 0.25, 1]
         });
     }
