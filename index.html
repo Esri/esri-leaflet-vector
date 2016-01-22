@@ -5,8 +5,8 @@
     <style>#map { width: 800px; height: 600px; }</style>
 
     <!-- Leaflet -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.css">
 
     <!-- Mapbox GL -->
     <script src="./mapbox-gl-js/mapbox-gl.js"></script>
@@ -15,7 +15,7 @@
     <script src="./leaflet-mapbox-gl.js"></script>
 
     <!-- Esri Leaflet -->
-    <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.2/esri-leaflet.js"></script>
+    <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
 
     <style>
       html, body {
@@ -33,7 +33,7 @@
 <div id="map"></div>
 <script>
 
-var map = L.map('map').setView([37.76, -122.38], 12);
+var map = L.map('map').setView([37.76, -122.38], 5);
 
 var styles = {
   'Hybrid Reference': 'http://www.arcgis.com/sharing/rest/content/items/1854498c7e35420b963a514a32689c80/resources/styles/root.json',

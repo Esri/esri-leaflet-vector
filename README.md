@@ -1,12 +1,11 @@
 # Esri Leaflet Vector Basemap Proof-of-Concept
 
-This is a proof of concept for using the [ArcGIS Online Vector Basemaps](http://www.arcgis.com/home/group.html?id=30de8da907d240a0bccd5ad3ff25ef4a&focus=layers) with [Esri Leaflet]()https://github.com/Esri/esri-leaflet. It uses https://github.com/mapbox/mapbox-gl-leaflet and a custom fork of [mapbox-gl-js](https://github.com/patrickarlt/mapbox-gl-js/tree/esri-leaflet-renderer) which is based off of https://github.com/Esri/mapbox-gl-js/tree/indexed-vector-sources and https://github.com/Esri/vector-tile-js/tree/clipping-logic.
+This is a proof of concept for using the [ArcGIS Online Vector Basemaps](http://www.arcgis.com/home/group.html?id=30de8da907d240a0bccd5ad3ff25ef4a&focus=layers) with [Esri Leaflet](https://github.com/Esri/esri-leaflet). It uses https://github.com/patrickarlt/mapbox-gl-leaflet/tree/leaflet-master which is a fork of https://github.com/mapbox/mapbox-gl-leaflet updated for Leaflet 1.0.0 and a custom fork of [mapbox-gl-js](https://github.com/patrickarlt/mapbox-gl-js/tree/esri-leaflet-renderer) which is based off of https://github.com/Esri/mapbox-gl-js/tree/indexed-vector-sources and https://github.com/Esri/vector-tile-js/tree/clipping-logic.
 
 ### Caveats
 
-* Mostly untested. Works against the basemap styles listed https://developers.arcgis.com/javascript/beta/api-reference/esri-layers-VectorTileLayer.html#url
-* Slight flickering around the edges when "flick-panning"
-* Leaflet 0.7.7 only
+* Mostly untested. Works against the basemap styles listed at https://developers.arcgis.com/javascript/beta/api-reference/esri-layers-VectorTileLayer.html#url
+* No proper handling of attribution
 
 ### Licensing
 Copyright 2015 Esri
