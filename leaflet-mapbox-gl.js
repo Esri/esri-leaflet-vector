@@ -24,6 +24,7 @@ L.MapboxGL = L.Layer.extend({
 
     getEvents: function () {
       return {
+        zoom: this._update,
         move: this._update,
         zoomanim: this._animateZoom
       }
