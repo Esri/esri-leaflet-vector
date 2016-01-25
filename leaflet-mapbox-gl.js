@@ -1,7 +1,27 @@
+function debounce (func, wait, immediate) {
+    var timeout;
+    return function () {
+        var context = this, args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        }, wait);
+        if (immediate && !timeout) func.apply(context, args);
+    };
+};
+
 L.MapboxGL = L.Layer.extend({
+
+    options: {
+      updateInterval: 50
+    },
 
     initialize: function (options) {
         L.setOptions(this, options);
+
+        // setup throttling the update event when panning
+        this._throttledUpdate = debounce.call(this, this._update, this.options.updateInterval);
     },
 
     onAdd: function (map) {
@@ -10,7 +30,6 @@ L.MapboxGL = L.Layer.extend({
         if (!this._glContainer) {
             this._initContainer();
         }
-
         map._panes.tilePane.appendChild(this._glContainer);
 
         this._initGL();
@@ -24,8 +43,8 @@ L.MapboxGL = L.Layer.extend({
 
     getEvents: function () {
       return {
-        // zoom: this._update,
-        move: this._update,
+        moveend: this._update,
+        move: this._throttledUpdate,
         zoomanim: this._animateZoom
       }
     },
@@ -60,15 +79,17 @@ L.MapboxGL = L.Layer.extend({
     },
 
     _update: function (e) {
-      console.log(e);
         var size = this._map.getSize(),
             container = this._glContainer,
             gl = this._glMap,
             topLeft = this._map.containerPointToLayerPoint([0, 0]);
 
-        L.DomUtil.setPosition(container, topLeft);
-
         var center = this._map.getCenter();
+
+        if (!this.listenerBindReference) {
+          this.listenerBindReference = this.onRender.bind(this);
+          this._glMap.on("render", this.listenerBindReference);
+        }
 
         // gl.setView([center.lat, center.lng], this._map.getZoom() - 1, 0);
         // calling setView directly causes sync issues because it uses requestAnimFrame
@@ -86,8 +107,16 @@ L.MapboxGL = L.Layer.extend({
         }
     },
 
+    onRender: function () {
+        var container = this._glContainer,
+        topLeft = this._map.containerPointToLayerPoint([0, 0]);
+
+        L.DomUtil.setPosition(container, topLeft);
+        this._glMap.off("render", this.listenerBindReference);
+        this.listenerBindReference = null;
+    },
+
     _animateZoom: function (e) {
-      console.log(e);
         // borrowed from the Leaflet 0.7.7 origin calcuation
         // https://github.com/Leaflet/Leaflet/blob/v0.7.7/src/map/anim/Map.ZoomAnimation.js#L47-L50
   		  var scale = this._map.getZoomScale(e.zoom),
