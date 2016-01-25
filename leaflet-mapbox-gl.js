@@ -24,7 +24,7 @@ L.MapboxGL = L.Layer.extend({
 
     getEvents: function () {
       return {
-        zoom: this._update,
+        // zoom: this._update,
         move: this._update,
         zoomanim: this._animateZoom
       }
@@ -59,7 +59,8 @@ L.MapboxGL = L.Layer.extend({
         this._glMap.transform.latRange = null;
     },
 
-    _update: function () {
+    _update: function (e) {
+      console.log(e);
         var size = this._map.getSize(),
             container = this._glContainer,
             gl = this._glMap,
@@ -86,6 +87,7 @@ L.MapboxGL = L.Layer.extend({
     },
 
     _animateZoom: function (e) {
+      console.log(e);
         // borrowed from the Leaflet 0.7.7 origin calcuation
         // https://github.com/Leaflet/Leaflet/blob/v0.7.7/src/map/anim/Map.ZoomAnimation.js#L47-L50
   		  var scale = this._map.getZoomScale(e.zoom),
