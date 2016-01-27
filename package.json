@@ -1,0 +1,23 @@
+{
+  "name": "esri-leaflet-vector-basemap-poc",
+  "version": "1.0.0",
+  "description": "This is a proof of concept for using the [ArcGIS Online Vector Basemaps](http://www.arcgis.com/home/group.html?id=30de8da907d240a0bccd5ad3ff25ef4a&focus=layers) with [Esri Leaflet](https://github.com/Esri/esri-leaflet). It uses https://github.com/patrickarlt/mapbox-gl-leaflet/tree/leaflet-master which is a fork of https://github.com/mapbox/mapbox-gl-leaflet updated for Leaflet 1.0.0 and a custom fork of [mapbox-gl-js](https://github.com/patrickarlt/mapbox-gl-js/tree/esri-leaflet-renderer) which is based off of https://github.com/Esri/mapbox-gl-js/tree/indexed-vector-sources and https://github.com/Esri/vector-tile-js/tree/clipping-logic.",
+  "main": "leaflet-mapbox-gl.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArcGIS/esri-leaflet-vector-basemap-poc.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ArcGIS/esri-leaflet-vector-basemap-poc/issues"
+  },
+  "homepage": "https://github.com/ArcGIS/esri-leaflet-vector-basemap-poc#readme",
+  "dependencies": {
+    "mapbox-gl": "git+https://github.com/patrickarlt/mapbox-gl-js.git#esri-leaflet-renderer",
+    "mapbox-gl-leaflet": "git+https://github.com/patrickarlt/mapbox-gl-leaflet.git#leaflet-master"
+  }
+}
