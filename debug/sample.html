@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>Esri Vector Basemaps</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Leaflet -->
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css">
+
+    <!-- Esri Leaflet -->
+    <script src="../node_modules/esri-leaflet/dist/esri-leaflet-debug.js"></script>
+
+    <script src="../dist/esri-leaflet-vector-debug.js"></script>
+
+    <style>
+      html, body {
+        margin: 0;
+      }
+
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+</head>
+
+<body>
+<div id="map"></div>
+<script>
+var map = L.map('map').setView([45.526, -122.667], 13);
+var basemap = L.esri.Vector.basemap('Topographic').addTo(map);
+</script>
+</body>
+</html>
