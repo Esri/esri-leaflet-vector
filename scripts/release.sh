@@ -34,4 +34,4 @@ git branch -D gh-release
 git push upstream :gh-release
 
 # publish release on NPM
-# npm publish
+npm publish
