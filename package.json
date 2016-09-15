@@ -1,23 +1,51 @@
 {
-  "name": "esri-leaflet-vector-basemap-poc",
+  "name": "esri-leaflet-vector",
+  "description": "Esri vector basemap plugin for Leaflet.",
   "version": "1.0.0",
-  "description": "This is a proof of concept for using the [ArcGIS Online Vector Basemaps](http://www.arcgis.com/home/group.html?id=30de8da907d240a0bccd5ad3ff25ef4a&focus=layers) with [Esri Leaflet](https://github.com/Esri/esri-leaflet). It uses https://github.com/patrickarlt/mapbox-gl-leaflet/tree/leaflet-master which is a fork of https://github.com/mapbox/mapbox-gl-leaflet updated for Leaflet 1.0.0 and a custom fork of [mapbox-gl-js](https://github.com/patrickarlt/mapbox-gl-js/tree/esri-leaflet-renderer) which is based off of https://github.com/Esri/mapbox-gl-js/tree/indexed-vector-sources and https://github.com/Esri/vector-tile-js/tree/clipping-logic.",
-  "main": "leaflet-mapbox-gl.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/ArcGIS/esri-leaflet-vector/issues"
   },
+  "dependencies": {
+    "esri-leaflet": "^2.0.2",
+    "leaflet": "^1.0.0-rc.3",
+    "mapbox-gl": "git+https://github.com/jgravois/mapbox-gl-js.git#esri-leaflet-renderer",
+    "mapbox-gl-leaflet": "git+https://github.com/patrickarlt/mapbox-gl-leaflet.git#leaflet-master"
+  },
+  "devDependencies": {
+    "gh-release": "^2.0.0",
+    "http-server": "^0.8.5",
+    "mkdirp": "^0.5.1",
+    "nodemon": "^1.9.2",
+    "rollup": "^0.25.4",
+    "rollup-plugin-json": "^2.0.0",
+    "rollup-plugin-node-resolve": "^1.4.0",
+    "rollup-plugin-uglify": "^0.3.1",
+    "semistandard": "^7.0.5",
+    "snazzy": "^2.0.1"
+  },
+  "homepage": "https://github.com/ArcGIS/esri-leaflet-vector#readme",
+  "jsnext:main": "src/EsriLeafletVector.js",
+  "jspm": {
+    "registry": "npm",
+    "format": "es6",
+    "main": "src/EsriLeafletVector.js"
+  },
+  "license": "Apache-2.0",
+  "main": "dist/esri-leaflet-vector-debug.js",
+  "browser": "dist/esri-leaflet-vector-debug.js",
+  "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArcGIS/esri-leaflet-vector-basemap-poc.git"
+    "url": "git+https://github.com/ArcGIS/esri-leaflet-vector-basemap.git"
   },
-  "author": "",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/ArcGIS/esri-leaflet-vector-basemap-poc/issues"
-  },
-  "homepage": "https://github.com/ArcGIS/esri-leaflet-vector-basemap-poc#readme",
-  "dependencies": {
-    "mapbox-gl": "git+https://github.com/patrickarlt/mapbox-gl-js.git#esri-leaflet-renderer",
-    "mapbox-gl-leaflet": "git+https://github.com/patrickarlt/mapbox-gl-leaflet.git#leaflet-master"
+  "scripts": {
+    "prebuild": "mkdirp dist",
+    "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
+    "lint": "semistandard src/**/*.js | snazzy",
+    "prepublish": "npm run build",
+    "pretest": "npm run build",
+    "start": "nodemon --watch src --exec 'npm run build' & http-server -p 8765 -c-1 -o",
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
