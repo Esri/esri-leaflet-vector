@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "",
   "bugs": {
-    "url": "https://github.com/ArcGIS/esri-leaflet-vector/issues"
+    "url": "https://github.com/Esri/esri-leaflet-vector/issues"
   },
   "dependencies": {
     "esri-leaflet": "^2.0.2",
@@ -24,7 +24,7 @@
     "semistandard": "^7.0.5",
     "snazzy": "^2.0.1"
   },
-  "homepage": "https://github.com/ArcGIS/esri-leaflet-vector#readme",
+  "homepage": "https://github.com/Esri/esri-leaflet-vector#readme",
   "jsnext:main": "src/EsriLeafletVector.js",
   "jspm": {
     "registry": "npm",
@@ -37,7 +37,7 @@
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArcGIS/esri-leaflet-vector-basemap.git"
+    "url": "git+https://github.com/Esri/esri-leaflet-vector.git"
   },
   "scripts": {
     "prebuild": "mkdirp dist",
@@ -46,6 +46,7 @@
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "start": "nodemon --watch src --exec 'npm run build' & http-server -p 8765 -c-1 -o",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "./scripts/release.sh"
   }
 }

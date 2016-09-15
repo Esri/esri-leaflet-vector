@@ -1,0 +1,12 @@
+# Mac
+.DS_Store
+Icon
+._*
+.Spotlight-V100
+
+node_modules
+*.zip
+debug/
+scripts/
+example.png
+.npmignore
