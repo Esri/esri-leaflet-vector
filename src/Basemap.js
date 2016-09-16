@@ -1,7 +1,6 @@
 export { version as VERSION } from '../package.json';
 
 import 'mapbox-gl-leaflet';
-// we can bundle our fork of mapbox-gl by adding a jsnext:main field
 import 'mapbox-gl';
 
 import { request, Util } from 'esri-leaflet';
@@ -19,7 +18,10 @@ export var Basemap = L.Layer.extend({
       'Streets': '4e1133c28ac04cca97693cf336cd49ad',
       'StreetsNight': 'bf79e422e9454565ae0cbe9553cf6471',
       'StreetsRelief': '2e063e709e3446459f8538ed6743f879',
-      'Topographic': '6f65bc1351b7411588a8cb43fe23dad7'
+      'Topographic': '6f65bc1351b7411588a8cb43fe23dad7',
+      'Spring': '763884983d3544c0a418a97992881fce',
+      'Newspaper': '4f4843d99c34436f82920932317893ae',
+      "MidCentury": '267f44f08a844c7abee2b62b00600540'
     }
   },
 
@@ -82,7 +84,7 @@ export var Basemap = L.Layer.extend({
     Util.setEsriAttribution(map);
 
     if (map.attributionControl) {
-      // 95% sure this is the right url
+      // 95% sure this is the right static attribution url
       Util._getAttributionData('https://static.arcgis.com/attribution/World_Street_Map', map);
       map.attributionControl.addAttribution('<span class="esri-dynamic-attribution">USGS, NOAA</span>');
     }
