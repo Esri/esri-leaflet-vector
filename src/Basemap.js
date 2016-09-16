@@ -21,7 +21,7 @@ export var Basemap = L.Layer.extend({
       'Topographic': '6f65bc1351b7411588a8cb43fe23dad7',
       'Spring': '763884983d3544c0a418a97992881fce',
       'Newspaper': '4f4843d99c34436f82920932317893ae',
-      "MidCentury": '267f44f08a844c7abee2b62b00600540'
+      'MidCentury': '267f44f08a844c7abee2b62b00600540'
     }
   },
 
