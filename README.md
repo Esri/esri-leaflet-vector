@@ -27,7 +27,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
   <script src="https://unpkg.com/esri-leaflet@2.0.2"></script>
-  <script src="https://unpkg.com/esri-leaflet-vector@1.0.1"></script>
+  <script src="https://unpkg.com/esri-leaflet-vector@1.0.2"></script>
 
   <style>
     body {margin:0;padding:0;}
@@ -40,7 +40,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
 <script>
   var map = L.map('map').setView([ 40.706, -73.926], 14);
-  L.esri.Vector.basemap('Topographic').addTo(map);
+  L.esri.Vector.basemap('Newspaper').addTo(map);
 </script>
 
 </body>
