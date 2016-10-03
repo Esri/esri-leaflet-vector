@@ -10,6 +10,6 @@ config.plugins[0] = nodeResolve({
   main: true,
   browser: false,
   extensions: [ '.js', '.json' ]
-})
+});
 
 export default config;
