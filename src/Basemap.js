@@ -1,8 +1,6 @@
-export { version as VERSION } from '../package.json';
-
+import L from 'leaflet';
 import { Util } from 'esri-leaflet';
 import { fetchMetadata } from './Util';
-import L from 'leaflet';
 
 export var Basemap = L.Layer.extend({
   statics: {

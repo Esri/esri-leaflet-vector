@@ -1,6 +1,4 @@
-
 import L from 'leaflet';
-
 import { Util } from 'esri-leaflet';
 import { fetchMetadata } from './Util';
 
