@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet-vector",
   "description": "Esri vector basemap plugin for Leaflet.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "",
   "bugs": {
     "url": "https://github.com/Esri/esri-leaflet-vector/issues"
