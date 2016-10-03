@@ -1,4 +1,4 @@
-# Esri Leaflet Vector Tile Plugin
+# Esri Leaflet Vector Tile Plugin 
 
 [![npm version][npm-img]][npm-url]
 [![apache licensed](https://img.shields.io/badge/license-Apache-green.svg?style=flat-square)](https://raw.githubusercontent.com/Esri/esri-leaflet-vector/master/LICENSE)
@@ -6,7 +6,7 @@
 [npm-img]: https://img.shields.io/npm/v/esri-leaflet-vector.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/esri-leaflet-vector
 
-> A plugin for Esri Leaflet to visualize Vector tiles from ArcGIS Online. Built on top of [`mapbox-gl-leaflet`](https://github.com/mapbox/mapbox-gl-leaflet).
+> An ***experimental*** plugin for Esri Leaflet to visualize Vector tiles from ArcGIS Online. Built on top of [`mapbox-gl-leaflet`](https://github.com/mapbox/mapbox-gl-leaflet).
 
 ## Example
 

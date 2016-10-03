@@ -42,7 +42,7 @@
   "scripts": {
     "prebuild": "mkdirp dist",
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
-    "lint": "semistandard src/**/*.js | snazzy",
+    "lint": "semistandard | snazzy",
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "start": "nodemon --watch src --exec 'npm run build' & http-server -p 8765 -c-1 -o",
