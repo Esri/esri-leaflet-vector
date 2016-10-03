@@ -19,7 +19,7 @@ export function fetchMetadata (url, context) {
           };
 
           // if urls are provided using relative paths, we need to qualify them
-          if (style.glyphs.indexOf('https') === -1) {
+          if (style.glyphs.indexOf('http') === -1) {
             // set paths to sprite and glyphs
             style.glyphs = url.replace('styles/root.json', style.glyphs.replace('../', ''));
             style.sprite = url.replace('styles/root.json', style.sprite.replace('../', ''));
