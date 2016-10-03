@@ -56,9 +56,12 @@ export var Basemap = L.Layer.extend({
               name: metadata.name
             };
 
-            // set paths to sprite and glyphs
-            style.glyphs = url.replace('styles/root.json', style.glyphs.replace('../', ''));
-            style.sprite = url.replace('styles/root.json', style.sprite.replace('../', ''));
+            // if urls are provided using relative paths, we need to qualify them
+            if (style.glyphs.indexOf('https') === -1) {
+              // set paths to sprite and glyphs
+              style.glyphs = url.replace('styles/root.json', style.glyphs.replace('../', ''));
+              style.sprite = url.replace('styles/root.json', style.sprite.replace('../', ''));
+            }
 
             // set index
             style.index = metadata.tileInfo.tileMap;
