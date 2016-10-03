@@ -1,4 +1,4 @@
-# Esri Leaflet Vector Tile Plugin 
+# Esri Leaflet Vector Tile Plugin
 
 [![npm version][npm-img]][npm-url]
 [![apache licensed](https://img.shields.io/badge/license-Apache-green.svg?style=flat-square)](https://raw.githubusercontent.com/Esri/esri-leaflet-vector/master/LICENSE)
@@ -22,8 +22,8 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load libraries from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.0.0-rc.3"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-beta.2/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.0.0-beta.2"></script>
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
   <script src="https://unpkg.com/esri-leaflet@2.0.2"></script>

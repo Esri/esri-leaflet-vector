@@ -1,3 +1,7 @@
+import L from 'leaflet';
+import 'mapbox-gl';
+import 'mapbox-gl-leaflet';
+
 import { request } from 'esri-leaflet';
 
 export function fetchMetadata (url, context) {

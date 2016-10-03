@@ -1,11 +1,8 @@
-import 'mapbox-gl-leaflet';
-import 'mapbox-gl';
 
 import L from 'leaflet';
 
-import { fetchMetadata } from './Util';
-
 import { Util } from 'esri-leaflet';
+import { fetchMetadata } from './Util';
 
 export var Layer = L.Layer.extend({
   statics: {
