@@ -65,7 +65,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
 ## Dependencies
 
-* Leaflet version [1.0.0-rc.3](https://github.com/Leaflet/Leaflet/releases/tag/v1.0.0-rc.3) (or higher) is required.
+* Leaflet version [1.0.0-beta.2](https://github.com/Leaflet/Leaflet/releases/tag/v1.0.0-beta.2) exhibits less flickering during pan/zoom, but more recent versions can be substituted.
 * Esri Leaflet [2.0.3](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.3) (or higher) is required.
 * [Mapbox GL Leaflet](https://github.com/patrickarlt/mapbox-gl-leaflet.git#leaflet-master)
 * [a fork of Mapbox GL JS](https://github.com/jgravois/mapbox-gl-js.git#esri-leaflet-renderer)
