@@ -2,36 +2,23 @@ import L from 'leaflet';
 import { Util } from 'esri-leaflet';
 import { fetchMetadata } from './Util';
 
-export var Basemap = L.Layer.extend({
+export var Layer = L.Layer.extend({
   statics: {
     URLPREFIX: 'https://www.arcgis.com/sharing/rest/content/items/',
-    URLSUFFIX: '/resources/styles/root.json',
-    STYLES: {
-      'DarkGray': '850db44b9eb845d3bd42b19e8aa7a024',
-      'Gray': '0e02e6f86d02455091796eaae811d9b5',
-      'Hybrid': '8fad42206b6d4efcbd02623dba4554e4',
-      'Navigation': 'dcbbba0edf094eaa81af19298b9c6247',
-      'Streets': '4e1133c28ac04cca97693cf336cd49ad',
-      'StreetsNight': 'bf79e422e9454565ae0cbe9553cf6471',
-      'StreetsRelief': '2e063e709e3446459f8538ed6743f879',
-      'Topographic': '6f65bc1351b7411588a8cb43fe23dad7',
-      'Spring': '763884983d3544c0a418a97992881fce',
-      'Newspaper': '4f4843d99c34436f82920932317893ae',
-      'MidCentury': '267f44f08a844c7abee2b62b00600540'
-    }
+    URLSUFFIX: '/resources/styles/root.json'
   },
 
   initialize: function (options) {
     // L.Layer expects a JSON object literal to be passed in constructor
     options = {
-      key: options
+      id: options
     };
 
-    if (typeof options.key === 'string' && Basemap.STYLES[options.key]) {
-      var url = Basemap.URLPREFIX + Basemap.STYLES[options.key] + Basemap.URLSUFFIX;
+    if (typeof options.id === 'string') {
+      var url = Layer.URLPREFIX + options.id + Layer.URLSUFFIX;
       fetchMetadata(url, this);
     } else {
-      throw new Error('L.esri.Vector.Basemap: Invalid parameter. Use one of "DarkGray", "Gray", "Hybrid", "Navigation", "Streets", "StreetsNight", "StreetsRelief", "Topographic"');
+      throw new Error('L.esri.Vector.Layer: Invalid parameter. Use the id of an ArcGIS Online vector tile item');
     }
   },
 
@@ -77,8 +64,8 @@ export var Basemap = L.Layer.extend({
   }
 });
 
-export function basemap (key) {
-  return new Basemap(key);
+export function layer (id) {
+  return new Layer(id);
 }
 
-export default Basemap;
+export default Layer;

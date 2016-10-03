@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "esri-leaflet": "^2.0.2",
-    "leaflet": "^1.0.0-rc.3",
+    "leaflet": "1.0.0-beta.2",
     "mapbox-gl": "git+https://github.com/jgravois/mapbox-gl-js.git#esri-leaflet-renderer",
     "mapbox-gl-leaflet": "git+https://github.com/patrickarlt/mapbox-gl-leaflet.git#leaflet-master"
   },
