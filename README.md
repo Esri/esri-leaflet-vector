@@ -27,7 +27,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
   <script src="https://unpkg.com/esri-leaflet@2.0.2"></script>
-  <script src="https://unpkg.com/esri-leaflet-vector@1.0.2"></script>
+  <script src="https://unpkg.com/esri-leaflet-vector@1.0.3"></script>
 
   <style>
     body {margin:0;padding:0;}
@@ -50,6 +50,8 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 ## API Reference
 
 ### [`L.esri.Vector.basemap`](http://esri.github.io/esri-leaflet/api-reference/layers/vector-basemap.html)
+
+### [`L.esri.Vector.layer`](http://esri.github.io/esri-leaflet/api-reference/layers/vector-layer.html)
 
 ### Development Instructions
 
