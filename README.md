@@ -22,11 +22,11 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load libraries from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-beta.2/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.0.0-beta.2"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.0.0"></script>
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
-  <script src="https://unpkg.com/esri-leaflet@2.0.2"></script>
+  <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   <script src="https://unpkg.com/esri-leaflet-vector@1.0.3"></script>
 
   <style>
