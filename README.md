@@ -26,7 +26,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
   <script src="https://unpkg.com/leaflet@1.0.0-beta.2"></script>
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
-  <script src="https://unpkg.com/esri-leaflet@2.0.2"></script>
+  <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   <script src="https://unpkg.com/esri-leaflet-vector@1.0.3"></script>
 
   <style>
