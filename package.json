@@ -9,8 +9,8 @@
   "dependencies": {
     "esri-leaflet": "^2.0.3",
     "leaflet": "1.0.0-beta.2",
-    "mapbox-gl": "git+https://github.com/jgravois/mapbox-gl-js.git#esri-leaflet-renderer",
-    "mapbox-gl-leaflet": "git+https://github.com/patrickarlt/mapbox-gl-leaflet.git#leaflet-master"
+    "mapbox-gl": "git+https://github.com/Esri/mapbox-gl-js.git#indexed-vector-sources",
+    "mapbox-gl-leaflet": "git+https://github.com/patrickarlt/mapbox-gl-leaflet#leaflet-master"
   },
   "devDependencies": {
     "gh-release": "^2.0.0",

@@ -1,11 +1,10 @@
 import L from 'leaflet';
-import { Util } from 'esri-leaflet';
-import { fetchMetadata } from './Util';
+import { request, Util } from 'esri-leaflet';
+import { formatStyle, fetchMetadata } from './Util';
 
 export var Layer = L.Layer.extend({
   statics: {
-    URLPREFIX: 'https://www.arcgis.com/sharing/rest/content/items/',
-    URLSUFFIX: '/resources/styles/root.json'
+    URLPREFIX: 'https://www.arcgis.com/sharing/rest/content/items/'
   },
 
   initialize: function (options) {
@@ -15,8 +14,45 @@ export var Layer = L.Layer.extend({
     };
 
     if (typeof options.id === 'string') {
-      var url = Layer.URLPREFIX + options.id + Layer.URLSUFFIX;
-      fetchMetadata(url, this);
+      var itemMetadataUrl = Layer.URLPREFIX + options.id
+      var tileUrl;
+      var styleUrl;
+
+      request(itemMetadataUrl, {}, function (error, metadata) {
+        if (!error) {
+
+          tileUrl = metadata.url;
+
+          if (tileUrl.indexOf('basemaps.arcgis.com') === -1) {
+            this._customTileset = true;
+            // not all custom basemaps remember to include copyright info
+            if (metadata.accessInformation) {
+              this._copyrightText = metadata.accessInformation;
+            }
+          }
+
+          request(tileUrl, {}, function (error, tileMetadata) {
+            // right now ArcGIS Pro published vector services have a slightly different signature
+            if (tileMetadata.defaultStyles.charAt(0) != '/') {
+              tileMetadata.defaultStyles = '/' + tileMetadata.defaultStyles;
+            }
+
+            styleUrl = tileUrl + tileMetadata.defaultStyles + '/root.json';
+            request(styleUrl, {}, function (error, style) {
+              formatStyle(style, tileMetadata, styleUrl);
+
+              this._mapboxGL = L.mapboxGL({
+                accessToken: 'ezree',
+                style: style
+              });
+
+              this._ready = true;
+              this.fire('ready', {}, true);
+            }, this);
+          }, this);
+        }
+      }, this)
+
     } else {
       throw new Error('L.esri.Vector.Layer: Invalid parameter. Use the id of an ArcGIS Online vector tile item');
     }
@@ -24,14 +60,7 @@ export var Layer = L.Layer.extend({
 
   onAdd: function (map) {
     this._map = map;
-
     Util.setEsriAttribution(map);
-
-    if (map.attributionControl) {
-      // 95% sure this is the right static attribution url
-      Util._getAttributionData('https://static.arcgis.com/attribution/World_Street_Map', map);
-      map.attributionControl.addAttribution('<span class="esri-dynamic-attribution">USGS, NOAA</span>');
-    }
 
     if (this._ready) {
       this._asyncAdd();
@@ -55,11 +84,22 @@ export var Layer = L.Layer.extend({
 
   _asyncAdd: function () {
     var map = this._map;
+    if (map.attributionControl) {
+      if (this._customTileset) {
+        if (this._copyrightText) {
+          // pull static copyright text for services published with Pro
+          map.attributionControl.addAttribution('<span class="esri-dynamic-attribution">' + this._copyrightText + '</span>');
+        }
+      } else {
+        // provide dynamic attribution for Esri basemaps
+        Util._getAttributionData('https://static.arcgis.com/attribution/World_Street_Map', map);
+        map.attributionControl.addAttribution('<span class="esri-dynamic-attribution">USGS, NOAA</span>');
+        map.on('moveend', Util._updateMapAttribution);
+      }
+    }
 
     // set the background color of the map to the background color of the tiles
     map.getContainer().style.background = this._mapboxGL.options.style.layers[0].paint['background-color'];
-
-    map.on('moveend', Util._updateMapAttribution);
     this._mapboxGL.addTo(map, this);
   }
 });
