@@ -58,7 +58,8 @@ export function formatStyle (style, metadata, styleUrl) {
 }
 
 export var Util = {
-  fetchMetadata: fetchMetadata
+  fetchMetadata: fetchMetadata,
+  formatStyle: formatStyle
 };
 
 export default Util;
