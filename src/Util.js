@@ -6,31 +6,10 @@ import { request } from 'esri-leaflet';
 export function fetchMetadata (url, context) {
   request(url, {}, function (error, style) {
     if (!error) {
-      request(style.sources.esri.url, {}, function (error, metadata) {
+      request(style.sources.esri.url, {}, function (error, tileMetadata) {
         if (!error) {
-          style.sources.esri = {
-            type: 'vector',
-            scheme: 'xyz',
-            tilejson: metadata.tilejson || '2.0.0',
-            format: (metadata.tileInfo && metadata.tileInfo.format) || 'pbf',
-            index: metadata.tileMap ? style.sources.esri.url + metadata.tileMap : null,
-            tiles: [
-              style.sources.esri.url + metadata.tiles[0]
-            ],
-            description: metadata.description,
-            name: metadata.name
-          };
-
-          // if urls are provided using relative paths, we need to qualify them
-          if (style.glyphs.indexOf('http') === -1) {
-            // set paths to sprite and glyphs
-            style.glyphs = url.replace('styles/root.json', style.glyphs.replace('../', ''));
-            style.sprite = url.replace('styles/root.json', style.sprite.replace('../', ''));
-          }
-
-          // set index
-          style.index = metadata.tileInfo.tileMap;
-
+          formatStyle(style, tileMetadata, url);
+          
           context._mapboxGL = L.mapboxGL({
             accessToken: 'ezree',
             style: style
@@ -46,8 +25,41 @@ export function fetchMetadata (url, context) {
   }, context);
 }
 
+export function formatStyle (style, metadata, styleUrl) {
+
+  // if a relative path is referenced, the default style can be found in a standard location
+  if (style.sources.esri.url && style.sources.esri.url.indexOf('http') === -1) {
+    style.sources.esri.url = styleUrl.replace('/resources/styles/root.json', '');
+  }
+
+  // right now ArcGIS Pro published vector services have a slightly different signature
+  if (metadata.tiles && metadata.tiles[0].charAt(0) != '/') {
+    metadata.tiles[0] = '/' + metadata.tiles[0];
+  }
+
+  style.sources.esri = {
+    type: 'vector',
+    scheme: 'xyz',
+    tilejson: metadata.tilejson || '2.0.0',
+    format: (metadata.tileInfo && metadata.tileInfo.format) || 'pbf',
+    index: metadata.tileMap ? style.sources.esri.url + metadata.tileMap : null,
+    tiles: [
+      style.sources.esri.url + metadata.tiles[0]
+    ],
+    description: metadata.description,
+    name: metadata.name
+  };
+
+  if (style.glyphs.indexOf('http') === -1) {
+    // set paths to sprite and glyphs
+    style.glyphs = styleUrl.replace('styles/root.json', style.glyphs.replace('../', ''));
+    style.sprite = styleUrl.replace('styles/root.json', style.sprite.replace('../', ''));
+  }
+}
+
 export var Util = {
-  fetchMetadata: fetchMetadata
+  fetchMetadata: fetchMetadata,
+  formatStyle: formatStyle
 };
 
 export default Util;

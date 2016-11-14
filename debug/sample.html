@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Leaflet -->
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet-src.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.css">
 
     <!-- Esri Leaflet -->
@@ -28,11 +28,17 @@
 <body>
 <div id="map"></div>
 <script>
-var map = L.map('map').setView([45.526, -122.667], 13);
-L.esri.Vector.basemap('Topographic').addTo(map);
+var map = L.map('map').setView([45.526, -122.667], 3);
 
-// http://www.arcgis.com/home/item.html?id=bd505ce3efff479bb4e87b182f180159
-// L.esri.Vector.layer('4f4843d99c34436f82920932317893ae').addTo(map);
+// esri hosted basemap
+// L.esri.Vector.basemap('Topographic').addTo(map);
+
+// custom hosted basemap
+// L.esri.Vector.layer('bd505ce3efff479bb4e87b182f180159').addTo(map);
+
+// custom ArcGIS Pro published vector service
+// http://www.arcgis.com/home/item.html?id=0bac0ffdc8634d9a9bc662bb8fa7547d
+L.esri.Vector.layer('0bac0ffdc8634d9a9bc662bb8fa7547d').addTo(map);
 </script>
 </body>
 </html>
