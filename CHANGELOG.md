@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [1.0.4]
+
+### Added
+
+* `L.esri.Vector.layer` can now be used to display Vector Tile Services published using ArcGIS Pro.  (like [this one](http://www.arcgis.com/home/item.html?id=0bac0ffdc8634d9a9bc662bb8fa7547d))
+
 ## [1.0.3]
 
 ### Added
@@ -38,7 +44,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.3...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.4...HEAD
+[1.0.4]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.0...v1.0.1
