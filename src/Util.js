@@ -9,7 +9,6 @@ export function fetchMetadata (url, context) {
       request(style.sources.esri.url, {}, function (error, tileMetadata) {
         if (!error) {
           formatStyle(style, tileMetadata, url);
-          
           context._mapboxGL = L.mapboxGL({
             accessToken: 'ezree',
             style: style
@@ -26,14 +25,13 @@ export function fetchMetadata (url, context) {
 }
 
 export function formatStyle (style, metadata, styleUrl) {
-
   // if a relative path is referenced, the default style can be found in a standard location
   if (style.sources.esri.url && style.sources.esri.url.indexOf('http') === -1) {
     style.sources.esri.url = styleUrl.replace('/resources/styles/root.json', '');
   }
 
   // right now ArcGIS Pro published vector services have a slightly different signature
-  if (metadata.tiles && metadata.tiles[0].charAt(0) != '/') {
+  if (metadata.tiles && metadata.tiles[0].charAt(0) !== '/') {
     metadata.tiles[0] = '/' + metadata.tiles[0];
   }
 
