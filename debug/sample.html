@@ -31,10 +31,10 @@
 var map = L.map('map').setView([45.526, -122.667], 3);
 
 // esri hosted basemap
-L.esri.Vector.basemap('Topographic').addTo(map);
+// L.esri.Vector.basemap('Topographic').addTo(map);
 
 // custom hosted basemap
-// L.esri.Vector.layer('bd505ce3efff479bb4e87b182f180159').addTo(map);
+L.esri.Vector.layer('bd505ce3efff479bb4e87b182f180159').addTo(map);
 
 // custom ArcGIS Pro published vector service
 // http://www.arcgis.com/home/item.html?id=0bac0ffdc8634d9a9bc662bb8fa7547d

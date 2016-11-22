@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { request, Util } from 'esri-leaflet';
-import { formatStyle } from './Util';
+import { fetchMetadata, formatStyle } from './Util';
 
 export var Layer = L.Layer.extend({
   statics: {
@@ -22,37 +22,40 @@ export var Layer = L.Layer.extend({
         if (!error) {
           tileUrl = metadata.url;
 
+          // custom tileset published using ArcGIS Pro
           if (tileUrl.indexOf('basemaps.arcgis.com') === -1) {
             this._customTileset = true;
-            // not all custom basemaps remember to include copyright info
+            // if copyright info was published, display it.
             if (metadata.accessInformation) {
               this._copyrightText = metadata.accessInformation;
             }
-          }
-
-          request(tileUrl, {}, function (error, tileMetadata) {
-            if (!error) {
-              // right now ArcGIS Pro published vector services have a slightly different signature
-              if (tileMetadata.defaultStyles.charAt(0) !== '/') {
-                tileMetadata.defaultStyles = '/' + tileMetadata.defaultStyles;
-              }
-
-              styleUrl = tileUrl + tileMetadata.defaultStyles + '/root.json';
-              request(styleUrl, {}, function (error, style) {
-                if (!error) {
-                  formatStyle(style, tileMetadata, styleUrl);
-
-                  this._mapboxGL = L.mapboxGL({
-                    accessToken: 'ezree',
-                    style: style
-                  });
-
-                  this._ready = true;
-                  this.fire('ready', {}, true);
+            request(tileUrl, {}, function (error, tileMetadata) {
+              if (!error) {
+                // right now ArcGIS Pro published vector services have a slightly different signature
+                if (tileMetadata.defaultStyles.charAt(0) !== '/') {
+                  tileMetadata.defaultStyles = '/' + tileMetadata.defaultStyles;
                 }
-              }, this);
-            }
-          }, this);
+
+                styleUrl = tileUrl + tileMetadata.defaultStyles + '/root.json';
+                request(styleUrl, {}, function (error, style) {
+                  if (!error) {
+                    formatStyle(style, tileMetadata, styleUrl);
+
+                    this._mapboxGL = L.mapboxGL({
+                      accessToken: 'ezree',
+                      style: style
+                    });
+
+                    this._ready = true;
+                    this.fire('ready', {}, true);
+                  }
+                }, this);
+              }
+            }, this);
+          } else {
+            // custom symbology applied to hosted basemap tiles
+            fetchMetadata(itemMetadataUrl + '/resources/styles/root.json', this);
+          }
         }
       }, this);
     } else {
