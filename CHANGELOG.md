@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [1.0.5]
+
+### Fixed
+
+* Fixed a regression which caused `L.esri.Vector.Layer` not to honor custom styles applied to generic Esri hosted vector tilesets (example [item](http://www.arcgis.com/home/item.html?id=bd505ce3efff479bb4e87b182f180159))
+
 ## [1.0.4]
 
 ### Added
@@ -44,7 +50,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.4...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.1...v1.0.2
