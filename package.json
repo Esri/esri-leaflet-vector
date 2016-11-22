@@ -47,7 +47,7 @@
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "start": "watch 'npm run build' src & http-server -p 8765 -c-1 -o",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run lint",
     "release": "./scripts/release.sh"
   }
 }

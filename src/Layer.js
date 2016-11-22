@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { request, Util } from 'esri-leaflet';
-import { formatStyle, fetchMetadata } from './Util';
+import { formatStyle } from './Util';
 
 export var Layer = L.Layer.extend({
   statics: {
@@ -14,13 +14,12 @@ export var Layer = L.Layer.extend({
     };
 
     if (typeof options.id === 'string') {
-      var itemMetadataUrl = Layer.URLPREFIX + options.id
+      var itemMetadataUrl = Layer.URLPREFIX + options.id;
       var tileUrl;
       var styleUrl;
 
       request(itemMetadataUrl, {}, function (error, metadata) {
         if (!error) {
-
           tileUrl = metadata.url;
 
           if (tileUrl.indexOf('basemaps.arcgis.com') === -1) {
@@ -32,27 +31,30 @@ export var Layer = L.Layer.extend({
           }
 
           request(tileUrl, {}, function (error, tileMetadata) {
-            // right now ArcGIS Pro published vector services have a slightly different signature
-            if (tileMetadata.defaultStyles.charAt(0) != '/') {
-              tileMetadata.defaultStyles = '/' + tileMetadata.defaultStyles;
+            if (!error) {
+              // right now ArcGIS Pro published vector services have a slightly different signature
+              if (tileMetadata.defaultStyles.charAt(0) !== '/') {
+                tileMetadata.defaultStyles = '/' + tileMetadata.defaultStyles;
+              }
+
+              styleUrl = tileUrl + tileMetadata.defaultStyles + '/root.json';
+              request(styleUrl, {}, function (error, style) {
+                if (!error) {
+                  formatStyle(style, tileMetadata, styleUrl);
+
+                  this._mapboxGL = L.mapboxGL({
+                    accessToken: 'ezree',
+                    style: style
+                  });
+
+                  this._ready = true;
+                  this.fire('ready', {}, true);
+                }
+              }, this);
             }
-
-            styleUrl = tileUrl + tileMetadata.defaultStyles + '/root.json';
-            request(styleUrl, {}, function (error, style) {
-              formatStyle(style, tileMetadata, styleUrl);
-
-              this._mapboxGL = L.mapboxGL({
-                accessToken: 'ezree',
-                style: style
-              });
-
-              this._ready = true;
-              this.fire('ready', {}, true);
-            }, this);
           }, this);
         }
-      }, this)
-
+      }, this);
     } else {
       throw new Error('L.esri.Vector.Layer: Invalid parameter. Use the id of an ArcGIS Online vector tile item');
     }
