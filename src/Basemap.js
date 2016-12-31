@@ -7,17 +7,19 @@ export var Basemap = L.Layer.extend({
     URLPREFIX: 'https://www.arcgis.com/sharing/rest/content/items/',
     URLSUFFIX: '/resources/styles/root.json',
     STYLES: {
-      'DarkGray': '850db44b9eb845d3bd42b19e8aa7a024',
-      'Gray': '0e02e6f86d02455091796eaae811d9b5',
-      'Hybrid': '8fad42206b6d4efcbd02623dba4554e4',
-      'Navigation': 'dcbbba0edf094eaa81af19298b9c6247',
-      'Streets': '4e1133c28ac04cca97693cf336cd49ad',
-      'StreetsNight': 'bf79e422e9454565ae0cbe9553cf6471',
-      'StreetsRelief': '2e063e709e3446459f8538ed6743f879',
-      'Topographic': '6f65bc1351b7411588a8cb43fe23dad7',
+      'DarkGray': '57436c01bc754dbb87dfb636b6484022',
+      'Gray': '1e47168d181248e491541ffd5a91c0de',
+      'Hybrid': 'af6063d6906c4eb589dfe03819610660',
+      'Navigation': 'e19e9330bf08490ca8353d76b5e2e658',
+      'Streets': 'a60a37a27cc140ddad15f919cd5a69f2',
+      'StreetsNight': '92c551c9f07b4147846aae273e822714',
+      'StreetsRelief': '78c0a9ab4fbf4198a8b951848aab19d8',
+      'Topographic': '86d5ed4b6dc741de9dad5f0fbe09ae95',
       'Spring': '763884983d3544c0a418a97992881fce',
       'Newspaper': '4f4843d99c34436f82920932317893ae',
-      'MidCentury': '267f44f08a844c7abee2b62b00600540'
+      'MidCentury': '267f44f08a844c7abee2b62b00600540',
+      'ModernAntique': '996d9e7a3aac4514bb692ce7a990f1c1',
+      'BlackAndWhite': '3161443179244702a5e0449010013b54'
     }
   },
 
