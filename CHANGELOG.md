@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [1.0.6]
+
+### Changed
+
+* now using Esri's latest and greatest basemaps
+
+### Fixed
+
+* Ensure that when a tileMap is present in an ArcGIS Pro published tileset, that its url is concatenated correctly [#20](https://github.com/Esri/esri-leaflet-vector/issues/20)
+
 ## [1.0.5]
 
 ### Fixed
@@ -50,7 +60,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.5...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.6...HEAD
+[1.0.5]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.2...v1.0.3
