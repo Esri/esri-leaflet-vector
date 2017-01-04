@@ -35,6 +35,10 @@ export function formatStyle (style, metadata, styleUrl) {
     metadata.tiles[0] = '/' + metadata.tiles[0];
   }
 
+  if (metadata.tileMap && metadata.tileMap.charAt(0) !== '/') {
+    metadata.tileMap = '/' + metadata.tileMap;
+  }
+
   style.sources.esri = {
     type: 'vector',
     scheme: 'xyz',
