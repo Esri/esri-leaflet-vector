@@ -13,7 +13,7 @@
     "esri-leaflet": "^2.0.3",
     "leaflet": "^1.0.0",
     "mapbox-gl": "git+https://github.com/Esri/mapbox-gl-js.git#indexed-vector-sources",
-    "mapbox-gl-leaflet": "git+https://github.com/jgravois/mapbox-gl-leaflet#indexed-vector-sources"
+    "mapbox-gl-leaflet": "git+https://github.com/mapbox/mapbox-gl-leaflet"
   },
   "devDependencies": {
     "gh-release": "^2.0.0",
