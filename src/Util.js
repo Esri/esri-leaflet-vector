@@ -50,7 +50,7 @@ export function formatStyle (style, metadata, styleUrl) {
     ],
     description: metadata.description,
     name: metadata.name,
-    maxzoom: metadata.maxzoom
+    maxzoom: metadata.maxzoom ? metadata.maxzoom : 22
   };
 
   if (style.glyphs.indexOf('http') === -1) {
