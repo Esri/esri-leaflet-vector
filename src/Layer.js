@@ -9,9 +9,9 @@ export var Layer = L.Layer.extend({
 
   initialize: function (options) {
     // L.Layer expects a JSON object literal to be passed in constructor
-    options = {
-      id: options
-    };
+    // options = {
+    //   id: options
+    // };
 
     if (typeof options.id === 'string') {
       var itemMetadataUrl = Layer.URLPREFIX + options.id;
@@ -39,7 +39,7 @@ export var Layer = L.Layer.extend({
                 styleUrl = tileUrl + tileMetadata.defaultStyles + '/root.json';
                 request(styleUrl, {}, function (error, style) {
                   if (!error) {
-                    formatStyle(style, tileMetadata, styleUrl);
+                    formatStyle(style, tileMetadata, styleUrl, options.rasterBasemap);
 
                     this._mapboxGL = L.mapboxGL({
                       accessToken: 'ezree',
@@ -104,7 +104,7 @@ export var Layer = L.Layer.extend({
     }
 
     // set the background color of the map to the background color of the tiles
-    map.getContainer().style.background = this._mapboxGL.options.style.layers[0].paint['background-color'];
+    map.getContainer().style.background = this._mapboxGL.options.style.layers.slice(-1)[0].paint['background-color'];
     this._mapboxGL.addTo(map, this);
   }
 });
