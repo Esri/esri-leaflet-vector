@@ -9,9 +9,11 @@ export var Layer = L.Layer.extend({
 
   initialize: function (options) {
     // L.Layer expects a JSON object literal to be passed in constructor
-    // options = {
-    //   id: options
-    // };
+    if (!options.id) {
+      options = {
+        id: options
+      };
+    }
 
     if (typeof options.id === 'string') {
       var itemMetadataUrl = Layer.URLPREFIX + options.id;
