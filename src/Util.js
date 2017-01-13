@@ -49,7 +49,8 @@ export function formatStyle (style, metadata, styleUrl) {
       style.sources.esri.url + metadata.tiles[0]
     ],
     description: metadata.description,
-    name: metadata.name
+    name: metadata.name,
+    maxzoom: metadata.maxzoom
   };
 
   if (style.glyphs.indexOf('http') === -1) {
