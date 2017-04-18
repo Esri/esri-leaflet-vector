@@ -1,5 +1,5 @@
 {
-  "name": "esri-leaflet-vector",
+  "name" : "esri-leaflet-vector",
   "description": "Esri vector basemap plugin for Leaflet.",
   "version": "1.0.6",
   "author": "John Gravois <jgravois@esri.com> (http://johngravois.com)",
@@ -13,7 +13,7 @@
     "esri-leaflet": "^2.0.3",
     "leaflet": "^1.0.0",
     "mapbox-gl": "git+https://github.com/Esri/mapbox-gl-js.git#indexed-vector-sources",
-    "mapbox-gl-leaflet": "git+https://github.com/jgravois/mapbox-gl-leaflet#indexed-vector-sources"
+    "mapbox-gl-leaflet": "git+https://github.com/mapbox/mapbox-gl-leaflet#v0.0.3"
   },
   "devDependencies": {
     "gh-release": "^2.0.0",
@@ -21,6 +21,7 @@
     "mkdirp": "^0.5.1",
     "nodemon": "^1.9.2",
     "rollup": "^0.25.4",
+    "rollup-plugin-commonjs": "^7.0.0",
     "rollup-plugin-json": "^2.0.0",
     "rollup-plugin-node-resolve": "^1.4.0",
     "rollup-plugin-uglify": "^0.3.1",
@@ -37,6 +38,7 @@
   },
   "license": "Apache-2.0",
   "main": "dist/esri-leaflet-vector-debug.js",
+  "module": "src/EsriLeafletVector.js",
   "browser": "dist/esri-leaflet-vector-debug.js",
   "readmeFilename": "README.md",
   "repository": {
