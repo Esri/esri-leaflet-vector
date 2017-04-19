@@ -22,12 +22,12 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load libraries from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.0.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.0.3"></script>
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
-  <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
-  <script src="https://unpkg.com/esri-leaflet-vector@1.0.3"></script>
+  <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+  <script src="https://unpkg.com/esri-leaflet-vector@1.0.7"></script>
 
   <style>
     body {margin:0;padding:0;}
@@ -92,7 +92,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 ## [Terms](https://github.com/Esri/esri-leaflet#terms)
 
 ## Licensing
-Copyright 2016 Esri
+Copyright 2017 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -107,6 +107,3 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 A copy of the license is available in the repository's [LICENSE](./LICENSE) file.
-
-[](Esri Tags: ArcGIS Web Mapping Leaflet Vector VectorTiles Tiles)
-[](Esri Language: JavaScript)
