@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [1.0.7]
+
+### Fixed
+
+* several edge cases that corrupted the current state of the map
+
 ## [1.0.6]
 
 ### Changed
@@ -60,7 +66,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.6...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.7...HEAD
+[1.0.7]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.3...v1.0.4
