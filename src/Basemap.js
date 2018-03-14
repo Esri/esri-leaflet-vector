@@ -15,9 +15,9 @@ export var Basemap = L.Layer.extend({
       'StreetsNight': '92c551c9f07b4147846aae273e822714',
       'StreetsRelief': '78c0a9ab4fbf4198a8b951848aab19d8',
       'Topographic': '86d5ed4b6dc741de9dad5f0fbe09ae95',
-      'Spring': '763884983d3544c0a418a97992881fce',
+      'Spring': '267f44f08a844c7abee2b62b00600540',
       'Newspaper': '4f4843d99c34436f82920932317893ae',
-      'MidCentury': '267f44f08a844c7abee2b62b00600540',
+      'MidCentury': '763884983d3544c0a418a97992881fce',
       'ModernAntique': '996d9e7a3aac4514bb692ce7a990f1c1',
       'BlackAndWhite': '3161443179244702a5e0449010013b54'
     }
