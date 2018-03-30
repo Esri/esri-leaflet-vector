@@ -1,6 +1,6 @@
 import config from './base.js';
 
-config.dest = 'dist/esri-leaflet-vector-debug.js';
-config.sourceMap = 'inline';
+config.output.file = 'dist/esri-leaflet-vector-debug.js';
+config.output.sourcemap = true;
 
 export default config;

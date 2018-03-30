@@ -8,6 +8,12 @@
 
 > An ***experimental*** plugin for Esri Leaflet to visualize Vector tiles from ArcGIS Online. Built on top of [`mapbox-gl-leaflet`](https://github.com/mapbox/mapbox-gl-leaflet).
 
+## Disclaimer
+
+The code here is a house of cards that attempts to synchronize a [WebGLRenderingContext](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext) with a Leaflet map. It doesn't support rotation and can't draw more than one source at a time.
+
+For production applications, the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/latest/sample-code/layers-vectortilelayer/index.html) is a much more appropriate choice.
+
 ## Example
 
 Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vector-basemap.html).
@@ -21,13 +27,17 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
   <title>Esri Vector Basemap</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
-  <!-- Load libraries from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  <!-- Load Leaflet from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+
+  <!-- Load Mapbox GL -->
+  <link rel="stylesheet" href="https://unpkg.com/mapbox-gl@0.44.1/dist/mapbox-gl.css"/>
+  <script src="https://unpkg.com/mapbox-gl@0.44.1/dist/mapbox-gl.js"></script>
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
-  <script src="https://unpkg.com/esri-leaflet@2.0.8/dist/esri-leaflet.js"></script>
-  <script src="https://unpkg.com/esri-leaflet-vector@1.0.7/dist/esri-leaflet-vector.js"></script>
+  <script src="https://unpkg.com/esri-leaflet@2.1.3/dist/esri-leaflet.js"></script>
+  <script src="../dist/esri-leaflet-vector-debug.js"></script>
 
   <style>
     body {margin:0;padding:0;}
@@ -92,7 +102,8 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 ## [Terms](https://github.com/Esri/esri-leaflet#terms)
 
 ## Licensing
-Copyright 2017 Esri
+
+Copyright 2018 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
