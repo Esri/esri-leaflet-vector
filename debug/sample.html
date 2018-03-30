@@ -4,13 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Leaflet -->
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.3/leaflet-src.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.3/leaflet.css">
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/mapbox-gl@0.44.1/dist/mapbox-gl.css"/>
+    <script src="https://unpkg.com/mapbox-gl@0.44.1/dist/mapbox-gl.js"></script>
+    <!--script src="../node_modules/mapbox-gl/dist/mapbox-gl.js"></script-->
 
     <!-- Esri Leaflet -->
-    <script src="../node_modules/esri-leaflet/dist/esri-leaflet-debug.js"></script>
-
+    <script src="https://unpkg.com/esri-leaflet@2.1.3/dist/esri-leaflet.js"></script>
     <script src="../dist/esri-leaflet-vector-debug.js"></script>
 
     <style>
@@ -31,7 +34,7 @@
 var map = L.map('map').setView([45.526, -122.667], 3);
 
 // esri hosted basemap
-L.esri.Vector.basemap('Newspaper').addTo(map);
+L.esri.Vector.basemap('Nova').addTo(map);
 
 // custom hosted basemap
 // L.esri.Vector.layer('bd505ce3efff479bb4e87b182f180159').addTo(map);
@@ -39,6 +42,10 @@ L.esri.Vector.basemap('Newspaper').addTo(map);
 // custom ArcGIS Pro published vector service
 // http://www.arcgis.com/home/item.html?id=0bac0ffdc8634d9a9bc662bb8fa7547d
 // L.esri.Vector.layer('0bac0ffdc8634d9a9bc662bb8fa7547d').addTo(map);
+
+// L.esri.featureLayer({
+//   url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3"
+// }).addTo(map);
 </script>
 </body>
 </html>
