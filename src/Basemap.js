@@ -8,7 +8,6 @@ export var Basemap = L.Layer.extend({
     URLSUFFIX: '/resources/styles/root.json',
     STYLES: {
       'DarkGray': '5e9b3685f4c24d8781073dd928ebda50',
-      'DarkGrayLabels' : '747cb7a5329c478cbe6981076cc879c5',
       'Gray': '291da5eab3a0412593b66d384379f89f',
       // 'Hybrid': '30d6b8271e1849cd9c3042060001f425', only loads labels
       'Navigation': '63c47b7177f946b49902c24129b87252',
@@ -74,17 +73,15 @@ export var Basemap = L.Layer.extend({
 
   _asyncAdd: function () {
     var map = this._map;
-
     // thought it was just me, but apparently its not easy to mixin two different styles
     // https://github.com/mapbox/mapbox-gl-js/issues/4000
-    
+
     // set the background color of the map to the background color of the tiles
     map.getContainer().style.background = this._mapboxGL.options.style.layers[0].paint['background-color'];
 
     map.on('moveend', Util._updateMapAttribution);
     this._mapboxGL.addTo(map, this);
     // map._gl = this._mapboxGL;
-    
   }
 });
 
