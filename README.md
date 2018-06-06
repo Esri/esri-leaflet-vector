@@ -37,7 +37,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
   <script src="https://unpkg.com/esri-leaflet@2.1.3/dist/esri-leaflet.js"></script>
-  <script src="../dist/esri-leaflet-vector-debug.js"></script>
+  <script src="https://unpkg.com/esri-leaflet-vector@1.0.7/dist/esri-leaflet-vector.js"></script>
 
   <style>
     body {margin:0;padding:0;}
