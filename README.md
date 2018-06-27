@@ -10,9 +10,13 @@
 
 ## Disclaimer
 
-The code here is a house of cards that attempts to synchronize a [WebGLRenderingContext](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext) with a Leaflet map. It doesn't support rotation and can't draw more than one source at a time.
+The code here is a house of cards that attempts to synchronize a [WebGLRenderingContext](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext) with a Leaflet map. 
 
-For production applications, the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/latest/sample-code/layers-vectortilelayer/index.html) is a much more appropriate choice.
+* It doesn't support rotation 
+* It can't draw more than one vector tile source at a time.
+* It only supports [`v1`](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/whats-new-in-esri-vector-basemaps-december-2017/) basemaps, which stopped receiving data updates in December 2017.
+
+For production applications, the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/latest/sample-code/layers-vectortilelayer/index.html) is a **much** more appropriate choice.
 
 ## Example
 
