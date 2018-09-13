@@ -7,24 +7,25 @@ export var Basemap = L.Layer.extend({
     URLPREFIX: 'https://www.arcgis.com/sharing/rest/content/items/',
     URLSUFFIX: '/resources/styles/root.json',
     STYLES: {
-      'DarkGray': '5e9b3685f4c24d8781073dd928ebda50',
-      'Gray': '291da5eab3a0412593b66d384379f89f',
-      // 'Hybrid': '30d6b8271e1849cd9c3042060001f425', only loads labels
-      'Navigation': '63c47b7177f946b49902c24129b87252',
+      'OpenStreetMap': '3e1a00aeae81496587988075fe529f71',
+      // v2
       'Streets': 'de26a3cf4cc9451298ea173c4b324736',
-      // 'StreetsNight': '86f556a2d1fd468181855a35e344567f', fails to load
       'StreetsRelief': 'b266e6d17fc345b498345613930fbd76',
-      'Topographic': '7dc6cea0b1764a1f9af2e679f642f0f5',
-      'Spring': '267f44f08a844c7abee2b62b00600540',
+      // 7dc6cea0b1764a1f9af2e679f642f0f5 doesnt pass validation
+      'Topographic': '7a6bf0e8cb5a418085e66c0485e74d19',
+      // 86f556a2d1fd468181855a35e344567f doesnt pass validation
+      'StreetsNight': '93554006894c45a88136127535878fca',
       'Newspaper': 'dfb04de5f3144a80bc3f9f336228d24a',
-      'MidCentury': '7675d44bb1e4428aa2c30a9b68f97822',
-      'ModernAntique': 'effe3475f05a4d608e66fd6eeb2113c0',
-      'BlackAndWhite': '3161443179244702a5e0449010013b54',
-      'ColoredPencil': '4cf7e1fb9f254dcda9c8fbadb15cf0f8',
-      // 'HumanGeography': '97fa1365da1e43eabb90d0364326bc2d', doesn't load
-      // 'DarkHumanGeography': 'd7397603e9274052808839b70812be50', // loads, but not much
+      'Navigation': '63c47b7177f946b49902c24129b87252',
       'Nova': '75f4dfdff19e445395653121a95a85db',
-      'OpenStreetMap': '3e1a00aeae81496587988075fe529f71'
+      'ColoredPencil': '4cf7e1fb9f254dcda9c8fbadb15cf0f8',
+      'Hybrid': '30d6b8271e1849cd9c3042060001f425',
+      'Gray': '291da5eab3a0412593b66d384379f89f', // no labels
+      'DarkGray': '5e9b3685f4c24d8781073dd928ebda50', // no labels
+      'HumanGeography': '2afe5b807fa74006be6363fd243ffb30', // no labels
+      'HumanGeographyDetail': '97fa1365da1e43eabb90d0364326bc2d', // no labels
+      'DarkHumanGeography': 'd7397603e9274052808839b70812be50' // no labels
+      // 'ModernAntique': 'effe3475f05a4d608e66fd6eeb2113c0', // throws mismatched image size error
     }
   },
 
@@ -51,12 +52,11 @@ export var Basemap = L.Layer.extend({
     if (map.attributionControl) {
       if (this._basemap === 'OpenStreetMap') {
         map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
-        map.attributionControl.addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, map layer by Esri');
+        map.attributionControl.addAttribution('<span class="esri-dynamic-attribution">&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, map layer by Esri</span>');
       } else {
         Util._getAttributionData('https://static.arcgis.com/attribution/World_Street_Map', map);
         map.attributionControl.addAttribution('<span class="esri-dynamic-attribution">USGS, NOAA</span>');
       }
-      
     }
 
     if (this._ready) {

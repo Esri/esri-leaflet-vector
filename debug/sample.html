@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
 
-    <link rel="stylesheet" href="https://unpkg.com/mapbox-gl@0.44.1/dist/mapbox-gl.css"/>
-    <script src="https://unpkg.com/mapbox-gl@0.44.1/dist/mapbox-gl.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/mapbox-gl@0.49.0/dist/mapbox-gl.css"/>
+    <script src="https://unpkg.com/mapbox-gl@0.49.0/dist/mapbox-gl.js"></script>
     <!--script src="../node_modules/mapbox-gl/dist/mapbox-gl.js"></script-->
 
     <!-- Esri Leaflet -->
@@ -34,7 +34,7 @@
 var map = L.map('map').setView([45.526, -122.667], 3);
 
 // esri hosted basemap
-L.esri.Vector.basemap('Nova').addTo(map);
+L.esri.Vector.basemap('StreetsNight').addTo(map);
 
 // custom hosted basemap
 // L.esri.Vector.layer('bd505ce3efff479bb4e87b182f180159').addTo(map);
