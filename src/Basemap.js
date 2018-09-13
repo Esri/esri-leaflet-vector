@@ -23,7 +23,8 @@ export var Basemap = L.Layer.extend({
       'ColoredPencil': '4cf7e1fb9f254dcda9c8fbadb15cf0f8',
       // 'HumanGeography': '97fa1365da1e43eabb90d0364326bc2d', doesn't load
       // 'DarkHumanGeography': 'd7397603e9274052808839b70812be50', // loads, but not much
-      'Nova': '75f4dfdff19e445395653121a95a85db'
+      'Nova': '75f4dfdff19e445395653121a95a85db',
+      'OpenStreetMap': '3e1a00aeae81496587988075fe529f71'
     }
   },
 
@@ -32,6 +33,8 @@ export var Basemap = L.Layer.extend({
     options = {
       key: options
     };
+
+    this._basemap = options.key;
 
     if (typeof options.key === 'string' && Basemap.STYLES[options.key]) {
       var url = Basemap.URLPREFIX + Basemap.STYLES[options.key] + Basemap.URLSUFFIX;
@@ -46,9 +49,14 @@ export var Basemap = L.Layer.extend({
     Util.setEsriAttribution(map);
 
     if (map.attributionControl) {
-      // 95% sure this is the right static attribution url
-      Util._getAttributionData('https://static.arcgis.com/attribution/World_Street_Map', map);
-      map.attributionControl.addAttribution('<span class="esri-dynamic-attribution">USGS, NOAA</span>');
+      if (this._basemap === 'OpenStreetMap') {
+        map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        map.attributionControl.addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, map layer by Esri');
+      } else {
+        Util._getAttributionData('https://static.arcgis.com/attribution/World_Street_Map', map);
+        map.attributionControl.addAttribution('<span class="esri-dynamic-attribution">USGS, NOAA</span>');
+      }
+      
     }
 
     if (this._ready) {
