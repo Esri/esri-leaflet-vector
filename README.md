@@ -14,7 +14,6 @@ The code here is a house of cards that attempts to synchronize a [WebGLRendering
 
 * It doesn't support rotation 
 * It can't draw more than one vector tile source at a time.
-* It only supports [`v1`](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/whats-new-in-esri-vector-basemaps-december-2017/) basemaps, which stopped receiving data updates in December 2017.
 
 For production applications, the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/latest/sample-code/layers-vectortilelayer/index.html) is a **much** more appropriate choice.
 
@@ -32,16 +31,16 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load Leaflet from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <!-- Load Mapbox GL -->
-  <link rel="stylesheet" href="https://unpkg.com/mapbox-gl@0.44.1/dist/mapbox-gl.css"/>
-  <script src="https://unpkg.com/mapbox-gl@0.44.1/dist/mapbox-gl.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/mapbox-gl/dist/mapbox-gl.css"/>
+  <script src="https://unpkg.com/mapbox-gl/dist/mapbox-gl.js"></script>
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
-  <script src="https://unpkg.com/esri-leaflet@2.1.3/dist/esri-leaflet.js"></script>
-  <script src="https://unpkg.com/esri-leaflet-vector@1.0.7/dist/esri-leaflet-vector.js"></script>
+  <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
+  <script src="https://unpkg.com/esri-leaflet-vector/dist/esri-leaflet-vector.js"></script>
 
   <style>
     body {margin:0;padding:0;}
@@ -82,7 +81,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 * Leaflet version [1.0.x](https://github.com/Leaflet/Leaflet/releases/tag/v1.0.1)
 * Esri Leaflet [2.0.3](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.3) (or higher) is required.
 * [Mapbox GL Leaflet](https://github.com/jgravois/mapbox-gl-leaflet.git#indexed-vector-sources)
-* [a fork of Mapbox GL JS](https://github.com/Esri/mapbox-gl-js.git#indexed-vector-sources)
+* [mapbox-gl-js](https://www.mapbox.com/mapbox-gl-js/)
 
 ## Resources
 
@@ -93,11 +92,11 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
 ## Issues
 
-Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet-heatmap-feature-layer/issues).
+Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet-vector/issues).
 
-Please take a look at previous issues on [Esri Leaflet](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) and Esri Leaflet [Vector](https://github.com/Esri/esri-leaflet-vector/issues) that resolve common problems.
+Please take a look at previous issues on [Esri Leaflet](https://github.com/Esri/esri-leaflet-vector/issues?labels=FAQ&milestone=&page=1&state=closed) and Esri Leaflet [Vector](https://github.com/Esri/esri-leaflet-vector/issues) that resolve common problems.
 
-You can also post issues on the [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+You can also post issues on the [GIS Stack Exchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
 
 ## Contributing
 
@@ -107,7 +106,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ## Licensing
 
-Copyright 2018 Esri
+Copyright &copy; 2016-2018 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

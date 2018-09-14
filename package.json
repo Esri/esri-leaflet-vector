@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet-vector",
   "description": "Esri vector basemap plugin for Leaflet.",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "author": "John Gravois <jgravois@esri.com> (http://johngravois.com)",
   "contributors": [
     "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)"
@@ -29,6 +29,11 @@
     "snazzy": "^2.0.1",
     "watch": "^0.17.1"
   },
+  "files": [
+    "src/**/*.js",
+    "dist/*.js",
+    "dist/*.js.map"
+  ],
   "homepage": "https://github.com/Esri/esri-leaflet-vector#readme",
   "jsnext:main": "src/EsriLeafletVector.js",
   "jspm": {

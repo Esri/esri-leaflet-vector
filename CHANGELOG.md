@@ -5,6 +5,29 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [2.0.0]
+
+### Changed
+
+* Existing basemaps have been updated to [`v2`](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/whats-new-in-esri-vector-basemaps-december-2017/)
+
+### Added
+
+* Esri's [OpenStreetMap Vector basemap](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/new-osm-vector-basemap/)
+
+### Breaking Change
+
+* `mapbox-gl-js` is now an external dependency. it is no longer bundled internally.
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/mapbox-gl/dist/mapbox-gl.css"/>
+<script src="https://unpkg.com/mapbox-gl/dist/mapbox-gl.js"></script>
+
+<!-- Esri Leaflet -->
+<script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
+<script src="https://unpkg.com/esri-leaflet-vector/dist/esri-leaflet-vector.js"></script>
+```
+
 ## [1.0.7]
 
 ### Fixed
@@ -66,7 +89,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.7...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.7...v2.0.0
 [1.0.7]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.4...v1.0.5
