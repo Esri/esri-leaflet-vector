@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet-vector",
   "description": "Esri vector basemap plugin for Leaflet.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "John Gravois <jgravois@esri.com> (http://johngravois.com)",
   "contributors": [
     "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)"

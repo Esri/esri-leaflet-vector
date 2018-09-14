@@ -14,6 +14,7 @@ The code here is a house of cards that attempts to synchronize a [WebGLRendering
 
 * It doesn't support rotation 
 * It can't draw more than one vector tile source at a time.
+* `404`s will be encountered when zooming in past zoom level 15 in areas without much feature density. 
 
 For production applications, the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/latest/sample-code/layers-vectortilelayer/index.html) is a **much** more appropriate choice.
 
