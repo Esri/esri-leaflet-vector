@@ -31,21 +31,67 @@
 <body>
 <div id="map"></div>
 <script>
-var map = L.map('map').setView([45.526, -122.667], 3);
+	'use strict';
+	
+	var map = L.map('map').setView([45.526, -122.667], 3);
 
-// esri hosted basemap
-L.esri.Vector.basemap('StreetsNight').addTo(map);
+	// esri hosted basemap
+	var osm = L.esri.Vector.basemap('OpenStreetMap').addTo(map);
+	var streets = L.esri.Vector.basemap('Streets');
+	var streetsRelief = L.esri.Vector.basemap('StreetsRelief');
+	var topo = L.esri.Vector.basemap('Topographic');
+	var streetsNight = L.esri.Vector.basemap('StreetsNight');
+	var newspaper = L.esri.Vector.basemap('Newspaper');
+	var navigation = L.esri.Vector.basemap('Navigation');
+	var nova = L.esri.Vector.basemap('Nova');
+	var coloredPencil = L.esri.Vector.basemap('ColoredPencil');
+	var hybrid = L.esri.Vector.basemap('Hybrid');
+	var gray = L.esri.Vector.basemap('Gray');
+	var darkGray = L.esri.Vector.basemap('DarkGray');	
+	var humanGeography = L.esri.Vector.basemap('HumanGeography');
+	var humanGeographyDetail = L.esri.Vector.basemap('HumanGeographyDetail');
+	var darkHumanGeography = L.esri.Vector.basemap('DarkHumanGeography');
+	var darkHumanGeographyDetail = L.esri.Vector.basemap('DarkHumanGeographyDetail');
+	var chartedTerrority = L.esri.Vector.basemap('ChartedTerritory');
+	var midCentury = L.esri.Vector.basemap('MidCentury');
 
-// custom hosted basemap
-// L.esri.Vector.layer('bd505ce3efff479bb4e87b182f180159').addTo(map);
+	// base maps group for control
+	var vectorBasemaps = {
+		"Open Street Map": osm,
+		"Streets": streets,
+		"Streets (Relief)": streetsRelief,
+		"Topographic": topo,
+		"Streets (Night)": streetsNight,
+		"Newspaper": newspaper,
+		"Navigation": navigation,
+		"Nova": nova,
+		"Colored Pencil": coloredPencil,
+		"Hybrid": hybrid,
+		"Light Gray": gray,
+		"Dark Gray": darkGray,
+		"Human Geography": humanGeography,
+		"Human Geography (Detail)": humanGeographyDetail,
+		"Dark Human Geography": darkHumanGeography,
+		"Dark Human Geography (Detail)": darkHumanGeographyDetail,
+		"Charted Territory": chartedTerrority,
+		"Mid-Century": midCentury
+	};
 
-// custom ArcGIS Pro published vector service
-// http://www.arcgis.com/home/item.html?id=0bac0ffdc8634d9a9bc662bb8fa7547d
-// L.esri.Vector.layer('0bac0ffdc8634d9a9bc662bb8fa7547d').addTo(map);
+	// base map changer control
+	var layerControl = L.control.layers(vectorBasemaps,null, {
+		collapsed: false
+	}).addTo(map);
 
-// L.esri.featureLayer({
-//   url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3"
-// }).addTo(map);
+	// custom hosted basemap
+	// L.esri.Vector.layer('bd505ce3efff479bb4e87b182f180159').addTo(map);
+
+	// custom ArcGIS Pro published vector service
+	// http://www.arcgis.com/home/item.html?id=0bac0ffdc8634d9a9bc662bb8fa7547d
+	// L.esri.Vector.layer('0bac0ffdc8634d9a9bc662bb8fa7547d').addTo(map);
+
+	// L.esri.featureLayer({
+	//   url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3"
+	// }).addTo(map);
 </script>
 </body>
 </html>
