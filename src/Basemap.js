@@ -24,8 +24,11 @@ export var Basemap = L.Layer.extend({
       'DarkGray': '5e9b3685f4c24d8781073dd928ebda50', // no labels
       'HumanGeography': '2afe5b807fa74006be6363fd243ffb30', // no labels
       'HumanGeographyDetail': '97fa1365da1e43eabb90d0364326bc2d', // no labels
-      'DarkHumanGeography': 'd7397603e9274052808839b70812be50' // no labels
-      // 'ModernAntique': 'effe3475f05a4d608e66fd6eeb2113c0', // throws mismatched image size error
+      'DarkHumanGeography': 'd7397603e9274052808839b70812be50', // no labels
+      'DarkHumanGeographyDetail': '1ddbb25aa29c4811aaadd94de469856a', // no labels
+      'ChartedTerritory': '1c365daf37a744fbad748b67aa69dac8',
+      'MidCentury': '7675d44bb1e4428aa2c30a9b68f97822'
+      // 'ModernAntique': 'effe3475f05a4d608e66fd6eeb2113c0' // throws mismatched image size error
     }
   },
 
