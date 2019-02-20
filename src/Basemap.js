@@ -11,15 +11,20 @@ export var Basemap = L.Layer.extend({
       // v2
       'Streets': 'de26a3cf4cc9451298ea173c4b324736',
       'StreetsRelief': 'b266e6d17fc345b498345613930fbd76',
+      'StreetsLocalLanguage': '7549fb39378a485ca0c9d18a2d968c15',
       // 7dc6cea0b1764a1f9af2e679f642f0f5 doesnt pass validation
       'Topographic': '7a6bf0e8cb5a418085e66c0485e74d19',
       // 86f556a2d1fd468181855a35e344567f doesnt pass validation
+      'TopographicLocalLanguage': '0f52cd2d17ea4773944a1d0e0fb99ea4',
       'StreetsNight': '93554006894c45a88136127535878fca',
+      'StreetsNightLocalLanguage': 'f3a55a52222341a7aafc793174351bb8',
       'Newspaper': 'dfb04de5f3144a80bc3f9f336228d24a',
       'Navigation': '63c47b7177f946b49902c24129b87252',
+      'NavigationLocalLanguage': '72be31d1fa6a42fc895d9a3c0fd8aeef',
       'Nova': '75f4dfdff19e445395653121a95a85db',
       'ColoredPencil': '4cf7e1fb9f254dcda9c8fbadb15cf0f8',
       'Hybrid': '30d6b8271e1849cd9c3042060001f425',
+      'HybridLocalLanguage': '2a2e806e6e654ea78ecb705149ceae9f',
       'Gray': '291da5eab3a0412593b66d384379f89f', // no labels
       'DarkGray': '5e9b3685f4c24d8781073dd928ebda50', // no labels
       'HumanGeography': '2afe5b807fa74006be6363fd243ffb30', // no labels

@@ -42,13 +42,18 @@
 	var osm = L.esri.Vector.basemap('OpenStreetMap').addTo(map);
 	var streets = L.esri.Vector.basemap('Streets');
 	var streetsRelief = L.esri.Vector.basemap('StreetsRelief');
+	var streetsLocal = L.esri.Vector.basemap('StreetsLocalLanguage');
 	var topo = L.esri.Vector.basemap('Topographic');
+	var topoLocal = L.esri.Vector.basemap('TopographicLocalLanguage');
 	var streetsNight = L.esri.Vector.basemap('StreetsNight');
+	var streetsNightLocal = L.esri.Vector.basemap('StreetsNightLocalLanguage');
 	var newspaper = L.esri.Vector.basemap('Newspaper');
 	var navigation = L.esri.Vector.basemap('Navigation');
+	var navigationLocal = L.esri.Vector.basemap('NavigationLocalLanguage');
 	var nova = L.esri.Vector.basemap('Nova');
 	var coloredPencil = L.esri.Vector.basemap('ColoredPencil');
 	var hybrid = L.esri.Vector.basemap('Hybrid');
+	var hybridLocal = L.esri.Vector.basemap('HybridLocalLanguage');
 	var gray = L.esri.Vector.basemap('Gray');
 	var darkGray = L.esri.Vector.basemap('DarkGray');	
 	var humanGeography = L.esri.Vector.basemap('HumanGeography');
@@ -63,13 +68,18 @@
 		"Open Street Map": osm,
 		"Streets": streets,
 		"Streets (Relief)": streetsRelief,
+		"Streets (Local Language)": streetsLocal,
 		"Topographic": topo,
+		"Topographic (Local Language)": topoLocal,
 		"Streets (Night)": streetsNight,
+		"Streest (Night Local Language)": streetsNightLocal,
 		"Newspaper": newspaper,
 		"Navigation": navigation,
+		"Navigation (Local Language)": navigationLocal,
 		"Nova": nova,
 		"Colored Pencil": coloredPencil,
 		"Hybrid": hybrid,
+		"Hybrid (Local Language)": hybridLocal,
 		"Light Gray": gray,
 		"Dark Gray": darkGray,
 		"Human Geography": humanGeography,
