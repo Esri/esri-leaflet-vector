@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet-vector",
   "description": "Esri vector basemap plugin for Leaflet.",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "author": "John Gravois <jgravois@esri.com> (http://johngravois.com)",
   "contributors": [
     "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)"
@@ -10,18 +10,24 @@
     "url": "https://github.com/Esri/esri-leaflet-vector/issues"
   },
   "dependencies": {
-    "esri-leaflet": "^2.1.2",
-    "leaflet": "^1.0.0",
-    "mapbox-gl": "git+https://github.com/Esri/mapbox-gl-js.git#indexed-vector-sources",
-    "mapbox-gl-leaflet": "0.0.3"
+    "esri-leaflet": "^2.3.0",
+    "leaflet": "^1.5.0"
+  },
+  "peerDependencies": {
+    "mapbox-gl": "^1.4.0",
+    "esri-leaflet": "^2.3.0",
+    "leaflet": "^1.5.0"
   },
   "devDependencies": {
     "gh-release": "^2.0.0",
     "http-server": "^0.8.5",
+    "mapbox-gl": "^1.4.0",
+    "esri-leaflet": "^2.3.0",
+    "leaflet": "^1.5.0",
     "mkdirp": "^0.5.1",
     "nodemon": "^1.9.2",
     "rollup": "^0.57.1",
-    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^3.0.0",

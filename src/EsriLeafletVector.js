@@ -1,4 +1,2 @@
-export { version as VERSION } from '../package.json';
-
-export { Basemap, basemap } from './Basemap';
-export { Layer, layer } from './Layer';
+export { version as VERSION } from "../package.json";
+export { VectorTileLayer, vectorTileLayer } from "./VectorTileLayer";
