@@ -1,0 +1,40 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Esri Leaflet Vector Quickstart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Load Leaflet from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.0/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.5.0/dist/leaflet.js"></script>
+
+  <!-- Esri Leaflet and Esri Leaflet Vector plugin production version -->
+  <script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"></script>
+  <!-- Note that mapbox-gl is bundled in Esri Leaflet Vector's production code -->
+  <script src="../dist/esri-leaflet-vector.js"></script>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script>
+    var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
+
+    L.esri.Vector.vectorTileLayer("OpenStreetMap").addTo(map);
+  </script>
+</body>
+
+</html>

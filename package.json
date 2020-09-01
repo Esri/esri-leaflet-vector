@@ -10,22 +10,20 @@
     "url": "https://github.com/Esri/esri-leaflet-vector/issues"
   },
   "dependencies": {
-    "esri-leaflet": "^2.3.0",
-    "leaflet": "^1.5.0"
+    "mapbox-gl": "^1.4.0"
   },
   "peerDependencies": {
-    "mapbox-gl": "^1.4.0",
     "esri-leaflet": "^2.3.0",
     "leaflet": "^1.5.0"
   },
   "devDependencies": {
+    "esri-leaflet": "^2.3.0",
     "gh-release": "^2.0.0",
     "http-server": "^0.8.5",
-    "mapbox-gl": "^1.4.0",
-    "esri-leaflet": "^2.3.0",
     "leaflet": "^1.5.0",
     "mkdirp": "^0.5.1",
     "nodemon": "^1.9.2",
+    "npm-run-all": "^4.1.5",
     "rollup": "^0.57.1",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-json": "^2.3.0",
@@ -59,10 +57,17 @@
   "scripts": {
     "prebuild": "mkdirp dist",
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
+    "build-dev": "rollup -c profiles/debug.js",
+    "fix": "semistandard --fix",
     "lint": "semistandard | snazzy",
     "prepublish": "npm run build",
     "pretest": "npm run build",
-    "start": "watch 'npm run build' src & http-server -p 8765 -c-1 -o",
+    "start-watch": "watch \"npm run build\" src",
+    "start-watch-dev": "watch \"npm run build-dev\" src",
+    "start": "run-p start-watch serve",
+    "start-dev": "run-p start-watch-dev serve",
+    "dev": "npm run start-dev",
+    "serve": "http-server -p 8765 -c-1 -o",
     "test": "npm run lint",
     "release": "./scripts/release.sh"
   }
