@@ -1,15 +1,15 @@
-import { latLng, latLngBounds } from "leaflet";
-import { request, Support, Util } from "esri-leaflet";
+import { latLng, latLngBounds } from 'leaflet';
+import { request, Support, Util } from 'esri-leaflet';
 
-export function getBasemapStyleUrl(key, apiKey) {
-  var url = "https://basemapsdev-api-nocdn.arcgis.com/styles/" + key;
+export function getBasemapStyleUrl (key, apiKey) {
+  var url = 'https://basemapsdev-api-nocdn.arcgis.com/styles/' + key;
   if (apiKey) {
-    url = url + "?apiKey=" + apiKey;
+    url = url + '?apiKey=' + apiKey;
   }
   return url;
 }
 
-export function getAttributionData(url, map) {
+export function getAttributionData (url, map) {
   if (Support.cors) {
     request(url, {}, function (error, attributions) {
       if (error) {
@@ -28,7 +28,7 @@ export function getAttributionData(url, map) {
             score: coverageArea.score,
             bounds: latLngBounds(southWest, northEast),
             minZoom: coverageArea.zoomMin,
-            maxZoom: coverageArea.zoomMax,
+            maxZoom: coverageArea.zoomMax
           });
         }
       }
