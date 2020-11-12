@@ -67,7 +67,7 @@
     "build-dev": "rollup -c profiles/debug.js",
     "fix": "semistandard --fix",
     "lint": "semistandard | snazzy",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "pretest": "npm run build",
     "start-watch": "watch \"npm run build\" src",
     "start-watch-dev": "watch \"npm run build-dev\" src",
