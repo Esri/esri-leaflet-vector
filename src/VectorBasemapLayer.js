@@ -20,6 +20,16 @@ export var VectorBasemapLayer = Layer.extend({
       extend(this.options, options);
     }
 
+    // if token is passed in, use it as an apiKey
+    if(this.options.token) {
+      this.options.apiKey = this.options.token;
+    }
+
+    // If no key passed in, or if the key is a named basemap enum, must include apiKey (or token) option
+    if((!key || (key && (key.indexOf('ArcGIS:') === 0 || key.indexOf('OSM:') === 0)) ) && !this.options.apiKey) {
+      throw new Error("API Key or token is required for vectorBasemapLayer.")
+    }
+
     // set key onto "this.options" for use elsewhere in the module.
     if (key) {
       this.options.key = key;
