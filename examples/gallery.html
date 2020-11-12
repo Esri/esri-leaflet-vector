@@ -1,70 +1,110 @@
 <html>
-  <head>
-    <title>Esri Vector Tiles</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Load Leaflet from CDN -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
-    />
-    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+<head>
+  <title>Esri Vector Tiles</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/mapbox-gl@1.4.0/dist/mapbox-gl.css"
-    />
-    <script src="https://unpkg.com/mapbox-gl@1.4.0/dist/mapbox-gl.js"></script>
+  <!-- Load Leaflet from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
 
-    <!-- Esri Leaflet -->
-    <script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"></script>
-    <script src="../dist/esri-leaflet-vector-debug.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/mapbox-gl@1.4.0/dist/mapbox-gl.css" />
+  <script src="https://unpkg.com/mapbox-gl@1.4.0/dist/mapbox-gl.js"></script>
 
-    <style>
-      html,
-      body {
-        margin: 0;
-      }
+  <!-- Esri Leaflet -->
+  <script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"></script>
+  <script src="../dist/esri-leaflet-vector-debug.js"></script>
 
-      #map {
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-  </head>
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
 
-  <body>
-    <div id="map"></div>
-    <script>
-      "use strict";
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
 
-      // deeper than zoom level 15, missing tiles may be encountered
-      var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
+<body>
+  <div id="map"></div>
+  <script>
+    "use strict";
 
-      // // base maps group for control
-      var vectorTiles = Object.keys(
-        L.esri.Vector.VectorTileLayer.STYLES
-      ).reduce((styles, key) => {
-        styles[key] = L.esri.Vector.vectorTileLayer(key);
-        return styles;
-      }, {});
+    // deeper than zoom level 15, missing tiles may be encountered
+    var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
 
+    var vectorTiles = {};
+    var allEnums = [
+      'ArcGIS:Imagery',
+      'ArcGIS:Imagery:Standard',
+      'ArcGIS:Imagery:Labels',
+      'ArcGIS:LightGray',
+      'ArcGIS:LightGray:Base',
+      'ArcGIS:LightGray:Labels',
+      'ArcGIS:DarkGray',
+      'ArcGIS:DarkGray:Base',
+      'ArcGIS:DarkGray:Labels',
+      'ArcGIS:Navigation',
+      'ArcGIS:NavigationNight',
+      'ArcGIS:Streets',
+      'ArcGIS:StreetsNight',
+      'ArcGIS:StreetsRelief',
+      'ArcGIS:Topographic',
+      'ArcGIS:Oceans',
+      'ArcGIS:Oceans:Base',
+      'ArcGIS:Oceans:Labels',
+      'OSM:Standard',
+      'OSM:StandardRelief',
+      'OSM:StandardRelief:Base',
+      'OSM:Streets',
+      'OSM:StreetsRelief',
+      'OSM:LightGray',
+      'OSM:LightGray:Base',
+      'OSM:LightGray:Labels',
+      'OSM:DarkGray',
+      'OSM-DarkGray:Base',
+      'OSM-DarkGray:Labels',
+      'ArcGIS:Terrain',
+      'ArcGIS:Terrain:Base',
+      'ArcGIS:Terrain:Detail',
+      'ArcGIS:Community',
+      'ArcGIS:ChartedTerritory',
+      'ArcGIS:ColoredPencil',
+      'ArcGIS:Nova',
+      'ArcGIS:ModernAntique',
+      'ArcGIS:Midcentury',
+      'ArcGIS:Newspaper',
+      'ArcGIS:Hillshade:Light',
+      'ArcGIS:Hillshade:Dark',
+    ];
+
+    var apiKey = "< YOUR VALID API KEY HERE >";
+
+    vectorTiles[
+      "Default"
+    ] = L.esri.Vector.vectorBasemapLayer(null, {
+      apiKey
+    });
+    allEnums.forEach((enumString) => {
       vectorTiles[
-        "Custom (0c6301683cdc42348c445ca89d55fa42)"
-      ] = L.esri.Vector.vectorTileLayer("0c6301683cdc42348c445ca89d55fa42");
+        enumString
+      ] = L.esri.Vector.vectorBasemapLayer(enumString, {
+        apiKey
+      })
+    })
 
-      vectorTiles[
-        "Childrens (63e139ef929a421fbd88ecb7fcef5317)"
-      ] = L.esri.Vector.vectorTileLayer("63e139ef929a421fbd88ecb7fcef5317");
+    var layerControl = L.control
+      .layers(vectorTiles, null, {
+        collapsed: false
+      })
+      .addTo(map);
 
-      var layerControl = L.control
-        .layers(vectorTiles, null, {
-          collapsed: false
-        })
-        .addTo(map);
+    vectorTiles["Default"].addTo(map);
+  </script>
+</body>
 
-      vectorTiles["OpenStreetMap"].addTo(map);
-    </script>
-  </body>
 </html>

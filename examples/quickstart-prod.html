@@ -33,7 +33,9 @@
   <script>
     var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
 
-    L.esri.Vector.vectorTileLayer("OpenStreetMap").addTo(map);
+    L.esri.Vector.vectorTileLayer("ArcGIS:Streets", {
+      apiKey: "< YOUR VALID API KEY HERE >"
+    }).addTo(map);
   </script>
 </body>
 

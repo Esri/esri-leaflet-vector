@@ -33,7 +33,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
   <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
-  <script src="https://unpkg.com/esri-leaflet-vector/dist/esri-leaflet-vector.js"></script>
+  <script src="https://unpkg.com/esri-leaflet-vector@3/dist/esri-leaflet-vector.js"></script>
 
   <style>
     body {
@@ -57,7 +57,9 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
   <script>
     var map = L.map("map").setView([40.706, -73.926], 14);
 
-    L.esri.Vector.vectorTileLayer("Newspaper").addTo(map);
+    L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
+      apiKey: "< YOUR VALID API KEY HERE >"
+    }).addTo(map);
   </script>
 </body>
 
@@ -68,7 +70,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
 _Coming soon._
 
-### `L.esri.Vector.vectorTileLayer`
+### `L.esri.Vector.vectorBasemapLayer`
 
 ## Development Instructions
 
