@@ -1,4 +1,4 @@
-import { Layer, extend } from 'leaflet';
+import { Layer, setOptions } from 'leaflet';
 import { Util } from 'esri-leaflet';
 import { getBasemapStyleUrl, getAttributionData } from './Util';
 import { mapboxGLJSLayer } from './MapBoxGLLayer';
@@ -16,8 +16,7 @@ export var VectorBasemapLayer = Layer.extend({
    */
   initialize: function (key, options) {
     if (options) {
-      // merge options into "this.options" (the default we set above)
-      extend(this.options, options);
+      setOptions(this, options);
     }
 
     // if token is passed in, use it as an apiKey
@@ -25,8 +24,8 @@ export var VectorBasemapLayer = Layer.extend({
       this.options.apiKey = this.options.token;
     }
 
-    // If no key passed in, or if the key is a named basemap enum, must include apiKey (or token) option
-    if ((!key || (key && (key.indexOf('ArcGIS:') === 0 || key.indexOf('OSM:') === 0))) && !this.options.apiKey) {
+    // If no API Key or token is required:
+    if (!(this.options.apiKey || this.options.token)) {
       throw new Error('API Key or token is required for vectorBasemapLayer.');
     }
 
@@ -181,4 +180,4 @@ export function vectorBasemapLayer (key, options) {
   return new VectorBasemapLayer(key, options);
 }
 
-export default VectorBasemapLayer;
+export default vectorBasemapLayer;
