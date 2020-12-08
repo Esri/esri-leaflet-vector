@@ -142,6 +142,11 @@ export var MapboxGLJSLayer = Layer.extend({
 
     this._glMap = new mapboxgl.Map(options);
 
+    // Fire event for MapboxGL "styledata" event.
+    this._glMap.once('styledata', function (res) {
+      this.fire('styleLoaded');
+    }.bind(this));
+
     // allow GL base map to pan beyond min/max latitudes
     this._glMap.transform.latRange = null;
 

@@ -53,33 +53,52 @@ export var VectorBasemapLayer = Layer.extend({
 
     this._ready = true;
     this.fire('ready', {}, true);
+
+    this._mapboxGL.on('styleLoaded', function (res) {
+      this._setupAttribution();
+    }.bind(this));
   },
 
   _setupAttribution: function () {
     var map = this._map;
 
-    if (!this.options.attributionUrls) {
-      this.options.attributionUrls = this._getAttributionUrls(this.options.key);
-    }
-
-    if (this._map && this.options.attributionUrls) {
-      Util.setEsriAttribution(map);
-
-      if (this._map.attributionControl) {
-        for (
-          let index = 0;
-          index < this.options.attributionUrls.length;
-          index++
-        ) {
-          const attributionUrl = this.options.attributionUrls[index];
-          getAttributionData(attributionUrl, map);
+    if (this.options.key.length === 32) {
+      // this is an itemId
+      var sources = this._mapboxGL.getMapboxMap().style.stylesheet.sources;
+      var allAttributions = [];
+      Object.keys(sources).forEach(function (key) {
+        allAttributions.push(sources[key].attribution);
+        if (sources[key].copyrightText && sources[key].copyrightText && sources[key].copyrightText !== '' && sources[key].attribution !== sources[key].copyrightText) {
+          allAttributions.push(sources[key].copyrightText);
         }
+      });
 
-        map.attributionControl.addAttribution(
-          '<span class="esri-dynamic-attribution"></span>'
-        );
+      map.attributionControl.addAttribution('<span class="">' + allAttributions.join(', ') + '</span>');
+    } else {
+      // this is an enum
+      if (!this.options.attributionUrls) {
+        this.options.attributionUrls = this._getAttributionUrls(this.options.key);
       }
-      Util._updateMapAttribution({ target: this._map });
+
+      if (this._map && this.options.attributionUrls) {
+        Util.setEsriAttribution(map);
+
+        if (this._map.attributionControl) {
+          for (
+            let index = 0;
+            index < this.options.attributionUrls.length;
+            index++
+          ) {
+            const attributionUrl = this.options.attributionUrls[index];
+            getAttributionData(attributionUrl, map);
+          }
+
+          map.attributionControl.addAttribution(
+            '<span class="esri-dynamic-attribution"></span>'
+          );
+        }
+        Util._updateMapAttribution({ target: this._map });
+      }
     }
   },
 
@@ -103,8 +122,6 @@ export var VectorBasemapLayer = Layer.extend({
 
   onAdd: function (map) {
     this._map = map;
-
-    this._setupAttribution();
 
     this._initPane();
 
