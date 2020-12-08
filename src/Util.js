@@ -6,9 +6,9 @@ import { request, Support, Util } from 'esri-leaflet';
   used primarily by VectorBasemapLayer.js
 */
 export function getBasemapStyleUrl (key, apiKey) {
-  var url = 'https://basemapsdev-api.arcgis.com/arcgis/rest/services/styles/' + key;
+  var url = 'https://basemapsdev-api.arcgis.com/arcgis/rest/services/styles/' + key + '?type=style';
   if (apiKey) {
-    url = url + '?apiKey=' + apiKey;
+    url = url + '&apiKey=' + apiKey;
   }
   return url;
 }
