@@ -68,9 +68,51 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
 ## API Reference
 
-_Coming soon._
-
 ### `L.esri.Vector.vectorBasemapLayer`
+
+For rendering basemap layers which use the Esri Basemap Styles API internally.
+
+```javascript
+L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
+  // provide either apiKey or token
+  apiKey: "...",
+  token: "..."
+}).addTo(map);
+
+L.esri.Vector.vectorBasemapLayer("ITEM_ID", {
+  // provide either apiKey or token
+  apiKey: "...",
+  token: "..."
+}).addTo(map);
+```
+
+### `L.esri.Vector.vectorTileLayer`
+
+For custom vector tiles layers published from user data.
+
+```javascript
+L.esri.Vector.vectorTileLayer("ITEM_ID", {
+  // provide either apiKey or token if not public
+  apiKey: "...",
+  token: "...",
+  // optionally customize the style with a function that gets the default style from the service
+  // and returns the new style to be used
+  style: (style) => {
+    return newStyle;
+  }
+}).addTo(map);
+
+L.esri.Vector.vectorTileLayer("SERVICE_URL", {
+  // provide either apiKey or token if not public
+  apiKey: "...",
+  token: "...",
+  // optionally customize the style with a function that gets the default style from the service
+  // and returns the new style to be used
+  style: (style) => {
+    return newStyle
+  }
+}).addTo(map);
+```
 
 ## Development Instructions
 

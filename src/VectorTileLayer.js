@@ -1,0 +1,105 @@
+import { Layer, setOptions } from 'leaflet';
+import { loadStyle, formatStyle } from './Util';
+import { mapboxGLJSLayer } from './MapBoxGLLayer';
+
+export var VectorTileLayer = Layer.extend({
+  options: {
+    // if pane is not provided default to LeafletJS's overlayPane
+    // https://leafletjs.com/reference.html#map-pane
+    pane: 'overlayPane'
+  },
+
+  /**
+   * Populates "this.options" to be used in the rest of the module and creates the layer instance.
+   *
+   * @param {string} key an ITEM ID or SERVICE URL
+   * @param {object} options optional
+   */
+  initialize: function (key, options) {
+    if (options) {
+      setOptions(this, options);
+    }
+
+    // if apiKey is passed in, use it as a token
+    // (opposite from VectorBasemapLayer.js)
+    if (this.options.apiKey) {
+      this.options.token = this.options.apiKey;
+    }
+
+    // if no key passed in
+    if (!key) {
+      throw new Error('An ITEM ID or SERVICE URL is required for vectorTileLayer.');
+    }
+
+    // set key onto "this.options" for use elsewhere in the module.
+    if (key) {
+      this.options.key = key;
+    }
+
+    // this.options has been set, continue on to create the layer:
+    this._createLayer();
+  },
+
+  /**
+   * Creates the mapboxGLJSLayer given using "this.options"
+   */
+  _createLayer: function () {
+    loadStyle(
+      this.options.key,
+      this.options,
+      function (error, style, styleUrl, service) {
+        if (error) {
+          throw new Error(error);
+        }
+
+        // once style object is loaded it must be transformed to be compliant with mapboxGLJSLayer
+        style = formatStyle(style, styleUrl, service, this.options.token);
+
+        // additionally modify the style object with the user's optional style override function
+        if (this.options.style && typeof this.options.style === 'function') {
+          style = this.options.style(style);
+        }
+
+        this._mapboxGL = mapboxGLJSLayer({
+          style: style,
+          pane: this.options.pane,
+          opacity: this.options.opacity
+        });
+
+        this._ready = true;
+        this.fire('ready', {}, true);
+      }.bind(this)
+    );
+  },
+
+  onAdd: function (map) {
+    this._map = map;
+
+    if (this._ready) {
+      this._asyncAdd();
+    } else {
+      this.once(
+        'ready',
+        function () {
+          this._asyncAdd();
+        },
+        this
+      );
+    }
+  },
+
+  onRemove: function (map) {
+    map.removeLayer(this._mapboxGL);
+  },
+
+  _asyncAdd: function () {
+    var map = this._map;
+    this._mapboxGL.addTo(map, this);
+  }
+});
+
+export function vectorTileLayer (key, options) {
+  return new VectorTileLayer(key, options);
+}
+
+export default vectorTileLayer;
