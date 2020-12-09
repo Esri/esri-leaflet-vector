@@ -70,7 +70,7 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 
 ### `L.esri.Vector.vectorBasemapLayer`
 
-For rendering basemap layers which use the Esri Basemap Styles API internally.
+For rendering basemap layers which use the Esri Basemap Styles API internally. Extends [L.Layer](https://leafletjs.com/reference#layer).
 
 ```javascript
 L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
@@ -88,7 +88,7 @@ L.esri.Vector.vectorBasemapLayer("ITEM_ID", {
 
 ### `L.esri.Vector.vectorTileLayer`
 
-For custom vector tiles layers published from user data.
+For custom vector tiles layers published from user data. Extends [L.Layer](https://leafletjs.com/reference#layer).
 
 ```javascript
 L.esri.Vector.vectorTileLayer("ITEM_ID", {
