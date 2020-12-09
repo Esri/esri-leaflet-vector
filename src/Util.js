@@ -131,8 +131,8 @@ export function formatStyle (style, styleUrl, metadata, token) {
     source.tiles[0] += (token ? '?token=' + token : '');
 
     // add minzoom and maxzoom to each source based on the service metadata
-    source.minzoom = metadata.minLOD;
-    source.maxzoom = metadata.maxLOD;
+    source.minzoom = metadata.tileInfo.lods[0].level;
+    source.maxzoom = metadata.tileInfo.lods[metadata.tileInfo.lods.length - 1].level;
   }
 
   // add the attribution and copyrightText properties to the last source in style.sources based on the service metadata
