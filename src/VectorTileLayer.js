@@ -55,6 +55,19 @@ export var VectorTileLayer = Layer.extend({
         // once style object is loaded it must be transformed to be compliant with mapboxGLJSLayer
         style = formatStyle(style, styleUrl, service, this.options.token);
 
+        // if a custom attribution was not provided in the options,
+        // then attempt to rely on the attribution of the last source in the style object
+        // and add it to the map's attribution control
+        // (otherwise it would have already been added by leaflet to the attribution control)
+        if (!this.getAttribution()) {
+          var sourcesKeys = Object.keys(style.sources);
+          this.options.attribution = style.sources[sourcesKeys[sourcesKeys.length - 1]].attribution;
+          if (this._map && this._map.attributionControl) {
+            // NOTE: if attribution is an empty string (or otherwise falsy) at this point it would not appear in the attribution control
+            this._map.attributionControl.addAttribution(this.getAttribution());
+          }
+        }
+
         // additionally modify the style object with the user's optional style override function
         if (this.options.style && typeof this.options.style === 'function') {
           style = this.options.style(style);
