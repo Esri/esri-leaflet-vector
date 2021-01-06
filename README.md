@@ -36,8 +36,8 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <!-- Load Mapbox GL -->
-  <link rel="stylesheet" href="https://unpkg.com/mapbox-gl/dist/mapbox-gl.css"/>
-  <script src="https://unpkg.com/mapbox-gl/dist/mapbox-gl.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/mapbox-gl@1.13.0/dist/mapbox-gl.css"/>
+  <script src="https://unpkg.com/mapbox-gl@1.13.0/dist/mapbox-gl.js"></script>
 
   <!-- Esri Leaflet and Esri Leaflet Vector -->
   <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
