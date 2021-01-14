@@ -1,75 +1,210 @@
-import L from 'leaflet';
-import 'mapbox-gl';
-import 'mapbox-gl-leaflet';
-import { request } from 'esri-leaflet';
+import { latLng, latLngBounds } from 'leaflet';
+import { request, Support, Util } from 'esri-leaflet';
 
-export function fetchMetadata (url, context) {
-  request(url, {}, function (error, style) {
-    if (!error) {
-      request(style.sources.esri.url, {}, function (error, tileMetadata) {
-        if (!error) {
-          formatStyle(style, tileMetadata, url);
-          context._mapboxGL = L.mapboxGL({
-            accessToken: 'ezree',
-            style: style
-          });
-
-          context._ready = true;
-          context.fire('ready', {}, true);
-        }
-      }, context);
-    } else {
-      throw new Error('Unable to fetch vector tile style metadata');
-    }
-  }, context);
+/*
+  utility to establish a URL for the basemap styles API
+  used primarily by VectorBasemapLayer.js
+*/
+export function getBasemapStyleUrl (key, apiKey) {
+  var url = 'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' + key + '?type=style';
+  if (apiKey) {
+    url = url + '&apiKey=' + apiKey;
+  }
+  return url;
 }
 
-export function formatStyle (style, metadata, styleUrl) {
-  // if a relative path is referenced, the default style can be found in a standard location
-  if (style.sources.esri.url && style.sources.esri.url.indexOf('http') === -1) {
-    style.sources.esri.url = styleUrl.replace('/resources/styles/root.json', '');
+/*
+  utilities to communicate with custom user styles via an ITEM ID or SERVICE URL
+  used primarily by VectorTileLayer.js
+*/
+export function loadStyle (idOrUrl, options, callback) {
+  var httpRegex = /^https?:\/\//;
+  var serviceRegex = /\/VectorTileServer\/?$/;
+
+  if (httpRegex.test(idOrUrl) && serviceRegex.test(idOrUrl)) {
+    var serviceUrl = idOrUrl;
+    loadStyleFromService(serviceUrl, options, callback);
+  } else {
+    var itemId = idOrUrl;
+    loadStyleFromItem(itemId, options, callback);
+  }
+}
+
+export function loadService (serviceUrl, options, callback) {
+  var params = options.token ? { token: options.token } : {};
+  request(serviceUrl, params, callback);
+}
+
+function loadItem (itemId, options, callback) {
+  var params = options.token ? { token: options.token } : {};
+  var url = 'https://www.arcgis.com/sharing/rest/content/items/' + itemId;
+  request(url, params, callback);
+}
+
+function loadStyleFromItem (itemId, options, callback) {
+  var itemStyleUrl =
+    'https://www.arcgis.com/sharing/rest/content/items/' +
+    itemId +
+    '/resources/styles/root.json';
+
+  loadStyleFromUrl(itemStyleUrl, options, function (error, style) {
+    if (error) {
+      loadItem(itemId, options, function (error, item) {
+        if (error) {
+          console.error(error);
+        }
+        loadStyleFromService(item.url, options, callback);
+      });
+    } else {
+      loadService(style.sources.esri.url, options, function (error, service) {
+        callback(error, style, itemStyleUrl, service, style.sources.esri.url);
+      });
+    }
+  });
+}
+
+function loadStyleFromService (serviceUrl, options, callback) {
+  loadService(serviceUrl, options, function (error, service) {
+    if (error) {
+      console.error(error);
+    }
+
+    var defaultStylesUrl;
+    if (
+      serviceUrl.charAt(0) !== '/' &&
+      service.defaultStyles.charAt(service.defaultStyles.length - 1) !== '/'
+    ) {
+      defaultStylesUrl = serviceUrl + '/' + service.defaultStyles + '/root.json';
+    } else {
+      defaultStylesUrl = serviceUrl + service.defaultStyles + '/root.json';
+    }
+
+    loadStyleFromUrl(defaultStylesUrl, options, function (
+      error,
+      style
+    ) {
+      if (error) {
+        console.error(error);
+      }
+      callback(null, style, defaultStylesUrl, service, serviceUrl);
+    });
+  });
+}
+
+function loadStyleFromUrl (styleUrl, options, callback) {
+  var params = options.token ? { token: options.token } : {};
+  request(styleUrl, params, callback);
+}
+
+export function formatStyle (style, styleUrl, metadata, token) {
+  // transforms style object in place and also returns it
+
+  // modify each source in style.sources
+  var sourcesKeys = Object.keys(style.sources);
+  for (var sourceIndex = 0; sourceIndex < sourcesKeys.length; sourceIndex++) {
+    var source = style.sources[sourcesKeys[sourceIndex]];
+
+    // if a relative path is referenced, the default style can be found in a standard location
+    if (source.url.indexOf('http') === -1) {
+      source.url = styleUrl.replace(
+        '/resources/styles/root.json',
+        ''
+      );
+    }
+
+    // add tiles property if missing
+    if (!source.tiles) {
+      // right now ArcGIS Pro published vector services have a slightly different signature
+      // the '/' is needed in the URL string concatenation below for source.tiles
+      if (metadata.tiles && metadata.tiles[0].charAt(0) !== '/') {
+        metadata.tiles[0] = '/' + metadata.tiles[0];
+      }
+
+      source.tiles = [
+        source.url +
+        metadata.tiles[0]
+      ];
+    }
+
+    // add the token to the source url and tiles properties as a query param
+    source.url += (token ? '?token=' + token : '');
+    source.tiles[0] += (token ? '?token=' + token : '');
+
+    // add minzoom and maxzoom to each source based on the service metadata
+    source.minzoom = metadata.tileInfo.lods[0].level;
+    source.maxzoom = metadata.tileInfo.lods[metadata.tileInfo.lods.length - 1].level;
   }
 
-  // right now ArcGIS Pro published vector services have a slightly different signature
-  if (metadata.tiles && metadata.tiles[0].charAt(0) !== '/') {
-    metadata.tiles[0] = '/' + metadata.tiles[0];
+  // add the attribution and copyrightText properties to the last source in style.sources based on the service metadata
+  var lastSource = style.sources[sourcesKeys[sourcesKeys.length - 1]];
+  lastSource.attribution = metadata.copyrightText || '';
+  lastSource.copyrightText = metadata.copyrightText || '';
+
+  // if any layer in style.layers has a layout.text-font property (it will be any array of strings) remove all items in the array after the first
+  for (var layerIndex = 0; layerIndex < style.layers.length; layerIndex++) {
+    var layer = style.layers[layerIndex];
+    if (layer.layout['text-font'] && layer.layout['text-font'].length > 1) {
+      layer.layout['text-font'] = [layer.layout['text-font'][0]];
+    }
   }
 
-  if (metadata.tileMap && metadata.tileMap.charAt(0) !== '/') {
-    metadata.tileMap = '/' + metadata.tileMap;
+  // resolve absolute URLs for style.sprite and style.glyphs
+  if (style.sprite.indexOf('http') === -1) {
+    style.sprite = styleUrl.replace(
+      'styles/root.json',
+      style.sprite.replace('../', '')
+    );
   }
-
-  style.sources.esri = {
-    type: 'vector',
-    scheme: 'xyz',
-    tilejson: metadata.tilejson || '2.0.0',
-    format: (metadata.tileInfo && metadata.tileInfo.format) || 'pbf',
-    index: metadata.tileMap ? style.sources.esri.url + metadata.tileMap : null,
-    tiles: [
-      style.sources.esri.url + metadata.tiles[0]
-    ],
-    description: metadata.description,
-    name: metadata.name,
-    /* mapbox-gl-js does not respect the indexing of esri tiles
-    because we cache to different zoom levels depending on feature density. articifially capping at 15, but 404s will still be encountered when zooming in tight in rural areas.
-
-    the *real* solution would be to make intermittent calls to our tilemap and update the maxzoom of the layer internally.
-
-    reference implementation: https://github.com/openstreetmap/iD/pull/5029
-    */
-    maxzoom: 15
-  };
 
   if (style.glyphs.indexOf('http') === -1) {
-    // set paths to sprite and glyphs
-    style.glyphs = styleUrl.replace('styles/root.json', style.glyphs.replace('../', ''));
-    style.sprite = styleUrl.replace('styles/root.json', style.sprite.replace('../', ''));
+    style.glyphs = styleUrl.replace(
+      'styles/root.json',
+      style.glyphs.replace('../', '')
+    );
   }
+
+  // add the token to the style.sprite and style.glyphs properties as a query param
+  style.sprite += (token ? '?token=' + token : '');
+  style.glyphs += (token ? '?token=' + token : '');
+
+  return style;
 }
 
-export var Util = {
-  fetchMetadata: fetchMetadata,
-  formatStyle: formatStyle
-};
+/*
+  utility to assist with dynamic attribution data
+  used primarily by VectorBasemapLayer.js
+*/
+export function getAttributionData (url, map) {
+  if (Support.cors) {
+    request(url, {}, function (error, attributions) {
+      if (error) {
+        return;
+      }
+      map._esriAttributions = map._esriAttributions || [];
+      for (var c = 0; c < attributions.contributors.length; c++) {
+        var contributor = attributions.contributors[c];
 
-export default Util;
+        for (var i = 0; i < contributor.coverageAreas.length; i++) {
+          var coverageArea = contributor.coverageAreas[i];
+          var southWest = latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+          var northEast = latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+          map._esriAttributions.push({
+            attribution: contributor.attribution,
+            score: coverageArea.score,
+            bounds: latLngBounds(southWest, northEast),
+            minZoom: coverageArea.zoomMin,
+            maxZoom: coverageArea.zoomMax
+          });
+        }
+      }
+
+      map._esriAttributions.sort(function (a, b) {
+        return b.score - a.score;
+      });
+
+      // pass the same argument as the map's 'moveend' event
+      var obj = { target: map };
+      Util._updateMapAttribution(obj);
+    });
+  }
+}
