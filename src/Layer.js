@@ -23,7 +23,7 @@ export var Layer = L.Layer.extend({
           tileUrl = metadata.url;
 
           // custom tileset published using ArcGIS Pro
-          if (tileUrl.indexOf('basemaps.arcgis.com') === -1) {
+          if (metadata.typeKeywords.indexOf("Hosted Service") !== -1) {
             this._customTileset = true;
             // if copyright info was published, display it.
             if (metadata.accessInformation) {
@@ -40,12 +40,12 @@ export var Layer = L.Layer.extend({
                 request(styleUrl, {}, function (error, style) {
                   if (!error) {
                     formatStyle(style, tileMetadata, styleUrl);
-
+   
                     this._mapboxGL = L.mapboxGL({
                       accessToken: 'ezree',
                       style: style
                     });
-
+   
                     this._ready = true;
                     this.fire('ready', {}, true);
                   }
@@ -55,7 +55,7 @@ export var Layer = L.Layer.extend({
           } else {
             // custom symbology applied to hosted basemap tiles
             fetchMetadata(itemMetadataUrl + '/resources/styles/root.json', this);
-          }
+           }
         }
       }, this);
     } else {
