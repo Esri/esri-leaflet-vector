@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [3.0.0] - 2021-01-25
+
+### Changed
+
+- Update to support the [upcoming product launch](https://www.esri.com/en-us/lg/events/esri-launch-event). Full release notes will be made available after the event.
+
 ## [2.0.1]
 
 ### Fixed
@@ -95,7 +101,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.1...v3.0.0
 [2.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.7...v2.0.0
 [1.0.7]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.6...v1.0.7
