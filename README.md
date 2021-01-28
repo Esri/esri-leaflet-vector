@@ -1,7 +1,3 @@
-WIP for CITRA
-
----
-
 # Esri Leaflet Vector Tile Plugin
 
 [![npm version][npm-img]][npm-url]
