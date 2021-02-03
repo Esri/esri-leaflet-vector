@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+### Fixed
+
+* While formatting the style object when loading a new `L.esri.Vector.vectorTileLayer`, check first if layer layout property exists before accessing. (🙏jag-eagle-technology🙏 [#70](https://github.com/Esri/esri-leaflet-vector/pull/70))
+
 ## [3.0.0] - 2021-01-25
 
 ### Changed
