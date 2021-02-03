@@ -143,7 +143,7 @@ export function formatStyle (style, styleUrl, metadata, token) {
   // if any layer in style.layers has a layout.text-font property (it will be any array of strings) remove all items in the array after the first
   for (var layerIndex = 0; layerIndex < style.layers.length; layerIndex++) {
     var layer = style.layers[layerIndex];
-    if (layer.layout['text-font'] && layer.layout['text-font'].length > 1) {
+    if (layer.layout && layer.layout['text-font'] && layer.layout['text-font'].length > 1) {
       layer.layout['text-font'] = [layer.layout['text-font'][0]];
     }
   }
