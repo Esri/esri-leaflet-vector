@@ -4,7 +4,9 @@
   "version": "3.0.0",
   "author": "John Gravois <jgravois@esri.com> (http://johngravois.com)",
   "contributors": [
-    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)"
+    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
+    "Gavin Rehkemper <grehkemper@esri.com>",
+    "Jacob Wasilkowski <jwasilkowski@esri.com> (https://jwasilgeo.github.io)"
   ],
   "bugs": {
     "url": "https://github.com/Esri/esri-leaflet-vector/issues"
