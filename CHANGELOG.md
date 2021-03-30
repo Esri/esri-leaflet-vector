@@ -27,11 +27,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   <script src="https://unpkg.com/esri-leaflet-vector@3/dist/esri-leaflet-vector.js"></script>
   ```
 
-### Added
-### Changed
-### Fixed
-### Removed
-
 ## [2.0.2]
 
 ### Added
