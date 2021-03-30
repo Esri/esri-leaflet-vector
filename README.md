@@ -82,6 +82,11 @@ L.esri.Vector.vectorBasemapLayer("ITEM_ID", {
 }).addTo(map);
 ```
 
+#### Basemap Names
+
+Please see [the documentation](http://esri.github.io/esri-leaflet/api-reference/layers/vector-basemap.html#vector-basemaps) for a list of basemap names you can use (`ArcGIS:Streets`, `ArcGIS:DarkGray`, `ArcGIS:Imagery:Standard`, `OSM:Standard`, etc).
+
+
 ### `L.esri.Vector.vectorTileLayer`
 
 For custom vector tiles layers published from user data. Extends [L.Layer](https://leafletjs.com/reference#layer).
