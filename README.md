@@ -6,7 +6,7 @@
 [npm-img]: https://img.shields.io/npm/v/esri-leaflet-vector.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/esri-leaflet-vector
 
-> A plugin for Esri Leaflet to visualize Vector tiles from ArcGIS Online. Built on top of [`mapbox-gl-js`](https://github.com/mapbox/mapbox-gl-js).
+> A plugin for Esri Leaflet to visualize Vector tiles from ArcGIS Online.
 
 ## Example
 
