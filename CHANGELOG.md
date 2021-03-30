@@ -11,9 +11,37 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.0.0] - 2021-01-25
 
-### Changed
+### Breaking
 
-- Update to support the [upcoming product launch](https://www.esri.com/en-us/lg/events/esri-launch-event). Full release notes will be made available after the event.
+* `L.esri.Vector.basemap` is now `L.esri.Vector.vectorBasemapLayer` and requires an API key (`apiKey`) or token (`token`).
+* `L.esri.Vector.layer` is now `L.esri.Vector.vectorTileLayer`.
+* Simplified imports. `mapbox-gl-js v1` continues to be a depedency but is bundled internally with production builds.
+
+  ```html
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Esri Leaflet and Esri Leaflet Vector -->
+  <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
+  <script src="https://unpkg.com/esri-leaflet-vector@3/dist/esri-leaflet-vector.js"></script>
+  ```
+
+### Added
+### Changed
+### Fixed
+### Removed
+
+## [2.0.2]
+
+### Added
+
+* New basemaps! 🙏pmacMaps🙏
+  * `DarkHumanGeography`
+  * `DarkHumanGeographyDetail`
+  * `ChartedTerritory`
+  * `MidCentury`
+  * `Nova`
 
 ## [2.0.1]
 
@@ -106,7 +134,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Initial Release
 
 [unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.0...HEAD
-[3.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.1...v3.0.0
+[3.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.2...v3.0.0
+[2.0.2]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.7...v2.0.0
 [1.0.7]: https://github.com/esri/esri-leaflet-vector/compare/v1.0.6...v1.0.7
