@@ -5,10 +5,10 @@ import { request, Support, Util } from 'esri-leaflet';
   utility to establish a URL for the basemap styles API
   used primarily by VectorBasemapLayer.js
 */
-export function getBasemapStyleUrl (key, apiKey) {
+export function getBasemapStyleUrl (key, apikey) {
   var url = 'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' + key + '?type=style';
-  if (apiKey) {
-    url = url + '&apiKey=' + apiKey;
+  if (apikey) {
+    url = url + '&apikey=' + apikey;
   }
   return url;
 }
