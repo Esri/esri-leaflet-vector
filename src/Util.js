@@ -8,7 +8,7 @@ import { request, Support, Util } from 'esri-leaflet';
 export function getBasemapStyleUrl (key, apikey) {
   var url = 'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' + key + '?type=style';
   if (apikey) {
-    url = url + '&apikey=' + apikey;
+    url = url + '&apiKey=' + apikey;
   }
   return url;
 }
