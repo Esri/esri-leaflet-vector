@@ -18,7 +18,10 @@ export var VectorBasemapLayer = Layer.extend({
     if (options) {
       setOptions(this, options);
     }
-
+    // support outdated casing apiKey of apikey
+    if (this.options.apiKey) {
+      this.options.apikey = this.options.apiKey;
+    }
     // if token is passed in, use it as an apikey
     if (this.options.token) {
       this.options.apikey = this.options.token;
