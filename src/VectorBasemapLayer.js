@@ -18,14 +18,17 @@ export var VectorBasemapLayer = Layer.extend({
     if (options) {
       setOptions(this, options);
     }
-
-    // if token is passed in, use it as an apiKey
+    // support outdated casing apiKey of apikey
+    if (this.options.apiKey) {
+      this.options.apikey = this.options.apiKey;
+    }
+    // if token is passed in, use it as an apikey
     if (this.options.token) {
-      this.options.apiKey = this.options.token;
+      this.options.apikey = this.options.token;
     }
 
     // If no API Key or token is required:
-    if (!(this.options.apiKey || this.options.token)) {
+    if (!(this.options.apikey || this.options.token)) {
       throw new Error('API Key or token is required for vectorBasemapLayer.');
     }
 
@@ -42,7 +45,7 @@ export var VectorBasemapLayer = Layer.extend({
    * Creates the mapboxGLJSLayer given using "this.options"
    */
   _createLayer: function () {
-    var styleUrl = getBasemapStyleUrl(this.options.key, this.options.apiKey);
+    var styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
 
     this._mapboxGL = mapboxGLJSLayer({
       style: styleUrl,
