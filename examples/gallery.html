@@ -82,18 +82,18 @@
       'ArcGIS:Hillshade:Dark',
     ];
 
-    var apiKey = "< YOUR VALID API KEY HERE >";
+    var apikey = "< YOUR VALID API KEY HERE >";
 
     vectorTiles[
       "Default"
     ] = L.esri.Vector.vectorBasemapLayer(null, {
-      apiKey
+      apikey
     });
     allEnums.forEach((enumString) => {
       vectorTiles[
         enumString
       ] = L.esri.Vector.vectorBasemapLayer(enumString, {
-        apiKey
+        apikey
       })
     })
 

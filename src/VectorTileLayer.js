@@ -19,11 +19,15 @@ export var VectorTileLayer = Layer.extend({
     if (options) {
       setOptions(this, options);
     }
-
-    // if apiKey is passed in, use it as a token
-    // (opposite from VectorBasemapLayer.js)
+    // support outdated casing apiKey of apikey
     if (this.options.apiKey) {
-      this.options.token = this.options.apiKey;
+      this.options.apikey = this.options.apiKey;
+    }
+
+    // if apikey is passed in, use it as a token
+    // (opposite from VectorBasemapLayer.js)
+    if (this.options.apikey) {
+      this.options.token = this.options.apikey;
     }
 
     // if no key passed in

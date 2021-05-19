@@ -3,7 +3,7 @@
 var itemId = '1c365daf37a744fbad748b67aa69dac8';
 var serviceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
 var token = '1234abcd';
-var apiKey = 'dcba4321';
+var apikey = 'dcba4321';
 
 describe('VectorTileLayer', function () {
   it('should have a L.esri.vectorTileLayer alias', function () {
@@ -44,10 +44,10 @@ describe('VectorTileLayer', function () {
 
   it('should save the api key as token from the constructor', function () {
     const layer = L.esri.Vector.vectorTileLayer(itemId, {
-      apiKey: apiKey
+      apikey: apikey
     });
 
-    expect(layer.options.token).to.equal(apiKey);
+    expect(layer.options.token).to.equal(apikey);
   });
 
   it('should default to the "overlayPane"', function () {
