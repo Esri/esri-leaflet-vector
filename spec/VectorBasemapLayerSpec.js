@@ -2,7 +2,7 @@
 
 var itemId = "287c07ef752246d08bb4712fd4b74438";
 var basemapKey = "ArcGIS:Streets";
-var apiKey = '1234';
+var apikey = '1234';
 
 describe('VectorBasemapLayer', function () {
 
@@ -10,14 +10,14 @@ describe('VectorBasemapLayer', function () {
     console.log('L.esri.Vector.vectorBasemapLayer', L.esri.Vector.vectorBasemapLayer);
 
     expect(L.esri.Vector.vectorBasemapLayer(itemId, {
-      apiKey: apiKey
+      apikey: apikey
     })).to.be.instanceof(L.esri.Vector.VectorBasemapLayer);
   });
 
   it('should save the key from the constructor - itemID', function () {
 
     const layer = L.esri.Vector.vectorBasemapLayer(itemId, {
-      apiKey: apiKey
+      apikey: apikey
     });
 
     expect(layer.options.key).to.equal(itemId);
@@ -33,7 +33,7 @@ describe('VectorBasemapLayer', function () {
   it('should save the key from the constructor - enumeration basemap key', function () {
 
     const layer = L.esri.Vector.vectorBasemapLayer(basemapKey, {
-      apiKey: apiKey
+      apikey: apikey
     });
 
     expect(layer.options.key).to.equal(basemapKey);
@@ -42,26 +42,26 @@ describe('VectorBasemapLayer', function () {
   it('should save the api key from the constructor', function () {
 
     const layer = L.esri.Vector.vectorBasemapLayer(basemapKey, {
-      apiKey: apiKey
+      apikey: apikey
     });
 
-    expect(layer.options.apiKey).to.equal(apiKey);
+    expect(layer.options.apikey).to.equal(apikey);
   });
 
-  it('should save the token as apiKey from the constructor', function () {
+  it('should save the token as apikey from the constructor', function () {
 
     var layer = new L.esri.Vector.VectorBasemapLayer(basemapKey, {
-      token: apiKey
+      token: apikey
     });
 
-    expect(layer.options.apiKey).to.equal(apiKey);
+    expect(layer.options.apikey.to.equal(apikey));
   });
 
   describe('_getAttributionUrls', function () {
     it('should handle OSM keys', function () {
       var key = "OSM:Standard";
       var layer = new L.esri.Vector.VectorBasemapLayer(key, {
-        token: apiKey
+        token: apikey
       });
       var attributionUrls = layer._getAttributionUrls(key);
       expect(attributionUrls.length).to.equal(1);
@@ -71,7 +71,7 @@ describe('VectorBasemapLayer', function () {
     it('should handle ArcGIS Imagery keys', function () {
       var key = "ArcGIS:Imagery";
       var layer = new L.esri.Vector.VectorBasemapLayer(key, {
-        token: apiKey
+        token: apikey
       });
       var attributionUrls = layer._getAttributionUrls(key);
       expect(attributionUrls.length).to.equal(2);
@@ -82,7 +82,7 @@ describe('VectorBasemapLayer', function () {
     it('should handle ArcGIS non-Imagery keys', function () {
       var key = "ArcGIS:Streets";
       var layer = new L.esri.Vector.VectorBasemapLayer(key, {
-        token: apiKey
+        token: apikey
       });
       var attributionUrls = layer._getAttributionUrls(key);
       expect(attributionUrls.length).to.equal(1);
