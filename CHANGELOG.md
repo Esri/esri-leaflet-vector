@@ -9,6 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * While formatting the style object when loading a new `L.esri.Vector.vectorTileLayer`, check first if layer layout property exists before accessing. (🙏jag-eagle-technology🙏 [#70](https://github.com/Esri/esri-leaflet-vector/pull/70))
 
+### Changed
+
+* The layer constructor option `apikey` in all lowercase is now supported **and encouraged** in order  to be consistent with the rest of esri-leaflet's ecosystem. Note that camel case `apiKey` continues to be allowed since [3.0.0]. [#89](https://github.com/Esri/esri-leaflet-vector/pull/89)
+
 ## [3.0.0] - 2021-01-25
 
 ### Breaking
