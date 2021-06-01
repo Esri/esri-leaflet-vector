@@ -54,7 +54,7 @@ describe('VectorBasemapLayer', function () {
       token: apikey
     });
 
-    expect(layer.options.apikey.to.equal(apikey));
+    expect(layer.options.apikey).to.equal(apikey);
   });
 
   describe('_getAttributionUrls', function () {
