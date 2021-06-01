@@ -11,5 +11,5 @@ module.exports = {
   globals: {
     L: false
   },
-  ignorePatterns: ['spec/**/*.js']
+  ignorePatterns: ['spec/**/*.js', 'eslintrc.js']
 };

@@ -17,47 +17,46 @@ Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vect
 ```html
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Esri Leaflet Vector Basemap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8" />
-  <title>Esri Leaflet Vector Basemap</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-  <!-- Load Leaflet from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
- 
-  <!-- Esri Leaflet and Esri Leaflet Vector -->
-  <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
-  <script src="https://unpkg.com/esri-leaflet-vector@3/dist/esri-leaflet-vector.js"></script>
+    <!-- Esri Leaflet and Esri Leaflet Vector -->
+    <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-vector@3/dist/esri-leaflet-vector.js"></script>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
 
-    #map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-    }
-  </style>
-</head>
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+      }
+    </style>
+  </head>
 
-<body>
-  <div id="map"></div>
+  <body>
+    <div id="map"></div>
 
-  <script>
-    var map = L.map("map").setView([40.706, -73.926], 14);
+    <script>
+      var map = L.map("map").setView([40.706, -73.926], 14);
 
-    L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
-      apiKey: "< YOUR VALID API KEY HERE >"
-    }).addTo(map);
-  </script>
-</body>
+      L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
+        apikey: "< YOUR VALID API KEY HERE >",
+      }).addTo(map);
+    </script>
+  </body>
 
 </html>
 ```
@@ -70,15 +69,15 @@ For rendering basemap layers which use the Esri Basemap Styles API internally. E
 
 ```javascript
 L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
-  // provide either apiKey or token
-  apiKey: "...",
-  token: "..."
+  // provide either apikey or token
+  apikey: "...",
+  token: "...",
 }).addTo(map);
 
 L.esri.Vector.vectorBasemapLayer("ITEM_ID", {
-  // provide either apiKey or token
-  apiKey: "...",
-  token: "..."
+  // provide either apikey or token
+  apikey: "...",
+  token: "...",
 }).addTo(map);
 ```
 
@@ -93,8 +92,8 @@ For custom vector tiles layers published from user data. Extends [L.Layer](https
 
 ```javascript
 L.esri.Vector.vectorTileLayer("ITEM_ID", {
-  // provide either apiKey or token if not public
-  apiKey: "...",
+  // provide either apikey or token if not public
+  apikey: "...",
   token: "...",
   // optionally customize the style with a function that gets the default style from the service
   // and returns the new style to be used
@@ -104,8 +103,8 @@ L.esri.Vector.vectorTileLayer("ITEM_ID", {
 }).addTo(map);
 
 L.esri.Vector.vectorTileLayer("SERVICE_URL", {
-  // provide either apiKey or token if not public
-  apiKey: "...",
+  // provide either apikey or token if not public
+  apikey: "...",
   token: "...",
   // optionally customize the style with a function that gets the default style from the service
   // and returns the new style to be used
@@ -123,7 +122,7 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
 2. `cd` into the `esri-leaflet-vector` folder.
 3. Install the dependencies with `npm install`.
 4. Run `npm run dev` to compile the raw source inside a newly created `dist` folder and start up a development web server.
-    - Alternatively, run `npm run start` to compile raw source code into both "debug" and "production" versions. This process will take longer to compile when saving your local changes to source code. Recommended only when building for production.
+   - Alternatively, run `npm run start` to compile raw source code into both "debug" and "production" versions. This process will take longer to compile when saving your local changes to source code. Recommended only when building for production.
 5. Open `examples/quickstart-dev.html` to see local changes in action.
 
 ### Advanced Development Instructions
