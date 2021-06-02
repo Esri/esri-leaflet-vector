@@ -80,7 +80,7 @@
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
     "build-dev": "rollup -c profiles/debug.js",
     "fix": "semistandard --fix",
-    "lint": "eslint {src,spec}/**/*.js",
+    "lint": "eslint src/**/*.js",
     "prepublishOnly": "npm run build",
     "start-watch": "watch \"npm run build\" src",
     "start-watch-dev": "watch \"npm run build-dev\" src",
