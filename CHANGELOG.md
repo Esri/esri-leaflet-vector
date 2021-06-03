@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [3.0.1] - 2021-06-03
+
 ### Fixed
 
 * While formatting the style object when loading a new `L.esri.Vector.vectorTileLayer`, check first if layer layout property exists before accessing. (🙏jag-eagle-technology🙏 [#70](https://github.com/Esri/esri-leaflet-vector/pull/70))
@@ -134,7 +136,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.0...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.1...HEAD
+[3.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.2...v3.0.0
 [2.0.2]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.0...v2.0.1
