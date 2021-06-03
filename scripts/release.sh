@@ -10,8 +10,8 @@ npm run lint || exit 1
 # checkout temp branch for release
 git checkout -b gh-release
 
-# run prepublish to build files
-npm run prepublish
+# run prepublishOnly to build files
+npm run prepublishOnly
 
 # force add files
 git add dist -f
@@ -20,18 +20,19 @@ git add dist -f
 git commit -m "build $VERSION"
 
 # push commit so it exists on GitHub when we run gh-release
-git push upstream gh-release
+git push https://github.com/Esri/esri-leaflet-vector gh-release
 
 # create a ZIP archive of the dist files
 zip -r $NAME-v$VERSION.zip dist
 
 # run gh-release to create the tag and push release to github
+# may need to run this instead on Windows: ./node_modules/.bin/gh-release --assets $NAME-v$VERSION.zip
 gh-release --assets $NAME-v$VERSION.zip
 
 # checkout master and delete release branch locally and on GitHub
 git checkout master
 git branch -D gh-release
-git push upstream :gh-release
+git push https://github.com/Esri/esri-leaflet-vector :gh-release
 
 # publish release on NPM
 npm publish
