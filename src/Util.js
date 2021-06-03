@@ -6,7 +6,10 @@ import { request, Support, Util } from 'esri-leaflet';
   used primarily by VectorBasemapLayer.js
 */
 export function getBasemapStyleUrl (key, apikey) {
-  var url = 'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' + key + '?type=style';
+  var url =
+    'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' +
+    key +
+    '?type=style';
   if (apikey) {
     url = url + '&apiKey=' + apikey;
   }
@@ -56,8 +59,13 @@ function loadStyleFromItem (itemId, options, callback) {
         loadStyleFromService(item.url, options, callback);
       });
     } else {
-      loadService(style.sources.esri.url, options, function (error, service) {
-        callback(error, style, itemStyleUrl, service, style.sources.esri.url);
+      loadItem(itemId, options, function (error, item) {
+        if (error) {
+          console.error(error);
+        }
+        loadService(item.url, options, function (error, service) {
+          callback(error, style, itemStyleUrl, service, item.url);
+        });
       });
     }
   });
@@ -74,15 +82,13 @@ function loadStyleFromService (serviceUrl, options, callback) {
       serviceUrl.charAt(0) !== '/' &&
       service.defaultStyles.charAt(service.defaultStyles.length - 1) !== '/'
     ) {
-      defaultStylesUrl = serviceUrl + '/' + service.defaultStyles + '/root.json';
+      defaultStylesUrl =
+        serviceUrl + '/' + service.defaultStyles + '/root.json';
     } else {
       defaultStylesUrl = serviceUrl + service.defaultStyles + '/root.json';
     }
 
-    loadStyleFromUrl(defaultStylesUrl, options, function (
-      error,
-      style
-    ) {
+    loadStyleFromUrl(defaultStylesUrl, options, function (error, style) {
       if (error) {
         console.error(error);
       }
@@ -106,10 +112,7 @@ export function formatStyle (style, styleUrl, metadata, token) {
 
     // if a relative path is referenced, the default style can be found in a standard location
     if (source.url.indexOf('http') === -1) {
-      source.url = styleUrl.replace(
-        '/resources/styles/root.json',
-        ''
-      );
+      source.url = styleUrl.replace('/resources/styles/root.json', '');
     }
 
     // add tiles property if missing
@@ -120,19 +123,17 @@ export function formatStyle (style, styleUrl, metadata, token) {
         metadata.tiles[0] = '/' + metadata.tiles[0];
       }
 
-      source.tiles = [
-        source.url +
-        metadata.tiles[0]
-      ];
+      source.tiles = [source.url + metadata.tiles[0]];
     }
 
     // add the token to the source url and tiles properties as a query param
-    source.url += (token ? '?token=' + token : '');
-    source.tiles[0] += (token ? '?token=' + token : '');
+    source.url += token ? '?token=' + token : '';
+    source.tiles[0] += token ? '?token=' + token : '';
 
     // add minzoom and maxzoom to each source based on the service metadata
     source.minzoom = metadata.tileInfo.lods[0].level;
-    source.maxzoom = metadata.tileInfo.lods[metadata.tileInfo.lods.length - 1].level;
+    source.maxzoom =
+      metadata.tileInfo.lods[metadata.tileInfo.lods.length - 1].level;
   }
 
   // add the attribution and copyrightText properties to the last source in style.sources based on the service metadata
@@ -143,7 +144,11 @@ export function formatStyle (style, styleUrl, metadata, token) {
   // if any layer in style.layers has a layout.text-font property (it will be any array of strings) remove all items in the array after the first
   for (var layerIndex = 0; layerIndex < style.layers.length; layerIndex++) {
     var layer = style.layers[layerIndex];
-    if (layer.layout && layer.layout['text-font'] && layer.layout['text-font'].length > 1) {
+    if (
+      layer.layout &&
+      layer.layout['text-font'] &&
+      layer.layout['text-font'].length > 1
+    ) {
       layer.layout['text-font'] = [layer.layout['text-font'][0]];
     }
   }
@@ -164,8 +169,8 @@ export function formatStyle (style, styleUrl, metadata, token) {
   }
 
   // add the token to the style.sprite and style.glyphs properties as a query param
-  style.sprite += (token ? '?token=' + token : '');
-  style.glyphs += (token ? '?token=' + token : '');
+  style.sprite += token ? '?token=' + token : '';
+  style.glyphs += token ? '?token=' + token : '';
 
   return style;
 }

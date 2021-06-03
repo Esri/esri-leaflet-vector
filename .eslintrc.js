@@ -1,8 +1,6 @@
 module.exports = {
   extends: 'eslint-config-semistandard',
-  plugins: [
-    'chai-friendly'
-  ],
+  plugins: ['chai-friendly'],
   rules: {
     'no-var': 'off',
     'no-unused-expressions': 0,
