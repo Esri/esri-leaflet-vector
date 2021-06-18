@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+### Added
+
+* New README documentation and a developer console warning for `L.esri.Vector.vectorTileLayer` explaining that only services with a Web Mercator `spatialReference` are fully supported. [#95](https://github.com/Esri/esri-leaflet-vector/pull/95)
+
 ## [3.0.1] - 2021-06-03
 
 ### Fixed
