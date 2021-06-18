@@ -1,5 +1,5 @@
 import { Layer, setOptions } from 'leaflet';
-import { loadStyle, formatStyle } from './Util';
+import { loadStyle, formatStyle, isWebMercator } from './Util';
 import { mapboxGLJSLayer } from './MapBoxGLLayer';
 
 export var VectorTileLayer = Layer.extend({
@@ -55,6 +55,14 @@ export var VectorTileLayer = Layer.extend({
       function (error, style, styleUrl, service) {
         if (error) {
           throw new Error(error);
+        }
+
+        if (!isWebMercator(service.tileInfo.spatialReference.wkid)) {
+          console.warn(
+            'This layer is not guaranteed to display properly because its service does not use the Web Mercator projection. The "tileInfo.spatialReference" property is:',
+            service.tileInfo.spatialReference,
+            '\nMore information is available at https://docs.mapbox.com/help/glossary/projection/ and https://github.com/Esri/esri-leaflet-vector/issues/94.'
+          );
         }
 
         // once style object is loaded it must be transformed to be compliant with mapboxGLJSLayer

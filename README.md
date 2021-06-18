@@ -85,10 +85,11 @@ L.esri.Vector.vectorBasemapLayer("ITEM_ID", {
 
 Please see [the documentation](http://esri.github.io/esri-leaflet/api-reference/layers/vector-basemap.html#vector-basemaps) for a list of basemap names you can use (`ArcGIS:Streets`, `ArcGIS:DarkGray`, `ArcGIS:Imagery:Standard`, `OSM:Standard`, etc).
 
-
 ### `L.esri.Vector.vectorTileLayer`
 
 For custom vector tiles layers published from user data. Extends [L.Layer](https://leafletjs.com/reference#layer).
+
+:warning: This only supports services using the Web Mercator projection because it [relies directly upon `mapbox-gl-js v1`](#dependencies). Otherwise, the layer is not guaranteed to display properly. More information is available at <https://docs.mapbox.com/help/glossary/projection/> and <https://github.com/Esri/esri-leaflet-vector/issues/94>.
 
 ```javascript
 L.esri.Vector.vectorTileLayer("ITEM_ID", {
