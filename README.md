@@ -10,7 +10,7 @@
 
 ## Example
 
-Take a look at the [live demo](http://esri.github.com/esri-leaflet/examples/vector-basemap.html).
+Take a look at the [live demo](http://esri.github.io/esri-leaflet/examples/vector-basemap.html).
 
 ![Example Image](example.png)
 
