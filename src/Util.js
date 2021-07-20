@@ -42,13 +42,16 @@ export function loadService (serviceUrl, options, callback) {
 
 function loadItem (itemId, options, callback) {
   var params = options.token ? { token: options.token } : {};
-  var url = 'https://www.arcgis.com/sharing/rest/content/items/' + itemId;
+  var url = options.portalUrl +
+    '/sharing/rest/content/items/' +
+    itemId;
   request(url, params, callback);
 }
 
 function loadStyleFromItem (itemId, options, callback) {
   var itemStyleUrl =
-    'https://www.arcgis.com/sharing/rest/content/items/' +
+    options.portalUrl +
+    '/sharing/rest/content/items/' +
     itemId +
     '/resources/styles/root.json';
 

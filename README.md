@@ -53,7 +53,7 @@ Take a look at the [live demo](https://esri.github.io/esri-leaflet/examples/vect
       var map = L.map("map").setView([40.706, -73.926], 14);
 
       L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
-        apikey: "< YOUR VALID API KEY HERE >",
+        apikey: "< YOUR VALID API KEY HERE >"
       }).addTo(map);
     </script>
   </body>
@@ -71,13 +71,13 @@ For rendering basemap layers which use the Esri Basemap Styles API internally. E
 L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
   // provide either apikey or token
   apikey: "...",
-  token: "...",
+  token: "..."
 }).addTo(map);
 
 L.esri.Vector.vectorBasemapLayer("ITEM_ID", {
   // provide either apikey or token
   apikey: "...",
-  token: "...",
+  token: "..."
 }).addTo(map);
 ```
 
@@ -96,7 +96,12 @@ L.esri.Vector.vectorTileLayer("ITEM_ID", {
   // provide either apikey or token if not public
   apikey: "...",
   token: "...",
-  // optionally customize the style with a function that gets the default style from the service
+
+  // optional: if your layer is not hosted on ArcGIS Online, change to the ArcGIS Enterprise base url
+  // this is necessary when specifying an ITEM_ID
+  portalUrl: "https://www.arcgis.com", // default value if not provided
+  
+  // optional: customize the style with a function that gets the default style from the service
   // and returns the new style to be used
   style: (style) => {
     return newStyle;
@@ -107,10 +112,15 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
   // provide either apikey or token if not public
   apikey: "...",
   token: "...",
-  // optionally customize the style with a function that gets the default style from the service
+
+  // optional: if your layer is not hosted on ArcGIS Online, change to the ArcGIS Enterprise base url
+  // this may not be necessary when specifying a SERVICE_URL
+  portalUrl: "https://www.arcgis.com", // default value if not provided
+  
+  // optional: customize the style with a function that gets the default style from the service
   // and returns the new style to be used
   style: (style) => {
-    return newStyle
+    return newStyle;
   }
 }).addTo(map);
 ```
