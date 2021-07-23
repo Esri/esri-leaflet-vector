@@ -131,8 +131,12 @@ export function formatStyle (style, styleUrl, metadata, token) {
       source.tiles = [source.url + metadata.tiles[0]];
     }
 
+    // some VectorTileServer endpoints may default to returning f=html,
+    // specify f=json to account for that behavior
+    source.url += '?f=json';
+
     // add the token to the source url and tiles properties as a query param
-    source.url += token ? '?token=' + token : '';
+    source.url += token ? '&token=' + token : '';
     source.tiles[0] += token ? '?token=' + token : '';
 
     // add minzoom and maxzoom to each source based on the service metadata
