@@ -42,13 +42,16 @@ export function loadService (serviceUrl, options, callback) {
 
 function loadItem (itemId, options, callback) {
   var params = options.token ? { token: options.token } : {};
-  var url = 'https://www.arcgis.com/sharing/rest/content/items/' + itemId;
+  var url = options.portalUrl +
+    '/sharing/rest/content/items/' +
+    itemId;
   request(url, params, callback);
 }
 
 function loadStyleFromItem (itemId, options, callback) {
   var itemStyleUrl =
-    'https://www.arcgis.com/sharing/rest/content/items/' +
+    options.portalUrl +
+    '/sharing/rest/content/items/' +
     itemId +
     '/resources/styles/root.json';
 
@@ -128,8 +131,12 @@ export function formatStyle (style, styleUrl, metadata, token) {
       source.tiles = [source.url + metadata.tiles[0]];
     }
 
+    // some VectorTileServer endpoints may default to returning f=html,
+    // specify f=json to account for that behavior
+    source.url += '?f=json';
+
     // add the token to the source url and tiles properties as a query param
-    source.url += token ? '?token=' + token : '';
+    source.url += token ? '&token=' + token : '';
     source.tiles[0] += token ? '?token=' + token : '';
 
     // add minzoom and maxzoom to each source based on the service metadata

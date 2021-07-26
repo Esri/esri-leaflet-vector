@@ -5,6 +5,11 @@ var serviceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/se
 var token = '1234abcd';
 var apikey = 'dcba4321';
 
+// for layers hosted in ArcGIS Enterprise instead of ArcGIS Online
+var onPremisePortalUrl = 'https://PATH/TO/ARCGIS/ENTERPRISE'; // defaults to https://www.arcgis.com
+var onPremiseItemId = '1c365daf37a744fbad748b67aa69dac8';
+var onPremiseServiceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
+
 describe('VectorTileLayer', function () {
   it('should have a L.esri.vectorTileLayer alias', function () {
     console.log('L.esri.Vector.vectorTileLayer', L.esri.Vector.vectorTileLayer);
@@ -63,5 +68,33 @@ describe('VectorTileLayer', function () {
     });
 
     expect(layer.options.pane).to.equal(otherPane);
+  });
+
+  it('should default to ArcGIS Online as the base "portalUrl" for loading the style - itemId', function () {
+    const layer = L.esri.Vector.vectorTileLayer(itemId);
+
+    expect(layer.options.portalUrl).to.equal('https://www.arcgis.com');
+  });
+
+  it('should default to ArcGIS Online as the base "portalUrl" for loading the style - serviceUrl', function () {
+    const layer = L.esri.Vector.vectorTileLayer(serviceUrl);
+
+    expect(layer.options.portalUrl).to.equal('https://www.arcgis.com');
+  });
+  
+  it('should let the base "portalUrl" be changed in the constructor for loading an on-premise style - itemId', function () {
+    const layer = L.esri.Vector.vectorTileLayer(onPremiseItemId, {
+      portalUrl: onPremisePortalUrl
+    });
+
+    expect(layer.options.portalUrl).to.equal(onPremisePortalUrl);
+  });
+
+  it('should let the base "portalUrl" be changed in the constructor for loading an on-premise style - serviceUrl', function () {
+    const layer = L.esri.Vector.vectorTileLayer(onPremiseServiceUrl, {
+      portalUrl: onPremisePortalUrl
+    });
+
+    expect(layer.options.portalUrl).to.equal(onPremisePortalUrl);
   });
 });

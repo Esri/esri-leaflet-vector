@@ -4,9 +4,12 @@ import { mapboxGLJSLayer } from './MapBoxGLLayer';
 
 export var VectorTileLayer = Layer.extend({
   options: {
-    // if pane is not provided default to LeafletJS's overlayPane
+    // if pane is not provided, default to LeafletJS's overlayPane
     // https://leafletjs.com/reference.html#map-pane
-    pane: 'overlayPane'
+    pane: 'overlayPane',
+
+    // if portalUrl is not provided, default to ArcGIS Online
+    portalUrl: 'https://www.arcgis.com'
   },
 
   /**
