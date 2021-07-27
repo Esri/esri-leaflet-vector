@@ -15,7 +15,7 @@
     "mapbox-gl": "^1.4.0"
   },
   "peerDependencies": {
-    "esri-leaflet": "^2.3.0",
+    "esri-leaflet": ">2.3.0",
     "leaflet": "^1.5.0"
   },
   "devDependencies": {
