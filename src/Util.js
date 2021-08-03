@@ -1,8 +1,6 @@
 import { latLng, latLngBounds } from 'leaflet';
 import { request, Support, Util } from 'esri-leaflet';
 
-const WEB_MERCATOR_WKIDS = [3857, 102100, 102113];
-
 /*
   utility to establish a URL for the basemap styles API
   used primarily by VectorBasemapLayer.js
@@ -222,6 +220,12 @@ export function getAttributionData (url, map) {
     });
   }
 }
+
+/*
+  utility to check if a service's tileInfo spatial reference is in Web Mercator
+  used primarily by VectorTileLayer.js
+*/
+const WEB_MERCATOR_WKIDS = [3857, 102100, 102113];
 
 export function isWebMercator (wkid) {
   return WEB_MERCATOR_WKIDS.indexOf(wkid) >= 0;
