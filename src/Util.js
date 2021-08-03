@@ -160,24 +160,27 @@ export function formatStyle (style, styleUrl, metadata, token) {
     }
   }
 
-  // resolve absolute URLs for style.sprite and style.glyphs
-  if (style.sprite.indexOf('http') === -1) {
+  if (style.sprite && style.sprite.indexOf('http') === -1) {
+    // resolve absolute URL for style.sprite
     style.sprite = styleUrl.replace(
       'styles/root.json',
       style.sprite.replace('../', '')
     );
+
+    // add the token to the style.sprite property as a query param
+    style.sprite += token ? '?token=' + token : '';
   }
 
-  if (style.glyphs.indexOf('http') === -1) {
+  if (style.glyphs && style.glyphs.indexOf('http') === -1) {
+    // resolve absolute URL for style.glyphs
     style.glyphs = styleUrl.replace(
       'styles/root.json',
       style.glyphs.replace('../', '')
     );
-  }
 
-  // add the token to the style.sprite and style.glyphs properties as a query param
-  style.sprite += token ? '?token=' + token : '';
-  style.glyphs += token ? '?token=' + token : '';
+    // add the token to the style.glyphs property as a query param
+    style.glyphs += token ? '?token=' + token : '';
+  }
 
   return style;
 }
