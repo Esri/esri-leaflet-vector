@@ -80,15 +80,20 @@ function loadStyleFromService (serviceUrl, options, callback) {
       console.error(error);
     }
 
+    var sanitizedServiceUrl = serviceUrl;
+    // a trailing "/" may create invalid paths
+    if (serviceUrl.charAt(serviceUrl.length - 1) === '/') {
+      sanitizedServiceUrl = serviceUrl.slice(0, serviceUrl.length - 1);
+    }
+
     var defaultStylesUrl;
-    if (
-      serviceUrl.charAt(0) !== '/' &&
-      service.defaultStyles.charAt(service.defaultStyles.length - 1) !== '/'
-    ) {
+    // inadvertently inserting more than 1 adjacent "/" may create invalid paths
+    if (service.defaultStyles.charAt(0) === '/') {
       defaultStylesUrl =
-        serviceUrl + '/' + service.defaultStyles + '/root.json';
+        sanitizedServiceUrl + service.defaultStyles + '/root.json';
     } else {
-      defaultStylesUrl = serviceUrl + service.defaultStyles + '/root.json';
+      defaultStylesUrl =
+        sanitizedServiceUrl + '/' + service.defaultStyles + '/root.json';
     }
 
     loadStyleFromUrl(defaultStylesUrl, options, function (error, style) {
@@ -116,6 +121,11 @@ export function formatStyle (style, styleUrl, metadata, token) {
     // if a relative path is referenced, the default style can be found in a standard location
     if (source.url.indexOf('http') === -1) {
       source.url = styleUrl.replace('/resources/styles/root.json', '');
+    }
+
+    // a trailing "/" may create invalid paths
+    if (source.url.charAt(source.url.length - 1) === '/') {
+      source.url = source.url.slice(0, source.url.length - 1);
     }
 
     // add tiles property if missing
