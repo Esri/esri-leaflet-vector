@@ -13,6 +13,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Updated peerDependencies to be more flexible for using v3 of `esri-leaflet`. [#99](https://github.com/Esri/esri-leaflet-vector/pull/99)
 
+### Fixed
+
+* Utility functions used by `L.esri.Vector.vectorTileLayer` have been improved to be more friendly with URL structures and style reformatting assumptions. [#100](https://github.com/Esri/esri-leaflet-vector/pull/100)
+
 ## [3.0.1] - 2021-06-03
 
 ### Fixed

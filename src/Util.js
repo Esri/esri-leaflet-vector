@@ -1,8 +1,6 @@
 import { latLng, latLngBounds } from 'leaflet';
 import { request, Support, Util } from 'esri-leaflet';
 
-const WEB_MERCATOR_WKIDS = [3857, 102100, 102113];
-
 /*
   utility to establish a URL for the basemap styles API
   used primarily by VectorBasemapLayer.js
@@ -82,15 +80,20 @@ function loadStyleFromService (serviceUrl, options, callback) {
       console.error(error);
     }
 
+    var sanitizedServiceUrl = serviceUrl;
+    // a trailing "/" may create invalid paths
+    if (serviceUrl.charAt(serviceUrl.length - 1) === '/') {
+      sanitizedServiceUrl = serviceUrl.slice(0, serviceUrl.length - 1);
+    }
+
     var defaultStylesUrl;
-    if (
-      serviceUrl.charAt(0) !== '/' &&
-      service.defaultStyles.charAt(service.defaultStyles.length - 1) !== '/'
-    ) {
+    // inadvertently inserting more than 1 adjacent "/" may create invalid paths
+    if (service.defaultStyles.charAt(0) === '/') {
       defaultStylesUrl =
-        serviceUrl + '/' + service.defaultStyles + '/root.json';
+        sanitizedServiceUrl + service.defaultStyles + '/root.json';
     } else {
-      defaultStylesUrl = serviceUrl + service.defaultStyles + '/root.json';
+      defaultStylesUrl =
+        sanitizedServiceUrl + '/' + service.defaultStyles + '/root.json';
     }
 
     loadStyleFromUrl(defaultStylesUrl, options, function (error, style) {
@@ -118,6 +121,11 @@ export function formatStyle (style, styleUrl, metadata, token) {
     // if a relative path is referenced, the default style can be found in a standard location
     if (source.url.indexOf('http') === -1) {
       source.url = styleUrl.replace('/resources/styles/root.json', '');
+    }
+
+    // a trailing "/" may create invalid paths
+    if (source.url.charAt(source.url.length - 1) === '/') {
+      source.url = source.url.slice(0, source.url.length - 1);
     }
 
     // add tiles property if missing
@@ -162,24 +170,27 @@ export function formatStyle (style, styleUrl, metadata, token) {
     }
   }
 
-  // resolve absolute URLs for style.sprite and style.glyphs
-  if (style.sprite.indexOf('http') === -1) {
+  if (style.sprite && style.sprite.indexOf('http') === -1) {
+    // resolve absolute URL for style.sprite
     style.sprite = styleUrl.replace(
       'styles/root.json',
       style.sprite.replace('../', '')
     );
+
+    // add the token to the style.sprite property as a query param
+    style.sprite += token ? '?token=' + token : '';
   }
 
-  if (style.glyphs.indexOf('http') === -1) {
+  if (style.glyphs && style.glyphs.indexOf('http') === -1) {
+    // resolve absolute URL for style.glyphs
     style.glyphs = styleUrl.replace(
       'styles/root.json',
       style.glyphs.replace('../', '')
     );
-  }
 
-  // add the token to the style.sprite and style.glyphs properties as a query param
-  style.sprite += token ? '?token=' + token : '';
-  style.glyphs += token ? '?token=' + token : '';
+    // add the token to the style.glyphs property as a query param
+    style.glyphs += token ? '?token=' + token : '';
+  }
 
   return style;
 }
@@ -222,6 +233,12 @@ export function getAttributionData (url, map) {
     });
   }
 }
+
+/*
+  utility to check if a service's tileInfo spatial reference is in Web Mercator
+  used primarily by VectorTileLayer.js
+*/
+const WEB_MERCATOR_WKIDS = [3857, 102100, 102113];
 
 export function isWebMercator (wkid) {
   return WEB_MERCATOR_WKIDS.indexOf(wkid) >= 0;
