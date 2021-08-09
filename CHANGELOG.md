@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [3.1.0] - 2021-08-09
+
 ### Added
 
 * `L.esri.Vector.vectorTileLayer` has been extended to support vector tiles layers hosted in ArcGIS Enterprise. A new `portalUrl` layer constructor option was added and is intended to be used with the "ITEM_ID" constructor flavor. [#97](https://github.com/Esri/esri-leaflet-vector/pull/97)
@@ -148,7 +150,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.1...v3.1.0
 [3.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.2...v3.0.0
 [2.0.2]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.1...v2.0.2
