@@ -1,0 +1,69 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Esri Leaflet Custom Vector Tile Layer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.0/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.5.0/dist/leaflet.js"></script>
+
+  <script src="https://unpkg.com/mapbox-gl@1.4.0/dist/mapbox-gl.js"></script>
+
+  <script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"></script>
+  <script src="../dist/esri-leaflet-vector-debug.js"></script>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script>
+    var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
+
+    // L.esri.Vector.vectorTileLayer("< ITEM ID or SERVICE URL >", {
+    //   token: "< YOUR VALID TOKEN HERE >",
+    //   style: function(style) {
+    //     return style;
+    //   }
+    // }).addTo(map);
+
+    // AGOL content item: https://esri.maps.arcgis.com/home/item.html?id=1c365daf37a744fbad748b67aa69dac8
+    L.esri.Vector.vectorTileLayer("1c365daf37a744fbad748b67aa69dac8").addTo(map);
+
+    // the following 2 are identical ways to load the layer at this AGOL content item: https://esri.maps.arcgis.com/home/item.html?id=f40326b0dea54330ae39584012807126
+    // L.esri.Vector.vectorTileLayer("f40326b0dea54330ae39584012807126").addTo(map);
+    var layer = L.esri.Vector.vectorTileLayer("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer").addTo(map);
+
+    // EARLY PROTOTYPE PROOF-OF-CONCEPT:
+    // We can wire up a LeafletJS Map click hander (or mousemove, etc.),
+    // and then pass through the event.latlng info to the mapbox-gl-js instance, currently deeper down our VTL.
+    // There we have access to the `queryRenderedFeatures` method which gives us the client-side GeoJSON feature info we want.
+    map.on("click", (e) => {
+      // https://docs.mapbox.com/mapbox-gl-js/api/map/#map#queryrenderedfeatures
+      
+      // A: example of passing in the clicked location
+      // const features = layer._mapboxGL._glMap.queryRenderedFeatures([e.latlng.lng, e.latlng.lat]);
+
+      // B: example of passing in a simple bbox extent around our clicked location
+      // const features = layer._mapboxGL._glMap.queryRenderedFeatures([[e.latlng.lng - 1, e.latlng.lat - 1], [e.latlng.lng + 1, e.latlng.lat + 1]]);
+      
+      // C: example of not passing any clicked location which returns ALL features in the current map extent
+      const features = layer._mapboxGL._glMap.queryRenderedFeatures();
+      console.log(features);
+    });
+  </script>
+</body>
+
+</html>
