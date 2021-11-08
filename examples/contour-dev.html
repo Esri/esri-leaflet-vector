@@ -2,22 +2,25 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Esri Leaflet Vector Quickstart</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Esri Leaflet Vector Custom Vector Tile Layer</title>
 
   <!-- Load Leaflet from CDN -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.0/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.5.0/dist/leaflet.js"></script>
 
   <!--
-    Load mapbox-gl from CDN for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
+    Load mapbox-gl from CDN or local node_modules for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
     (note also that loading mapbox-gl.css is not necessary)
   -->
-  <script src="https://unpkg.com/mapbox-gl@1.4.0/dist/mapbox-gl.js"></script>
+  <script src="../node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
 
-  <!-- Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
+  <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
   <script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"></script>
   <script src="../dist/esri-leaflet-vector-debug.js"></script>
+
+  <!-- But note that mapbox-gl is bundled in Esri Leaflet Vector's production code -->
+  <!-- <script src="../dist/esri-leaflet-vector.js"></script> -->
 
   <style>
     html,
