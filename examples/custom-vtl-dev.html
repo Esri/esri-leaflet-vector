@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Esri Leaflet Vector Custom Vector Tile Layer</title>
 
-  <!-- Load Leaflet from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.0/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.5.0/dist/leaflet.js"></script>
+  <!-- Load Leaflet from CDN or local node_modules -->
+  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+  <script src="../node_modules/leaflet/dist/leaflet.js"></script>
 
   <!--
     Load mapbox-gl from CDN or local node_modules for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
@@ -16,7 +16,7 @@
   <script src="../node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
 
   <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
-  <script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"></script>
+  <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
   <script src="../dist/esri-leaflet-vector-debug.js"></script>
 
   <!-- But note that mapbox-gl is bundled in Esri Leaflet Vector's production code -->
@@ -39,6 +39,13 @@
   <div id="map"></div>
 
   <script>
+    console.table({
+      "L.version": L.version,
+      "L.esri.VERSION": L.esri.VERSION,
+      "L.esri.Vector.VERSION": L.esri.Vector.VERSION,
+      "mapboxgl.version": mapboxgl.version
+    });
+
     var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
 
     // L.esri.Vector.vectorTileLayer("< ITEM ID or SERVICE URL >", {
