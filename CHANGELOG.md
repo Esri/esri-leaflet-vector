@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [3.1.1] - 2021-11-09
+
+### Fixed
+
+* Map panning was broken in some environments due to a specific `mapbox-gl-js` version. Pinning this library's `package.json` specifically to `mapbox-gl-js v1.13.1` fixes the issue. [#105](https://github.com/Esri/esri-leaflet-vector/pull/105)
+
 ## [3.1.0] - 2021-08-09
 
 ### Added
@@ -150,7 +156,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.0...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.1...HEAD
+[3.1.1]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.1...v3.1.0
 [3.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v2.0.2...v3.0.0
