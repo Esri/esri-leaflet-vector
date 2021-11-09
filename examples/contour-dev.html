@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Esri Leaflet Vector Quickstart (DEV TEST)</title>
+  <title>Esri Leaflet Vector Custom Vector Tile Layer</title>
 
   <!-- Load Leaflet from CDN or local node_modules -->
   <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
@@ -46,11 +46,10 @@
       "mapboxgl.version": mapboxgl.version
     });
 
-    var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
+    var map = L.map("map", {}).setView([34.0739, -118.2400], 15);
 
-    L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
-      apiKey: "< YOUR VALID API KEY HERE >"
-    }).addTo(map);
+    // should load and show contours around Dodger Stadium
+    L.esri.Vector.vectorTileLayer("18d32a699af64bfba4e78eba5a4dd705").addTo(map);
   </script>
 </body>
 

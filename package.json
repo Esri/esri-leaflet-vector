@@ -12,7 +12,7 @@
     "url": "https://github.com/Esri/esri-leaflet-vector/issues"
   },
   "dependencies": {
-    "mapbox-gl": "^1.4.0"
+    "mapbox-gl": "1.13.1"
   },
   "peerDependencies": {
     "esri-leaflet": ">2.3.0",
