@@ -70,6 +70,7 @@
   "main": "dist/esri-leaflet-vector-debug.js",
   "module": "src/EsriLeafletVector.js",
   "browser": "dist/esri-leaflet-vector-debug.js",
+  "types": "index.d.ts",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
