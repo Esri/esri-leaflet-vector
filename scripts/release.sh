@@ -5,13 +5,17 @@ VERSION=$(node --eval "console.log(require('./package.json').version);")
 NAME=$(node --eval "console.log(require('./package.json').name);")
 
 # build and test
-npm run lint || exit 1
+npm run test || exit 1
+
+# run build
+npm run build
+
+# Integrity string and save to siteData.json
+JS_INTEGRITY=$(cat dist/esri-leaflet-vector.js | openssl dgst -sha512 -binary | openssl base64 -A)
+echo "{\"name\": \"esri-leaflet-vector\",\"version\": \"$VERSION\",\"lib\": {\"path\": \"dist/esri-leaflet-vector.js\",\"integrity\": \"sha512-$JS_INTEGRITY\"}}" > dist/siteData.json
 
 # checkout temp branch for release
 git checkout -b gh-release
-
-# run prepublishOnly to build files
-npm run prepublishOnly
 
 # force add files
 git add dist -f
@@ -29,10 +33,10 @@ zip -r $NAME-v$VERSION.zip dist
 # may need to run this instead on Windows: ./node_modules/.bin/gh-release --assets $NAME-v$VERSION.zip
 gh-release --assets $NAME-v$VERSION.zip
 
+# publish release on NPM
+npm publish
+
 # checkout master and delete release branch locally and on GitHub
 git checkout master
 git branch -D gh-release
 git push https://github.com/Esri/esri-leaflet-vector :gh-release
-
-# publish release on NPM
-npm publish

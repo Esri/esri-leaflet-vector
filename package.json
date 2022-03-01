@@ -56,7 +56,8 @@
   "files": [
     "src/**/*.js",
     "dist/*.js",
-    "dist/*.js.map"
+    "dist/*.js.map",
+    "dist/*.json"
   ],
   "homepage": "https://github.com/Esri/esri-leaflet-vector#readme",
   "jsnext:main": "src/EsriLeafletVector.js",
@@ -81,7 +82,6 @@
     "build-dev": "rollup -c profiles/debug.js",
     "fix": "semistandard --fix",
     "lint": "eslint src/**/*.js",
-    "prepublishOnly": "npm run build",
     "start-watch": "chokidar src -c \"npm run build\"",
     "start-watch-dev": "chokidar src -c \"npm run build-dev\"",
     "start": "run-p start-watch serve",
