@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [3.1.2] - 2022-03-03
+
+### Added
+
+* TypeScript types file ([#114](https://github.com/Esri/esri-leaflet-vector/pull/114))
+
+### Updated
+
+* Updated dependencies and changed build-related settings to be consistent with Esri Leaflet ([#122](https://github.com/Esri/esri-leaflet-vector/pull/122))
+
 ## [3.1.1] - 2021-11-09
 
 ### Fixed
@@ -156,7 +166,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.2...HEAD
+[3.1.2]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.0...v3.1.2
 [3.1.1]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.1...v3.1.0
 [3.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.0...v3.0.1
