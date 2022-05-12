@@ -10,7 +10,7 @@
 
 ## Example
 
-Take a look at the [live demo](https://esri.github.io/esri-leaflet/examples/vector-basemap.html).
+Take a look at the [live demo](https://developers.arcgis.com/esri-leaflet/samples/showing-a-basemap/).
 
 ![Example Image](example.png)
 
@@ -63,7 +63,7 @@ Take a look at the [live demo](https://esri.github.io/esri-leaflet/examples/vect
 
 ## API Reference
 
-### `L.esri.Vector.vectorBasemapLayer`
+### [`L.esri.Vector.vectorBasemapLayer`](https://developers.arcgis.com/esri-leaflet/api-reference/layers/vector-basemap/)
 
 For rendering basemap layers which use the Esri Basemap Styles API internally. Extends [L.Layer](https://leafletjs.com/reference#layer).
 
@@ -88,9 +88,9 @@ L.esri.Vector.vectorBasemapLayer("ITEM_ID", {
 
 #### Basemap Names
 
-Please see [the documentation](http://esri.github.io/esri-leaflet/api-reference/layers/vector-basemap.html#vector-basemaps) for a list of basemap names you can use (`ArcGIS:Streets`, `ArcGIS:DarkGray`, `ArcGIS:Imagery:Standard`, `OSM:Standard`, etc).
+Please see [the documentation](https://developers.arcgis.com/esri-leaflet/api-reference/layers/vector-basemap/#vector-basemaps) for a list of basemap names you can use (`ArcGIS:Streets`, `ArcGIS:DarkGray`, `ArcGIS:Imagery:Standard`, `OSM:Standard`, etc).
 
-### `L.esri.Vector.vectorTileLayer`
+### [`L.esri.Vector.vectorTileLayer`](https://developers.arcgis.com/esri-leaflet/api-reference/layers/vector-layer/)
 
 For custom vector tiles layers published from user data. Extends [L.Layer](https://leafletjs.com/reference#layer).
 
