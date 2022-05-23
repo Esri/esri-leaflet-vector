@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [3.1.3] - 2022-05-23
+
+### Fixed
+
+* Offset issue when zooming out to levels 0 or 1 ([#127](https://github.com/Esri/esri-leaflet-vector/pull/127))
+
+### Updated
+
+* Updated dependencies
+
 ## [3.1.2] - 2022-03-03
 
 ### Added
@@ -166,7 +176,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.2...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.3...HEAD
+[3.1.3]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.0...v3.1.2
 [3.1.1]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/esri/esri-leaflet-vector/compare/v3.0.1...v3.1.0
