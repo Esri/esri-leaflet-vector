@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: Documentation
     url: https://github.com/Esri/esri-leaflet/issues/new/choose
-    about: To suggest an idea or report an issue with the documentation site, https://developers.arcgis.com/esri-leaflet, please log the issue in the Esri Leflet repository.
+    about: To suggest an idea or report an issue with the documentation site, https://developers.arcgis.com/esri-leaflet, please log the issue in the Esri Leaflet repository.
   - name: Esri Community
     url: https://community.esri.com/t5/esri-leaflet/ct-p/esri-leaflet
     about: Ask questions and discuss with other Esri Leaflet users.
