@@ -65,11 +65,10 @@ export var VectorBasemapLayer = Layer.extend({
 
   _setupAttribution: function () {
     var map = this._map;
+    // Set attribution
+    Util.setEsriAttribution(map);
 
     if (this.options.key.length === 32) {
-      // Set attribution
-      Util.setEsriAttribution(map);
-
       // this is an itemId
       var sources = this._mapboxGL.getMapboxMap().style.stylesheet.sources;
       var allAttributions = [];
