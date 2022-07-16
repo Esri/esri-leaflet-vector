@@ -87,8 +87,6 @@ export var VectorBasemapLayer = Layer.extend({
       }
 
       if (this._map && this.options.attributionUrls) {
-        Util.setEsriAttribution(map);
-
         if (this._map.attributionControl) {
           for (
             let index = 0;
