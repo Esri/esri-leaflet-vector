@@ -65,6 +65,8 @@ export var VectorBasemapLayer = Layer.extend({
 
   _setupAttribution: function () {
     var map = this._map;
+    // Set attribution
+    Util.setEsriAttribution(map);
 
     if (this.options.key.length === 32) {
       // this is an itemId
@@ -85,8 +87,6 @@ export var VectorBasemapLayer = Layer.extend({
       }
 
       if (this._map && this.options.attributionUrls) {
-        Util.setEsriAttribution(map);
-
         if (this._map.attributionControl) {
           for (
             let index = 0;
