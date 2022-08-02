@@ -9,7 +9,16 @@ export var VectorTileLayer = Layer.extend({
     pane: 'overlayPane',
 
     // if portalUrl is not provided, default to ArcGIS Online
-    portalUrl: 'https://www.arcgis.com'
+    portalUrl: 'https://www.arcgis.com',
+
+    // flag to use baseUrl and stylePath options (defaults below)
+    useCustomUrlOrPath: false,
+
+    // if baseUrl is not provided, default path to items on ArcGIS Online
+    baseUrl: 'https://www.arcgis.com/sharing/rest/content/items',
+
+    // if stylePath is not provided, default ArcGIS Online stylePath
+    stylePath: 'resources/styles/root.json'
   },
 
   /**
@@ -57,7 +66,12 @@ export var VectorTileLayer = Layer.extend({
       this.options,
       function (error, style, styleUrl, service) {
         if (error) {
-          throw new Error(error);
+          if (this.options.errorCallback) {
+            this.options.errorCallback(error);
+            return;
+          } else {
+            throw new Error(error);
+          }
         }
 
         if (!isWebMercator(service.tileInfo.spatialReference.wkid)) {
@@ -118,7 +132,9 @@ export var VectorTileLayer = Layer.extend({
   },
 
   onRemove: function (map) {
-    map.removeLayer(this._mapboxGL);
+    if (this._mapboxGL) {
+      map.removeLayer(this._mapboxGL);
+    }
   },
 
   _asyncAdd: function () {

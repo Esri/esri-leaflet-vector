@@ -40,24 +40,38 @@ export function loadService (serviceUrl, options, callback) {
 
 function loadItem (itemId, options, callback) {
   var params = options.token ? { token: options.token } : {};
-  var url = options.portalUrl +
+  var url = '';
+
+  if (options.useCustomUrlOrPath) {
+    url = options.baseUrl + '/' + itemId;
+  } else {
+    url = options.portalUrl +
     '/sharing/rest/content/items/' +
     itemId;
+  }
+
   request(url, params, callback);
 }
 
 function loadStyleFromItem (itemId, options, callback) {
-  var itemStyleUrl =
-    options.portalUrl +
+  var itemStyleUrl = '';
+
+  if (options.useCustomUrlOrPath) {
+    itemStyleUrl = options.baseUrl + '/' + itemId + '/' + options.stylePath;
+  } else {
+    itemStyleUrl = options.portalUrl +
     '/sharing/rest/content/items/' +
     itemId +
     '/resources/styles/root.json';
+  }
 
   loadStyleFromUrl(itemStyleUrl, options, function (error, style) {
     if (error) {
       loadItem(itemId, options, function (error, item) {
         if (error) {
           console.error(error);
+          callback(error);
+          return;
         }
         loadStyleFromService(item.url, options, callback);
       });
@@ -65,6 +79,8 @@ function loadStyleFromItem (itemId, options, callback) {
       loadItem(itemId, options, function (error, item) {
         if (error) {
           console.error(error);
+          callback(error);
+          return;
         }
         loadService(item.url, options, function (error, service) {
           callback(error, style, itemStyleUrl, service, item.url);
