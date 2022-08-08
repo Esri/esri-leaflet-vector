@@ -74,6 +74,15 @@ export var VectorTileLayer = Layer.extend({
           }
         }
 
+        if (!style.sources) {
+          if (this.options.errorCallback) {
+            this.options.errorCallback('incorrect style path detected');
+            return;
+          } else {
+            throw new Error('incorrect style path detected');
+          }
+        }
+
         if (!isWebMercator(service.tileInfo.spatialReference.wkid)) {
           console.warn(
             'This layer is not guaranteed to display properly because its service does not use the Web Mercator projection. The "tileInfo.spatialReference" property is:',
