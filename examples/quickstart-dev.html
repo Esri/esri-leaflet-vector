@@ -10,16 +10,16 @@
   <script src="../node_modules/leaflet/dist/leaflet.js"></script>
 
   <!--
-    Load mapbox-gl from CDN or local node_modules for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
-    (note also that loading mapbox-gl.css is not necessary)
+    Load maplibre-gl from CDN or local node_modules for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
+    (note also that loading maplibre-gl.css is not necessary)
   -->
-  <script src="../node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
+  <script src="../node_modules/maplibre-gl/dist/maplibre-gl.js"></script>
 
   <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
   <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
   <script src="../dist/esri-leaflet-vector-debug.js"></script>
 
-  <!-- But note that mapbox-gl is bundled in Esri Leaflet Vector's production code -->
+  <!-- But note that maplibre-gl is bundled in Esri Leaflet Vector's production code -->
   <!-- <script src="../dist/esri-leaflet-vector.js"></script> -->
 
   <style>
@@ -43,7 +43,7 @@
       "L.version": L.version,
       "L.esri.VERSION": L.esri.VERSION,
       "L.esri.Vector.VERSION": L.esri.Vector.VERSION,
-      "mapboxgl.version": mapboxgl.version
+      // "maplibregl.version": maplibregl.version // Version is temporarily not working, add back soon: https://github.com/maplibre/maplibre-gl-js/pull/1459
     });
 
     var map = L.map("map", {}).setView([34.0522, -118.2437], 15);

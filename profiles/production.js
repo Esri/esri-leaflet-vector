@@ -8,7 +8,7 @@ config.output.sourcemap = true;
 // use a Regex to preserve copyright text
 config.plugins.push(terser({ format: { comments: /Institute, Inc/ } }));
 
-// bundle mapbox-gl for production
+// bundle maplibre-gl for production
 config.plugins.push(
   commonjs()
 );
