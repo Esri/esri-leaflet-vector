@@ -34,6 +34,7 @@ node_modules
 
 dist/
 debug/*.html
+!debug/edge-of-the-world.html
 !debug/sample.html
 
 *.code-workspace
