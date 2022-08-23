@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [3.1.5] - 2022-08-23
+
+### Fixed
+
+* Fixed issue where layer is mis-aligned with map when panning the map off screen  ([#144](https://github.com/Esri/esri-leaflet-vector/pull/144))
+
+### Updated
+
+* Updated dependencies
+
 ## [3.1.4] - 2022-08-12
 
 ### Fixed
@@ -182,7 +192,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.4...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.5...HEAD
+[3.1.5]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.4...v3.1.5
 [3.1.4]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.3...v3.1.4
 [3.1.3]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.0...v3.1.2
