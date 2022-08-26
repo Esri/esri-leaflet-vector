@@ -149,6 +149,8 @@ export var MaplibreGLJSLayer = Layer.extend({
 
     // allow GL base map to pan beyond min/max latitudes
     this._glMap.transform.latRange = null;
+    this._glMap.transform.maxValidLatitude = Infinity;
+
     this._transformGL(this._glMap);
 
     if (this._glMap._canvas.canvas) {
