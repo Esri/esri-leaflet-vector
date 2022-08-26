@@ -96,6 +96,15 @@ export var MaplibreGLJSLayer = Layer.extend({
     return this._map.getSize().multiplyBy(1 + this.options.padding * 2);
   },
 
+  getOpacity: function () {
+    return this.options.opacity;
+  },
+
+  setOpacity: function (opacity) {
+    this.options.opacity = opacity;
+    this._container.style.opacity = opacity;
+  },
+
   getBounds: function () {
     var halfSize = this.getSize().multiplyBy(0.5);
     var center = this._map.latLngToContainerPoint(this._map.getCenter());
@@ -142,10 +151,10 @@ export var MaplibreGLJSLayer = Layer.extend({
 
     this._glMap = new maplibregl.Map(options);
 
-    // // Fire event for MapboxGL "styledata" event.
-    // this._glMap.once('styledata', function (res) {
-    //   this.fire('styleLoaded');
-    // }.bind(this));
+    // Fire event for Maplibre "styledata" event.
+    this._glMap.once('styledata', function (res) {
+      this.fire('styleLoaded');
+    }.bind(this));
 
     // allow GL base map to pan beyond min/max latitudes
     this._glMap.transform.latRange = null;
