@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [4.0.0] - 2022-09-02
+
+### Updated
+
+* Switched to use Maplibre GL JS ([#141](https://github.com/Esri/esri-leaflet-vector/pull/141))
+
 ## [3.1.5] - 2022-08-23
 
 ### Fixed
@@ -192,8 +198,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.5...HEAD
-[3.1.5]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.4...v3.1.5
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.5...v4.0.0
 [3.1.4]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.3...v3.1.4
 [3.1.3]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.0...v3.1.2
