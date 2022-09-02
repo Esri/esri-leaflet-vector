@@ -7,9 +7,9 @@ import {
   setOptions,
   Util
 } from 'leaflet';
-import mapboxgl from 'mapbox-gl';
+import maplibregl from 'maplibre-gl';
 
-export var MapboxGLJSLayer = Layer.extend({
+export var MaplibreGLJSLayer = Layer.extend({
   options: {
     updateInterval: 32,
     // How much to extend the overlay view (relative to map size)
@@ -18,7 +18,8 @@ export var MapboxGLJSLayer = Layer.extend({
     // whether or not to register the mouse and keyboard
     // events on the mapbox overlay
     interactive: false,
-    opacity: 1
+    // set the tilepane as the default pane to draw gl tiles
+    pane: 'tilePane'
   },
 
   initialize: function (options) {
@@ -37,7 +38,8 @@ export var MapboxGLJSLayer = Layer.extend({
       this._initContainer();
     }
 
-    this.getPane().appendChild(this._container);
+    var paneName = this.getPaneName();
+    map.getPane(paneName).appendChild(this._container);
 
     this._initGL();
 
@@ -64,7 +66,9 @@ export var MapboxGLJSLayer = Layer.extend({
       );
     }
 
-    this.getPane().removeChild(this._container);
+    var paneName = this.getPaneName();
+    map.getPane(paneName).removeChild(this._container);
+
     this._glMap.remove();
     this._glMap = null;
   },
@@ -75,11 +79,12 @@ export var MapboxGLJSLayer = Layer.extend({
       zoomanim: this._animateZoom, // applys the zoom animation to the <canvas>
       zoom: this._pinchZoom, // animate every zoom event for smoother pinch-zooming
       zoomstart: this._zoomStart, // flag starting a zoom to disable panning
-      zoomend: this._zoomEnd
+      zoomend: this._zoomEnd,
+      resize: this._resize
     };
   },
 
-  getMapboxMap: function () {
+  getMaplibreMap: function () {
     return this._glMap;
   },
 
@@ -113,6 +118,11 @@ export var MapboxGLJSLayer = Layer.extend({
     return this._container;
   },
 
+  // returns the pane name set in options if it is a valid pane, defaults to tilePane
+  getPaneName: function () {
+    return this._map.getPane(this.options.pane) ? this.options.pane : 'tilePane';
+  },
+
   _initContainer: function () {
     var container = (this._container = DomUtil.create(
       'div',
@@ -123,8 +133,7 @@ export var MapboxGLJSLayer = Layer.extend({
     var offset = this._map.getSize().multiplyBy(this.options.padding);
     container.style.width = size.x + 'px';
     container.style.height = size.y + 'px';
-    container.style.position = 'absolute';
-    container.style.opacity = this.options.opacity;
+
     var topLeft = this._map.containerPointToLayerPoint([0, 0]).subtract(offset);
 
     DomUtil.setPosition(container, topLeft);
@@ -140,9 +149,9 @@ export var MapboxGLJSLayer = Layer.extend({
       attributionControl: false
     });
 
-    this._glMap = new mapboxgl.Map(options);
+    this._glMap = new maplibregl.Map(options);
 
-    // Fire event for MapboxGL "styledata" event.
+    // Fire event for Maplibre "styledata" event.
     this._glMap.once('styledata', function (res) {
       this.fire('styleLoaded');
     }.bind(this));
@@ -215,7 +224,7 @@ export var MapboxGLJSLayer = Layer.extend({
     // calling setView directly causes sync issues because it uses requestAnimFrame
 
     var tr = gl.transform;
-    tr.center = mapboxgl.LngLat.convert([center.lng, center.lat]);
+    tr.center = maplibregl.LngLat.convert([center.lng, center.lat]);
     tr.zoom = this._map.getZoom() - 1;
   },
 
@@ -297,6 +306,6 @@ export var MapboxGLJSLayer = Layer.extend({
   }
 });
 
-export function mapboxGLJSLayer (options) {
-  return new MapboxGLJSLayer(options);
+export function maplibreGLJSLayer (options) {
+  return new MaplibreGLJSLayer(options);
 }

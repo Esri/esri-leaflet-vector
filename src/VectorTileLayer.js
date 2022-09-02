@@ -1,6 +1,6 @@
 import { Layer, setOptions } from 'leaflet';
 import { loadStyle, formatStyle, isWebMercator } from './Util';
-import { mapboxGLJSLayer } from './MapBoxGLLayer';
+import { maplibreGLJSLayer } from './MaplibreGLLayer';
 
 export var VectorTileLayer = Layer.extend({
   options: {
@@ -49,7 +49,7 @@ export var VectorTileLayer = Layer.extend({
   },
 
   /**
-   * Creates the mapboxGLJSLayer given using "this.options"
+   * Creates the maplibreGLJSLayer given using "this.options"
    */
   _createLayer: function () {
     loadStyle(
@@ -64,11 +64,11 @@ export var VectorTileLayer = Layer.extend({
           console.warn(
             'This layer is not guaranteed to display properly because its service does not use the Web Mercator projection. The "tileInfo.spatialReference" property is:',
             service.tileInfo.spatialReference,
-            '\nMore information is available at https://docs.mapbox.com/help/glossary/projection/ and https://github.com/Esri/esri-leaflet-vector/issues/94.'
+            '\nMore information is available at https://github.com/maplibre/maplibre-gl-js/issues/168 and https://github.com/Esri/esri-leaflet-vector/issues/94.'
           );
         }
 
-        // once style object is loaded it must be transformed to be compliant with mapboxGLJSLayer
+        // once style object is loaded it must be transformed to be compliant with maplibreGLJSLayer
         style = formatStyle(style, styleUrl, service, this.options.token);
 
         // if a custom attribution was not provided in the options,
@@ -89,7 +89,7 @@ export var VectorTileLayer = Layer.extend({
           style = this.options.style(style);
         }
 
-        this._mapboxGL = mapboxGLJSLayer({
+        this._maplibreGL = maplibreGLJSLayer({
           style: style,
           pane: this.options.pane,
           opacity: this.options.opacity
@@ -118,12 +118,12 @@ export var VectorTileLayer = Layer.extend({
   },
 
   onRemove: function (map) {
-    map.removeLayer(this._mapboxGL);
+    map.removeLayer(this._maplibreGL);
   },
 
   _asyncAdd: function () {
     var map = this._map;
-    this._mapboxGL.addTo(map, this);
+    this._maplibreGL.addTo(map, this);
   }
 });
 

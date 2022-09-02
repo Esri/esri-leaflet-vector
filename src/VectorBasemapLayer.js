@@ -1,7 +1,7 @@
 import { Layer, setOptions } from 'leaflet';
 import { Util } from 'esri-leaflet';
 import { getBasemapStyleUrl, getAttributionData } from './Util';
-import { mapboxGLJSLayer } from './MapBoxGLLayer';
+import { maplibreGLJSLayer } from './MaplibreGLLayer';
 
 export var VectorBasemapLayer = Layer.extend({
   options: {
@@ -44,12 +44,12 @@ export var VectorBasemapLayer = Layer.extend({
   },
 
   /**
-   * Creates the mapboxGLJSLayer given using "this.options"
+   * Creates the maplibreGLJSLayer given using "this.options"
    */
   _createLayer: function () {
     var styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
 
-    this._mapboxGL = mapboxGLJSLayer({
+    this._maplibreGL = maplibreGLJSLayer({
       style: styleUrl,
       pane: this.options.pane,
       opacity: this.options.opacity
@@ -58,7 +58,7 @@ export var VectorBasemapLayer = Layer.extend({
     this._ready = true;
     this.fire('ready', {}, true);
 
-    this._mapboxGL.on('styleLoaded', function (res) {
+    this._maplibreGL.on('styleLoaded', function (res) {
       this._setupAttribution();
     }.bind(this));
   },
@@ -70,7 +70,7 @@ export var VectorBasemapLayer = Layer.extend({
 
     if (this.options.key.length === 32) {
       // this is an itemId
-      var sources = this._mapboxGL.getMapboxMap().style.stylesheet.sources;
+      var sources = this._maplibreGL.getMaplibreMap().style.stylesheet.sources;
       var allAttributions = [];
       Object.keys(sources).forEach(function (key) {
         allAttributions.push(sources[key].attribution);
@@ -161,7 +161,7 @@ export var VectorBasemapLayer = Layer.extend({
 
   onRemove: function (map) {
     map.off('moveend', Util._updateMapAttribution);
-    map.removeLayer(this._mapboxGL);
+    map.removeLayer(this._maplibreGL);
 
     if (map.attributionControl) {
       var element = document.getElementsByClassName('esri-dynamic-attribution');
@@ -177,7 +177,7 @@ export var VectorBasemapLayer = Layer.extend({
   _asyncAdd: function () {
     var map = this._map;
     map.on('moveend', Util._updateMapAttribution);
-    this._mapboxGL.addTo(map, this);
+    this._maplibreGL.addTo(map, this);
   }
 });
 

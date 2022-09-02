@@ -94,7 +94,7 @@ Please see [the documentation](https://developers.arcgis.com/esri-leaflet/api-re
 
 For custom vector tiles layers published from user data. Extends [L.Layer](https://leafletjs.com/reference#layer).
 
-:warning: This only supports services using the Web Mercator projection because it [relies directly upon `mapbox-gl-js v1`](#dependencies). Otherwise, the layer is not guaranteed to display properly. More information is available at <https://docs.mapbox.com/help/glossary/projection/> and <https://github.com/Esri/esri-leaflet-vector/issues/94>.
+:warning: This only supports services using the Web Mercator projection because it [relies directly upon `maplibre-gl-js`](#dependencies). Otherwise, the layer is not guaranteed to display properly. More information is available at [Maplibre custom coordinate system](https://roadmap.maplibre.org/c/91-custom-coordinate-system-epsg-non-mercator-projection).
 
 ```javascript
 // example using an ITEM_ID
@@ -161,7 +161,7 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
 
 - Leaflet version [1.5.0](https://github.com/Leaflet/Leaflet/releases/tag/v1.5.0) (or higher) is required.
 - Esri Leaflet [2.3.0](https://github.com/Esri/esri-leaflet/releases/tag/v2.3.0) (or higher) is required.
-- [mapbox-gl-js](https://www.mapbox.com/mapbox-gl-js/)
+- [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js/)
 
 ## Resources
 
