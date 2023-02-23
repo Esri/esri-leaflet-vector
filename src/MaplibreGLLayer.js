@@ -5,9 +5,9 @@ import {
   latLngBounds,
   Layer,
   setOptions,
-  Util
-} from 'leaflet';
-import maplibregl from 'maplibre-gl';
+  Util,
+} from "leaflet";
+import maplibregl from "maplibre-gl";
 
 export var MaplibreGLJSLayer = Layer.extend({
   options: {
@@ -19,7 +19,7 @@ export var MaplibreGLJSLayer = Layer.extend({
     // events on the mapbox overlay
     interactive: false,
     // set the tilepane as the default pane to draw gl tiles
-    pane: 'tilePane'
+    pane: "tilePane",
   },
 
   initialize: function (options) {
@@ -67,7 +67,9 @@ export var MaplibreGLJSLayer = Layer.extend({
     }
 
     var paneName = this.getPaneName();
+
     map.getPane(paneName).removeChild(this._container);
+    this._container = null;
 
     this._glMap.remove();
     this._glMap = null;
@@ -80,7 +82,7 @@ export var MaplibreGLJSLayer = Layer.extend({
       zoom: this._pinchZoom, // animate every zoom event for smoother pinch-zooming
       zoomstart: this._zoomStart, // flag starting a zoom to disable panning
       zoomend: this._zoomEnd,
-      resize: this._resize
+      resize: this._resize,
     };
   },
 
@@ -120,41 +122,51 @@ export var MaplibreGLJSLayer = Layer.extend({
 
   // returns the pane name set in options if it is a valid pane, defaults to tilePane
   getPaneName: function () {
-    return this._map.getPane(this.options.pane) ? this.options.pane : 'tilePane';
+    return this._map.getPane(this.options.pane)
+      ? this.options.pane
+      : "tilePane";
   },
 
   _initContainer: function () {
-    var container = (this._container = DomUtil.create(
-      'div',
-      'leaflet-gl-layer'
-    ));
+    if (this._container) {
+      return;
+    }
+
+    this._container = DomUtil.create("div", "leaflet-gl-layer");
 
     var size = this.getSize();
     var offset = this._map.getSize().multiplyBy(this.options.padding);
-    container.style.width = size.x + 'px';
-    container.style.height = size.y + 'px';
+    this._container.style.width = size.x + "px";
+    this._container.style.height = size.y + "px";
 
     var topLeft = this._map.containerPointToLayerPoint([0, 0]).subtract(offset);
 
-    DomUtil.setPosition(container, topLeft);
+    DomUtil.setPosition(this._container, topLeft);
   },
 
   _initGL: function () {
+    if (this._glMap) {
+      return;
+    }
+
     var center = this._map.getCenter();
 
     var options = extend({}, this.options, {
       container: this._container,
       center: [center.lng, center.lat],
       zoom: this._map.getZoom() - 1,
-      attributionControl: false
+      attributionControl: false,
     });
 
     this._glMap = new maplibregl.Map(options);
 
     // Fire event for Maplibre "styledata" event.
-    this._glMap.once('styledata', function (res) {
-      this.fire('styleLoaded');
-    }.bind(this));
+    this._glMap.once(
+      "styledata",
+      function (res) {
+        this.fire("styleLoaded");
+      }.bind(this)
+    );
 
     // allow GL base map to pan beyond min/max latitudes
     this._glMap.transform.latRange = null;
@@ -171,10 +183,10 @@ export var MaplibreGLJSLayer = Layer.extend({
 
     // treat child <canvas> element like L.ImageOverlay
     var canvas = this._glMap._actualCanvas;
-    DomUtil.addClass(canvas, 'leaflet-image-layer');
-    DomUtil.addClass(canvas, 'leaflet-zoom-animated');
+    DomUtil.addClass(canvas, "leaflet-image-layer");
+    DomUtil.addClass(canvas, "leaflet-zoom-animated");
     if (this.options.interactive) {
-      DomUtil.addClass(canvas, 'leaflet-interactive');
+      DomUtil.addClass(canvas, "leaflet-interactive");
     }
     if (this.options.className) {
       DomUtil.addClass(canvas, this.options.className);
@@ -200,8 +212,8 @@ export var MaplibreGLJSLayer = Layer.extend({
     this._transformGL(gl);
 
     if (gl.transform.width !== size.x || gl.transform.height !== size.y) {
-      container.style.width = size.x + 'px';
-      container.style.height = size.y + 'px';
+      container.style.width = size.x + "px";
+      container.style.height = size.y + "px";
       if (gl._resize !== null && gl._resize !== undefined) {
         gl._resize();
       } else {
@@ -232,7 +244,7 @@ export var MaplibreGLJSLayer = Layer.extend({
   _pinchZoom: function (e) {
     this._glMap.jumpTo({
       zoom: this._map.getZoom() - 1,
-      center: this._map.getCenter()
+      center: this._map.getCenter(),
     });
   },
 
@@ -267,11 +279,7 @@ export var MaplibreGLJSLayer = Layer.extend({
   _zoomEnd: function () {
     var scale = this._map.getZoomScale(this._map.getZoom());
 
-    DomUtil.setTransform(
-      this._glMap._actualCanvas,
-      null,
-      scale
-    );
+    DomUtil.setTransform(this._glMap._actualCanvas, null, scale);
 
     this._zooming = false;
 
@@ -291,7 +299,7 @@ export var MaplibreGLJSLayer = Layer.extend({
 
       // enable panning once the gl map is ready again
       this._glMap.once(
-        'moveend',
+        "moveend",
         Util.bind(function () {
           this._zoomEnd();
         }, this)
@@ -300,12 +308,12 @@ export var MaplibreGLJSLayer = Layer.extend({
       // update the map position
       this._glMap.jumpTo({
         center: center,
-        zoom: zoom - 1
+        zoom: zoom - 1,
       });
     }, this);
-  }
+  },
 });
 
-export function maplibreGLJSLayer (options) {
+export function maplibreGLJSLayer(options) {
   return new MaplibreGLJSLayer(options);
 }
