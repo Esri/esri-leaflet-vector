@@ -1,15 +1,15 @@
-import { Layer, setOptions } from 'leaflet';
-import { loadStyle, formatStyle, isWebMercator } from './Util';
-import { maplibreGLJSLayer } from './MaplibreGLLayer';
+import { Layer, setOptions } from "leaflet";
+import { loadStyle, formatStyle, isWebMercator } from "./Util";
+import { maplibreGLJSLayer } from "./MaplibreGLLayer";
 
 export var VectorTileLayer = Layer.extend({
   options: {
     // if pane is not provided, default to LeafletJS's overlayPane
     // https://leafletjs.com/reference.html#map-pane
-    pane: 'overlayPane',
+    pane: "overlayPane",
 
     // if portalUrl is not provided, default to ArcGIS Online
-    portalUrl: 'https://www.arcgis.com'
+    portalUrl: "https://www.arcgis.com",
   },
 
   /**
@@ -36,7 +36,9 @@ export var VectorTileLayer = Layer.extend({
 
     // if no key passed in
     if (!key) {
-      throw new Error('An ITEM ID or SERVICE URL is required for vectorTileLayer.');
+      throw new Error(
+        "An ITEM ID or SERVICE URL is required for vectorTileLayer."
+      );
     }
 
     // set key onto "this.options" for use elsewhere in the module.
@@ -64,7 +66,7 @@ export var VectorTileLayer = Layer.extend({
           console.warn(
             'This layer is not guaranteed to display properly because its service does not use the Web Mercator projection. The "tileInfo.spatialReference" property is:',
             service.tileInfo.spatialReference,
-            '\nMore information is available at https://github.com/maplibre/maplibre-gl-js/issues/168 and https://github.com/Esri/esri-leaflet-vector/issues/94.'
+            "\nMore information is available at https://github.com/maplibre/maplibre-gl-js/issues/168 and https://github.com/Esri/esri-leaflet-vector/issues/94."
           );
         }
 
@@ -77,7 +79,8 @@ export var VectorTileLayer = Layer.extend({
         // (otherwise it would have already been added by leaflet to the attribution control)
         if (!this.getAttribution()) {
           var sourcesKeys = Object.keys(style.sources);
-          this.options.attribution = style.sources[sourcesKeys[sourcesKeys.length - 1]].attribution;
+          this.options.attribution =
+            style.sources[sourcesKeys[sourcesKeys.length - 1]].attribution;
           if (this._map && this._map.attributionControl) {
             // NOTE: if attribution is an empty string (or otherwise falsy) at this point it would not appear in the attribution control
             this._map.attributionControl.addAttribution(this.getAttribution());
@@ -85,18 +88,18 @@ export var VectorTileLayer = Layer.extend({
         }
 
         // additionally modify the style object with the user's optional style override function
-        if (this.options.style && typeof this.options.style === 'function') {
+        if (this.options.style && typeof this.options.style === "function") {
           style = this.options.style(style);
         }
 
         this._maplibreGL = maplibreGLJSLayer({
           style: style,
           pane: this.options.pane,
-          opacity: this.options.opacity
+          opacity: this.options.opacity,
         });
 
         this._ready = true;
-        this.fire('ready', {}, true);
+        this.fire("ready", {}, true);
       }.bind(this)
     );
   },
@@ -108,7 +111,7 @@ export var VectorTileLayer = Layer.extend({
       this._asyncAdd();
     } else {
       this.once(
-        'ready',
+        "ready",
         function () {
           this._asyncAdd();
         },
@@ -124,10 +127,10 @@ export var VectorTileLayer = Layer.extend({
   _asyncAdd: function () {
     var map = this._map;
     this._maplibreGL.addTo(map, this);
-  }
+  },
 });
 
-export function vectorTileLayer (key, options) {
+export function vectorTileLayer(key, options) {
   return new VectorTileLayer(key, options);
 }
 
