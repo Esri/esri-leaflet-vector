@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [4.0.1] - 2023-02-23
+
+### Fixed
+
+* Switching basemaps issue ([#162](https://github.com/Esri/esri-leaflet-vector/pull/162))
+
+### Updated
+
+* Updated dependencies ([#163](https://github.com/Esri/esri-leaflet-vector/pull/163))
+
 ## [4.0.0] - 2022-09-02
 
 ### Updated
@@ -198,7 +208,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.0...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.1...HEAD
+[4.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.5...v4.0.0
 [3.1.4]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.3...v3.1.4
 [3.1.3]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.2...v3.1.3
