@@ -1,14 +1,14 @@
 /* eslint-env mocha */
-
+// These must be vars (instead of const) due to how the unit tests are run:
 var itemId = '1c365daf37a744fbad748b67aa69dac8';
-var serviceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
-var token = '1234abcd';
 var apikey = 'dcba4321';
+const serviceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
+const token = '1234abcd';
 
 // for layers hosted in ArcGIS Enterprise instead of ArcGIS Online
-var onPremisePortalUrl = 'https://PATH/TO/ARCGIS/ENTERPRISE'; // defaults to https://www.arcgis.com
-var onPremiseItemId = '1c365daf37a744fbad748b67aa69dac8';
-var onPremiseServiceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
+const onPremisePortalUrl = 'https://PATH/TO/ARCGIS/ENTERPRISE'; // defaults to https://www.arcgis.com
+const onPremiseItemId = '1c365daf37a744fbad748b67aa69dac8';
+const onPremiseServiceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
 
 describe('VectorTileLayer', function () {
   it('should have a L.esri.vectorTileLayer alias', function () {
@@ -81,7 +81,7 @@ describe('VectorTileLayer', function () {
 
     expect(layer.options.portalUrl).to.equal('https://www.arcgis.com');
   });
-  
+
   it('should let the base "portalUrl" be changed in the constructor for loading an on-premise style - itemId', function () {
     const layer = L.esri.Vector.vectorTileLayer(onPremiseItemId, {
       portalUrl: onPremisePortalUrl

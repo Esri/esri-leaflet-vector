@@ -47,7 +47,7 @@ export var VectorBasemapLayer = Layer.extend({
    * Creates the maplibreGLJSLayer given using "this.options"
    */
   _createLayer: function () {
-    var styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
+    const styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
 
     this._maplibreGL = maplibreGLJSLayer({
       style: styleUrl,
@@ -64,14 +64,14 @@ export var VectorBasemapLayer = Layer.extend({
   },
 
   _setupAttribution: function () {
-    var map = this._map;
+    const map = this._map;
     // Set attribution
     Util.setEsriAttribution(map);
 
     if (this.options.key.length === 32) {
       // this is an itemId
-      var sources = this._maplibreGL.getMaplibreMap().style.stylesheet.sources;
-      var allAttributions = [];
+      const sources = this._maplibreGL.getMaplibreMap().style.stylesheet.sources;
+      const allAttributions = [];
       Object.keys(sources).forEach(function (key) {
         allAttributions.push(sources[key].attribution);
         if (sources[key].copyrightText && sources[key].copyrightText && sources[key].copyrightText !== '' && sources[key].attribution !== sources[key].copyrightText) {
@@ -153,7 +153,7 @@ export var VectorBasemapLayer = Layer.extend({
     }
 
     if (!this._map.getPane(this.options.pane)) {
-      var pane = this._map.createPane(this.options.pane);
+      const pane = this._map.createPane(this.options.pane);
       pane.style.pointerEvents = 'none';
       pane.style.zIndex = this.options.pane === 'esri-labels' ? 550 : 500;
     }
@@ -164,10 +164,10 @@ export var VectorBasemapLayer = Layer.extend({
     map.removeLayer(this._maplibreGL);
 
     if (map.attributionControl) {
-      var element = document.getElementsByClassName('esri-dynamic-attribution');
+      const element = document.getElementsByClassName('esri-dynamic-attribution');
 
       if (element && element.length > 0) {
-        var vectorAttribution = element[0].outerHTML;
+        const vectorAttribution = element[0].outerHTML;
         // this doesn't work, not sure why.
         map.attributionControl.removeAttribution(vectorAttribution);
       }
@@ -175,7 +175,7 @@ export var VectorBasemapLayer = Layer.extend({
   },
 
   _asyncAdd: function () {
-    var map = this._map;
+    const map = this._map;
     map.on('moveend', Util._updateMapAttribution);
     this._maplibreGL.addTo(map, this);
   }
