@@ -6,7 +6,7 @@ import { request, Support, Util } from 'esri-leaflet';
   used primarily by VectorBasemapLayer.js
 */
 export function getBasemapStyleUrl (key, apikey) {
-  var url =
+  let url =
     'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' +
     key +
     '?type=style';
@@ -21,33 +21,33 @@ export function getBasemapStyleUrl (key, apikey) {
   used primarily by VectorTileLayer.js
 */
 export function loadStyle (idOrUrl, options, callback) {
-  var httpRegex = /^https?:\/\//;
-  var serviceRegex = /\/VectorTileServer\/?$/;
+  const httpRegex = /^https?:\/\//;
+  const serviceRegex = /\/VectorTileServer\/?$/;
 
   if (httpRegex.test(idOrUrl) && serviceRegex.test(idOrUrl)) {
-    var serviceUrl = idOrUrl;
+    const serviceUrl = idOrUrl;
     loadStyleFromService(serviceUrl, options, callback);
   } else {
-    var itemId = idOrUrl;
+    const itemId = idOrUrl;
     loadStyleFromItem(itemId, options, callback);
   }
 }
 
 export function loadService (serviceUrl, options, callback) {
-  var params = options.token ? { token: options.token } : {};
+  const params = options.token ? { token: options.token } : {};
   request(serviceUrl, params, callback);
 }
 
 function loadItem (itemId, options, callback) {
-  var params = options.token ? { token: options.token } : {};
-  var url = options.portalUrl +
+  const params = options.token ? { token: options.token } : {};
+  const url = options.portalUrl +
     '/sharing/rest/content/items/' +
     itemId;
   request(url, params, callback);
 }
 
 function loadStyleFromItem (itemId, options, callback) {
-  var itemStyleUrl =
+  const itemStyleUrl =
     options.portalUrl +
     '/sharing/rest/content/items/' +
     itemId +
@@ -80,13 +80,13 @@ function loadStyleFromService (serviceUrl, options, callback) {
       console.error(error);
     }
 
-    var sanitizedServiceUrl = serviceUrl;
+    let sanitizedServiceUrl = serviceUrl;
     // a trailing "/" may create invalid paths
     if (serviceUrl.charAt(serviceUrl.length - 1) === '/') {
       sanitizedServiceUrl = serviceUrl.slice(0, serviceUrl.length - 1);
     }
 
-    var defaultStylesUrl;
+    let defaultStylesUrl;
     // inadvertently inserting more than 1 adjacent "/" may create invalid paths
     if (service.defaultStyles.charAt(0) === '/') {
       defaultStylesUrl =
@@ -106,7 +106,7 @@ function loadStyleFromService (serviceUrl, options, callback) {
 }
 
 function loadStyleFromUrl (styleUrl, options, callback) {
-  var params = options.token ? { token: options.token } : {};
+  const params = options.token ? { token: options.token } : {};
   request(styleUrl, params, callback);
 }
 
@@ -114,9 +114,9 @@ export function formatStyle (style, styleUrl, metadata, token) {
   // transforms style object in place and also returns it
 
   // modify each source in style.sources
-  var sourcesKeys = Object.keys(style.sources);
-  for (var sourceIndex = 0; sourceIndex < sourcesKeys.length; sourceIndex++) {
-    var source = style.sources[sourcesKeys[sourceIndex]];
+  const sourcesKeys = Object.keys(style.sources);
+  for (let sourceIndex = 0; sourceIndex < sourcesKeys.length; sourceIndex++) {
+    const source = style.sources[sourcesKeys[sourceIndex]];
 
     // if a relative path is referenced, the default style can be found in a standard location
     if (source.url.indexOf('http') === -1) {
@@ -154,13 +154,13 @@ export function formatStyle (style, styleUrl, metadata, token) {
   }
 
   // add the attribution and copyrightText properties to the last source in style.sources based on the service metadata
-  var lastSource = style.sources[sourcesKeys[sourcesKeys.length - 1]];
+  const lastSource = style.sources[sourcesKeys[sourcesKeys.length - 1]];
   lastSource.attribution = metadata.copyrightText || '';
   lastSource.copyrightText = metadata.copyrightText || '';
 
   // if any layer in style.layers has a layout.text-font property (it will be any array of strings) remove all items in the array after the first
-  for (var layerIndex = 0; layerIndex < style.layers.length; layerIndex++) {
-    var layer = style.layers[layerIndex];
+  for (let layerIndex = 0; layerIndex < style.layers.length; layerIndex++) {
+    const layer = style.layers[layerIndex];
     if (
       layer.layout &&
       layer.layout['text-font'] &&
@@ -206,13 +206,13 @@ export function getAttributionData (url, map) {
         return;
       }
       map._esriAttributions = map._esriAttributions || [];
-      for (var c = 0; c < attributions.contributors.length; c++) {
-        var contributor = attributions.contributors[c];
+      for (let c = 0; c < attributions.contributors.length; c++) {
+        const contributor = attributions.contributors[c];
 
-        for (var i = 0; i < contributor.coverageAreas.length; i++) {
-          var coverageArea = contributor.coverageAreas[i];
-          var southWest = latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-          var northEast = latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+        for (let i = 0; i < contributor.coverageAreas.length; i++) {
+          const coverageArea = contributor.coverageAreas[i];
+          const southWest = latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+          const northEast = latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
           map._esriAttributions.push({
             attribution: contributor.attribution,
             score: coverageArea.score,
@@ -228,7 +228,7 @@ export function getAttributionData (url, map) {
       });
 
       // pass the same argument as the map's 'moveend' event
-      var obj = { target: map };
+      const obj = { target: map };
       Util._updateMapAttribution(obj);
     });
   }
