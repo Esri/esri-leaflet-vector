@@ -54,10 +54,12 @@ function loadStyleFromItem (itemId, options, callback) {
     '/resources/styles/root.json';
 
   loadStyleFromUrl(itemStyleUrl, options, function (error, style) {
+
     if (error) {
       loadItem(itemId, options, function (error, item) {
         if (error) {
-          console.error(error);
+          callback(error);
+          return;
         }
         loadStyleFromService(item.url, options, callback);
       });
