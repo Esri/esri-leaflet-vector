@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 // These must be vars (instead of const) due to how the unit tests are run:
-var itemId = '1c365daf37a744fbad748b67aa69dac8';
-var apikey = 'dcba4321';
+const itemId = '1c365daf37a744fbad748b67aa69dac8';
+const apikey = 'dcba4321';
 const serviceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
 const token = '1234abcd';
 
