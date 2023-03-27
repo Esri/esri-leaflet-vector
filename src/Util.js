@@ -144,7 +144,6 @@ export function formatStyle (style, styleUrl, metadata, token) {
     // add the token to the source url and tiles properties as a query param
     source.url += token ? '&token=' + token : '';
     source.tiles[0] += token ? '?token=' + token : '';
-    console.log(source);
     // add minzoom and maxzoom to each source based on the service metadata
     // prefer minLOD/maxLOD if it exists since that is the level that tiles are cooked too
     // MapLibre will overzoom for LODs that are not cooked
