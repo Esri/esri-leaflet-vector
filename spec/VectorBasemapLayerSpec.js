@@ -1,7 +1,6 @@
 /* eslint-env mocha */
-// These must be vars (instead of const) due to how the unit tests are run:
-var itemId = '287c07ef752246d08bb4712fd4b74438';
-var apikey = '1234';
+const itemId = '287c07ef752246d08bb4712fd4b74438';
+const apikey = '1234';
 const basemapKey = 'ArcGIS:Streets';
 
 describe('VectorBasemapLayer', function () {
