@@ -58,7 +58,8 @@
     "src/**/*.js",
     "dist/*.js",
     "dist/*.js.map",
-    "dist/*.json"
+    "dist/*.json",
+    "index.d.ts"
   ],
   "homepage": "https://github.com/Esri/esri-leaflet-vector#readme",
   "jsnext:main": "src/EsriLeafletVector.js",
