@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet-vector",
   "description": "Esri vector basemap and vector tile layer plugin for Leaflet.",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "author": "John Gravois (https://johngravois.com)",
   "contributors": [
     "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",

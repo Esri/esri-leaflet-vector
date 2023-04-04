@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [4.0.2] - 2023-04-04
+
+### Fixed
+
+* Fixed layer invisible at certain zoom levels using minLOD/maxLOD ([#166](https://github.com/Esri/esri-leaflet-vector/pull/166))
+* Added `index.d.ts` to release ([#167](https://github.com/Esri/esri-leaflet-vector/pull/167))
+
 ## [4.0.1] - 2023-02-23
 
 ### Fixed
@@ -208,7 +215,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.2...HEAD
+[4.0.2]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.1...v4.0.2
 [4.0.1]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.5...v4.0.0
 [3.1.4]: https://github.com/esri/esri-leaflet-vector/compare/v3.1.3...v3.1.4
