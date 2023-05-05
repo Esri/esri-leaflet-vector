@@ -1,20 +1,25 @@
 /* eslint-env mocha */
-// These must be vars (instead of const) due to how the unit tests are run:
-var itemId = '1c365daf37a744fbad748b67aa69dac8';
-var apikey = 'dcba4321';
-const serviceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
-const token = '1234abcd';
-
-// for layers hosted in ArcGIS Enterprise instead of ArcGIS Online
-const onPremisePortalUrl = 'https://PATH/TO/ARCGIS/ENTERPRISE'; // defaults to https://www.arcgis.com
-const onPremiseItemId = '1c365daf37a744fbad748b67aa69dac8';
-const onPremiseServiceUrl = 'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
 
 describe('VectorTileLayer', function () {
+  // These must be vars (instead of const) due to how the unit tests are run:
+  const itemId = '1c365daf37a744fbad748b67aa69dac8';
+  const apikey = 'dcba4321';
+  const serviceUrl =
+    'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
+  const token = '1234abcd';
+
+  // for layers hosted in ArcGIS Enterprise instead of ArcGIS Online
+  const onPremisePortalUrl = 'https://PATH/TO/ARCGIS/ENTERPRISE'; // defaults to https://www.arcgis.com
+  const onPremiseItemId = '1c365daf37a744fbad748b67aa69dac8';
+  const onPremiseServiceUrl =
+    'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
+
   it('should have a L.esri.vectorTileLayer alias', function () {
     console.log('L.esri.Vector.vectorTileLayer', L.esri.Vector.vectorTileLayer);
 
-    expect(L.esri.Vector.vectorTileLayer(itemId)).to.be.instanceof(L.esri.Vector.VectorTileLayer);
+    expect(L.esri.Vector.vectorTileLayer(itemId)).to.be.instanceof(
+      L.esri.Vector.VectorTileLayer
+    );
   });
 
   it('should save the key from the constructor - itemId', function () {

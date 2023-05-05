@@ -40,9 +40,7 @@ export function loadService (serviceUrl, options, callback) {
 
 function loadItem (itemId, options, callback) {
   const params = options.token ? { token: options.token } : {};
-  const url = options.portalUrl +
-    '/sharing/rest/content/items/' +
-    itemId;
+  const url = options.portalUrl + '/sharing/rest/content/items/' + itemId;
   request(url, params, callback);
 }
 
@@ -147,10 +145,12 @@ export function formatStyle (style, styleUrl, metadata, token) {
     // add the token to the source url and tiles properties as a query param
     source.url += token ? '&token=' + token : '';
     source.tiles[0] += token ? '?token=' + token : '';
-
     // add minzoom and maxzoom to each source based on the service metadata
-    source.minzoom = metadata.tileInfo.lods[0].level;
+    // prefer minLOD/maxLOD if it exists since that is the level that tiles are cooked too
+    // MapLibre will overzoom for LODs that are not cooked
+    source.minzoom = metadata.minLOD || metadata.tileInfo.lods[0].level;
     source.maxzoom =
+      metadata.maxLOD ||
       metadata.tileInfo.lods[metadata.tileInfo.lods.length - 1].level;
   }
 
