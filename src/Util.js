@@ -63,7 +63,8 @@ function loadStyleFromItem (itemId, options, callback) {
     } else {
       loadItem(itemId, options, function (error, item) {
         if (error) {
-          console.error(error);
+          callback(error);
+          return;
         }
         loadService(item.url, options, function (error, service) {
           callback(error, style, itemStyleUrl, service, item.url);
@@ -76,7 +77,8 @@ function loadStyleFromItem (itemId, options, callback) {
 function loadStyleFromService (serviceUrl, options, callback) {
   loadService(serviceUrl, options, function (error, service) {
     if (error) {
-      console.error(error);
+      callback(error);
+      return;
     }
 
     let sanitizedServiceUrl = serviceUrl;
@@ -97,7 +99,8 @@ function loadStyleFromService (serviceUrl, options, callback) {
 
     loadStyleFromUrl(defaultStylesUrl, options, function (error, style) {
       if (error) {
-        console.error(error);
+        callback(error);
+        return;
       }
       callback(null, style, defaultStylesUrl, service, serviceUrl);
     });
