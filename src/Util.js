@@ -5,10 +5,10 @@ import { request, Support, Util } from 'esri-leaflet';
   utility to establish a URL for the basemap styles API
   used primarily by VectorBasemapLayer.js
 */
-export function getBasemapStyleUrl (key, apikey) {
+export function getBasemapStyleUrl (style, apikey) {
   let url =
     'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' +
-    key +
+    style +
     '?type=style';
   if (apikey) {
     url = url + '&apiKey=' + apikey;
@@ -16,6 +16,18 @@ export function getBasemapStyleUrl (key, apikey) {
   return url;
 }
 
+export function getBasemapStyleV2Url (sourceAndStyle, apikey, language) {
+  let url =
+    'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/' + sourceAndStyle;
+
+  if (apikey) {
+    url = url + '?token=' + apikey;
+  }
+  if (language) {
+    url = url + '&language=' + language;
+  }
+  return url;
+}
 /*
   utilities to communicate with custom user styles via an ITEM ID or SERVICE URL
   used primarily by VectorTileLayer.js
