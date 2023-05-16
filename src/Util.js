@@ -5,10 +5,14 @@ import { request, Support, Util } from 'esri-leaflet';
   utility to establish a URL for the basemap styles API
   used primarily by VectorBasemapLayer.js
 */
-export function getBasemapStyleUrl (style, apikey) {
+export function getBasemapStyleUrl (sourceAndStyle, apikey) {
+  if (sourceAndStyle.includes('/')) {
+    throw new Error(sourceAndStyle + ' is a v2 style enumeration. Set version:2 to request this style');
+  }
+
   let url =
     'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' +
-    style +
+    sourceAndStyle +
     '?type=style';
   if (apikey) {
     url = url + '&apiKey=' + apikey;
@@ -17,14 +21,29 @@ export function getBasemapStyleUrl (style, apikey) {
 }
 
 export function getBasemapStyleV2Url (sourceAndStyle, apikey, language) {
+  if (sourceAndStyle.includes(':')) {
+    const firstBreak = sourceAndStyle.indexOf(':');
+    let secondBreak = sourceAndStyle.indexOf(':', firstBreak + 1);
+
+    const source = sourceAndStyle.substring(0, firstBreak);
+    const layer = (secondBreak !== -1) ? sourceAndStyle.substring(secondBreak + 1, sourceAndStyle.length) : null;
+
+    if (secondBreak === -1) secondBreak = sourceAndStyle.length;
+    const style = sourceAndStyle.substring(firstBreak + 1, secondBreak);
+
+    const suggestion = source.toLowerCase() + '/' + style.toLowerCase() + (layer !== null ? '/' + layer.toLowerCase() : '');
+
+    throw new Error(sourceAndStyle + ' is a v1 style enumeration. Did you mean ' + suggestion + '?');
+  }
+
   let url =
     'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/' + sourceAndStyle;
 
   if (apikey) {
     url = url + '?token=' + apikey;
-  }
-  if (language) {
-    url = url + '&language=' + language;
+    if (language) {
+      url = url + '&language=' + language;
+    }
   }
   return url;
 }

@@ -34,8 +34,13 @@ export var VectorBasemapLayer = Layer.extend({
       throw new Error('API Key or token is required for vectorBasemapLayer.');
     }
 
+    // Set endpoint to the v1 service by default
+    if (!this.options.version) {
+      this.options.version = 1;
+    }
+
     if (this.options.language) {
-      if (!this.options.version || this.options.version !== 2) {
+      if (this.options.version !== 2) {
         throw new Error('The language parameter is only supported by the basemap styles service v2. Set version:2 to use this property.');
       }
     }
