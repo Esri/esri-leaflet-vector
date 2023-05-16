@@ -22,9 +22,10 @@ export function getBasemapStyleV2Url (sourceAndStyle, apikey, language) {
 
   if (apikey) {
     url = url + '?token=' + apikey;
-  }
-  if (language) {
-    url = url + '&language=' + language;
+    
+    if (language) {
+      url = url + '&language=' + language;
+    }
   }
   return url;
 }
