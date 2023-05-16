@@ -34,38 +34,17 @@
         color: #323232;
 
       }
-    /* @@Start(basemaps-wrapper-css) */
-    #languages-wrapper {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-
-      }
-      #languages {
-        font-size: 16px;
-        padding: 4px 8px;
-      }
-      /* @@End(basemaps-wrapper-css) */
     </style>
   </head>
   <body>
-    <div id="map"></div>    <!-- @@Start(basemaps-wrapper) -->
-    <div id="languages-wrapper">
-      <!-- @@Start(select) -->
-      <select id="languages">
-
-        <option value="vi"></option>
-      </select>
-      <!-- @@End(select) -->
-    </div>
-    <!-- @@End(basemaps-wrapper,select-context,basemaps-wrapper-context) @@Start(script,url-context) -->
+    <div id="map"></div>
     <script>
       const map = L.map("map", {
         minZoom: 2
-      }).setView([34.02, -118.805], 13);
+      }).setView([35.7088, 48.8790], 4);
 
 
-      const apiKey = "AAPK00d668efa6614988baf783deba85f6aclM-lV4VOYrvZGjVGOenLe-F22wG8GhBVFEh1X0IpdW4M5D7DBCgJSncg6lc1rQWG";
+      const apiKey = "AAPKcc58d292d8d24415af677a38d7adbcc1vMHlBBqqnttVrFKhCQWB8nT8YPjlQs3HPY3fKeV7-__w6LuMKgmag1MubRUgaAaA";
 
       const basemapStyle = "arcgis/outdoor";
 
