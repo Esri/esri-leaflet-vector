@@ -128,11 +128,48 @@ describe('VectorTileLayer', function () {
       })
     );
 
+    server.respondWith(
+      'GET',
+      'https://esri.maps.arcgis.com/sharing/rest/content/items/75f4dfdff19e445395653121a95a85db_WRONG?f=json',
+      JSON.stringify({
+        error: {
+          code: 400,
+          messageCode: 'CONT_0001',
+          message: 'Item does not exist or is inaccessible.',
+          details: []
+        }
+      })
+    );
+
     const layer = new L.esri.Vector.vectorTileLayer(
       '75f4dfdff19e445395653121a95a85db_WRONG',
       {
         portalUrl: 'https://esri.maps.arcgis.com'
       }
+    );
+    layer.on('load-error', function (e) {
+      expect(e.type).to.equal('load-error');
+      done();
+    });
+    server.respond();
+    server.respond();
+  });
+
+  it('should emit load-error for bad service url', function (done) {
+    server.respondWith(
+      'GET',
+      'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints_WRONG/VectorTileServer?f=json',
+      JSON.stringify({
+        error: {
+          code: 404,
+          message: 'Requested Service not available.',
+          details: null
+        }
+      })
+    );
+
+    const layer = new L.esri.Vector.vectorTileLayer(
+      'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints_WRONG/VectorTileServer'
     );
     layer.on('load-error', function (e) {
       expect(e.type).to.equal('load-error');
