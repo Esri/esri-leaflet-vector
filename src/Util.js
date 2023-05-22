@@ -5,39 +5,37 @@ import { request, Support, Util } from 'esri-leaflet';
   utility to establish a URL for the basemap styles API
   used primarily by VectorBasemapLayer.js
 */
-export function getBasemapStyleUrl (sourceAndStyle, apikey) {
-  if (sourceAndStyle.includes('/')) {
-    throw new Error(sourceAndStyle + ' is a v2 style enumeration. Set version:2 to request this style');
+export function getBasemapStyleUrl (style, apikey) {
+  if (style.includes('/')) {
+    throw new Error(style + ' is a v2 style enumeration. Set version:2 to request this style');
   }
 
   let url =
     'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' +
-    sourceAndStyle +
+    style +
     '?type=style';
   if (apikey) {
-    url = url + '&apiKey=' + apikey;
+    url = url + '&token=' + apikey;
   }
   return url;
 }
 
-export function getBasemapStyleV2Url (sourceAndStyle, apikey, language) {
-  if (sourceAndStyle.includes(':')) {
-    const firstBreak = sourceAndStyle.indexOf(':');
-    let secondBreak = sourceAndStyle.indexOf(':', firstBreak + 1);
-
-    const source = sourceAndStyle.substring(0, firstBreak);
-    const layer = (secondBreak !== -1) ? sourceAndStyle.substring(secondBreak + 1, sourceAndStyle.length) : null;
-
-    if (secondBreak === -1) secondBreak = sourceAndStyle.length;
-    const style = sourceAndStyle.substring(firstBreak + 1, secondBreak);
-
-    const suggestion = source.toLowerCase() + '/' + style.toLowerCase() + (layer !== null ? '/' + layer.toLowerCase() : '');
-
-    throw new Error(sourceAndStyle + ' is a v1 style enumeration. Did you mean ' + suggestion + '?');
+export function getBasemapStyleV2Url (style, apikey, language) {
+  if (style.includes(':')) {
+    throw new Error(style + ' is a v1 style enumeration. Set version:1 to request this style');
   }
 
-  let url =
-    'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/' + sourceAndStyle;
+  let url = 'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/';
+  if (style.length === 32) {
+    // style is an itemID
+    url = url + 'items/' + style;
+
+    if (language) {
+      throw new Error('The \'language\' parameter is not supported for custom basemap styles');
+    }
+  } else {
+    url = url + style;
+  }
 
   if (apikey) {
     url = url + '?token=' + apikey;

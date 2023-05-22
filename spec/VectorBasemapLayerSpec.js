@@ -3,6 +3,7 @@ const itemId = '287c07ef752246d08bb4712fd4b74438';
 const apikey = '1234';
 const basemapKey = 'ArcGIS:Streets';
 const basemapKeyV2 = 'arcgis/streets';
+const customBasemap = 'f04f33b9626240f084cb52f0b08758ef'
 const language = 'zh_s';
 
 describe('VectorBasemapLayer', function () {
@@ -102,7 +103,33 @@ describe('VectorBasemapLayer', function () {
         apikey:apikey,
         version:2
       });
-    }).to.throw(basemapKey + ' is a v1 style enumeration. Did you mean arcgis/streets?')
+    }).to.throw(basemapKey + ' is a v1 style enumeration. Set version:1 to request this style')
+  })
+
+  it('should load a custom basemap style from an item ID when using the v1 service', function () {
+    const customLayer =  L.esri.Vector.vectorBasemapLayer(customBasemap, {
+      apikey:apikey,
+      version:1
+    })
+    expect(customLayer._maplibreGL.options.style).to.equal(`https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${customBasemap}?type=style&token=${apikey}`)
+  })
+
+  it('should load a custom basemap style from an item ID when using the v2 service', function () {
+    const customLayer =  L.esri.Vector.vectorBasemapLayer(customBasemap, {
+      apikey:apikey,
+      version:2
+    })
+    expect(customLayer._maplibreGL.options.style).to.equal(`https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/items/${customBasemap}?token=${apikey}`)
+  })
+
+  it('should error if a language is provided when loading a custom basemap style', function () {
+    expect(function () {
+      L.esri.Vector.vectorBasemapLayer(customBasemap, {
+        apikey,apikey,
+        version:2,
+        language:language
+      })
+    }).to.throw('The \'language\' parameter is not supported for custom basemap styles')
   })
 
   describe('_getAttributionUrls', function () {
