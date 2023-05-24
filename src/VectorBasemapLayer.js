@@ -1,6 +1,6 @@
 import { Layer, setOptions } from 'leaflet';
 import { Util } from 'esri-leaflet';
-import { getBasemapStyleUrl, getAttributionData } from './Util';
+import { getBasemapStyleUrl, getAttributionData, getBasemapStyleV2Url } from './Util';
 import { maplibreGLJSLayer } from './MaplibreGLLayer';
 
 export var VectorBasemapLayer = Layer.extend({
@@ -34,6 +34,17 @@ export var VectorBasemapLayer = Layer.extend({
       throw new Error('API Key or token is required for vectorBasemapLayer.');
     }
 
+    // Set endpoint to the v1 service by default
+    if (!this.options.version) {
+      this.options.version = 1;
+    }
+
+    if (this.options.language) {
+      if (this.options.version !== 2) {
+        throw new Error('The language parameter is only supported by the basemap styles service v2. Set version:2 to use this property.');
+      }
+    }
+
     // set key onto "this.options" for use elsewhere in the module.
     if (key) {
       this.options.key = key;
@@ -47,7 +58,12 @@ export var VectorBasemapLayer = Layer.extend({
    * Creates the maplibreGLJSLayer given using "this.options"
    */
   _createLayer: function () {
-    const styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
+    let styleUrl;
+    if (this.options.version && this.options.version === 2) {
+      styleUrl = getBasemapStyleV2Url(this.options.key, this.options.apikey, this.options.language);
+    } else {
+      styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
+    }
 
     this._maplibreGL = maplibreGLJSLayer({
       style: styleUrl,
