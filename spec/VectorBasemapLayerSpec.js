@@ -53,6 +53,57 @@ describe('VectorBasemapLayer', function () {
     expect(layer.options.apikey).to.equal(apikey);
   });
 
+  it('should create basemap styles in the \'tilePane\' by default', function () {
+    const layer = new L.esri.Vector.vectorBasemapLayer(basemapKey, {
+      apikey: apikey
+    });
+    const layerV2 = new L.esri.Vector.vectorBasemapLayer(basemapKeyV2, {
+      apikey: apikey,
+      version:2
+    });
+
+    expect(layer.options.pane).to.equal('tilePane');
+    expect(layerV2.options.pane).to.equal('tilePane');
+  })
+
+  it('should add \'Labels\' styles to the \'esri-labels\' pane by default', function () {
+    const layer = new L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery:Labels', {
+      apikey: apikey
+    });
+
+    const layerV2 = new L.esri.Vector.vectorBasemapLayer('arcgis/imagery/labels', {
+      apikey: apikey,
+      version:2
+    });
+
+    // These label styles use a different endpoint (/label instead of /labels, for some reason)
+    const humanGeoLayer = new L.esri.Vector.vectorBasemapLayer('ArcGIS:HumanGeography:Label',{
+      apikey: apikey
+    });
+    const humanGeoLayerV2 = new L.esri.Vector.vectorBasemapLayer('arcgis/human-geography/label',{
+      apikey: apikey,
+      version:2
+    });
+
+    expect(layer.options.pane).to.equal('esri-labels');
+    expect(layerV2.options.pane).to.equal('esri-labels');
+    expect(humanGeoLayer.options.pane).to.equal('esri-labels');
+    expect(humanGeoLayerV2.options.pane).to.equal('esri-labels');
+  })
+  
+  it('should add \'Detail\' styles to the \'esri-detail\' pane by default', function () {
+    const layer = new L.esri.Vector.vectorBasemapLayer('ArcGIS:Terrain:Detail', {
+      apikey: apikey
+    })
+    const layerV2 = new L.esri.Vector.vectorBasemapLayer('arcgis/terrain/detail', {
+      apikey: apikey,
+      version:2
+    })
+
+    expect(layer.options.pane).to.equal('esri-detail');
+    expect(layerV2.options.pane).to.equal('esri-detail');
+  })
+
   it('should save the service version from the constructor', function () {
     const layer = new L.esri.Vector.vectorBasemapLayer(basemapKeyV2, {
       apikey: apikey,

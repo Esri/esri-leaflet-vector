@@ -50,8 +50,28 @@ export var VectorBasemapLayer = Layer.extend({
       this.options.key = key;
     }
 
+    // determine layer order
+    if (!options.pane) {
+      if (this._isLabelsStyle()) {
+        this.options.pane = 'esri-labels';
+      } else if (this._isDetailStyle()) {
+        this.options.pane = 'esri-detail';
+      } else {
+        // create layer in the tilePane by default
+        this.options.pane = 'tilePane';
+      }
+    }
+
     // this.options has been set, continue on to create the layer:
     this._createLayer();
+  },
+
+  _isLabelsStyle: function () {
+    return (this.options.key.indexOf(':Label') > -1 || this.options.key.indexOf('/label') > -1);
+  },
+
+  _isDetailStyle: function () {
+    return (this.options.key.indexOf(':Detail') > -1 || this.options.key.indexOf('/detail') > -1);
   },
 
   /**
@@ -140,10 +160,23 @@ export var VectorBasemapLayer = Layer.extend({
     return ['https://static.arcgis.com/attribution/Vector/World_Basemap_v2'];
   },
 
+  _initPane: function () {
+    if (!this._map.getPane(this.options.pane)) {
+      const pane = this._map.createPane(this.options.pane);
+      pane.style.pointerEvents = 'none';
+
+      let zIndex = 500;
+      if (this.options.pane === 'esri-detail') {
+        zIndex = 250;
+      } else if (this.options.pane === 'esri-labels') {
+        zIndex = 300;
+      }
+      pane.style.zIndex = zIndex;
+    }
+  },
+
   onAdd: function (map) {
     this._map = map;
-
-    this._initPane();
 
     if (this._ready) {
       this._asyncAdd();
@@ -155,23 +188,6 @@ export var VectorBasemapLayer = Layer.extend({
         },
         this
       );
-    }
-  },
-
-  _initPane: function () {
-    // if the layer is a "label" layer, should use the "esri-label" pane.
-    if (!this.options.pane) {
-      if (this.options.key.indexOf(':Labels') > -1) {
-        this.options.pane = 'esri-labels';
-      } else {
-        this.options.pane = 'tilePane';
-      }
-    }
-
-    if (!this._map.getPane(this.options.pane)) {
-      const pane = this._map.createPane(this.options.pane);
-      pane.style.pointerEvents = 'none';
-      pane.style.zIndex = this.options.pane === 'esri-labels' ? 550 : 500;
     }
   },
 
@@ -192,6 +208,7 @@ export var VectorBasemapLayer = Layer.extend({
 
   _asyncAdd: function () {
     const map = this._map;
+    this._initPane();
     map.on('moveend', Util._updateMapAttribution);
     this._maplibreGL.addTo(map, this);
   }
