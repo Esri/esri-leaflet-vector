@@ -4,10 +4,6 @@ import { maplibreGLJSLayer } from './MaplibreGLLayer';
 
 export var VectorTileLayer = Layer.extend({
   options: {
-    // if pane is not provided, default to LeafletJS's overlayPane
-    // https://leafletjs.com/reference.html#map-pane
-    pane: 'overlayPane',
-
     // if portalUrl is not provided, default to ArcGIS Online
     portalUrl: 'https://www.arcgis.com'
   },
@@ -28,10 +24,12 @@ export var VectorTileLayer = Layer.extend({
       this.options.apikey = this.options.apiKey;
     }
 
-    // if apiKey is passed in, use it as a token
-    // (opposite from VectorBasemapLayer.js)
+    // if apiKey is passed in, propogate to token
+    // if token is passed in, propogate to apikey
     if (this.options.apikey) {
       this.options.token = this.options.apikey;
+    } else if (this.options.token) {
+      this.options.apikey = this.options.token;
     }
 
     // if no key passed in
@@ -73,35 +71,47 @@ export var VectorTileLayer = Layer.extend({
         // once style object is loaded it must be transformed to be compliant with maplibreGLJSLayer
         style = formatStyle(style, styleUrl, service, this.options.token);
 
-        // if a custom attribution was not provided in the options,
-        // then attempt to rely on the attribution of the last source in the style object
-        // and add it to the map's attribution control
-        // (otherwise it would have already been added by leaflet to the attribution control)
-        if (!this.getAttribution()) {
-          const sourcesKeys = Object.keys(style.sources);
-          this.options.attribution =
-            style.sources[sourcesKeys[sourcesKeys.length - 1]].attribution;
-          if (this._map && this._map.attributionControl) {
-            // NOTE: if attribution is an empty string (or otherwise falsy) at this point it would not appear in the attribution control
-            this._map.attributionControl.addAttribution(this.getAttribution());
-          }
-        }
-
-        // additionally modify the style object with the user's optional style override function
-        if (this.options.style && typeof this.options.style === 'function') {
-          style = this.options.style(style);
-        }
-
-        this._maplibreGL = maplibreGLJSLayer({
-          style: style,
-          pane: this.options.pane,
-          opacity: this.options.opacity
-        });
-
-        this._ready = true;
-        this.fire('ready', {}, true);
+        this._createMaplibreLayer(style);
       }.bind(this)
     );
+  },
+
+  _setupAttribution: function () {
+    // if a custom attribution was not provided in the options,
+    // then attempt to rely on the attribution of the last source in the style object
+    // and add it to the map's attribution control
+    // (otherwise it would have already been added by leaflet to the attribution control)
+    const sources = this._maplibreGL.getMaplibreMap().style.stylesheet.sources;
+    console.log(this.getAttribution());
+    if (!this.getAttribution()) {
+      const sourcesKeys = Object.keys(sources);
+      this.options.attribution =
+      sources[sourcesKeys[sourcesKeys.length - 1]].attribution;
+      console.log(this.getAttribution());
+      if (this._map && this._map.attributionControl) {
+        // NOTE: if attribution is an empty string (or otherwise falsy) at this point it would not appear in the attribution control
+        this._map.attributionControl.addAttribution(this.getAttribution());
+      }
+    }
+  },
+
+  _createMaplibreLayer: function (style) {
+    this._maplibreGL = maplibreGLJSLayer({
+      style: style,
+      pane: this.options.pane,
+      opacity: this.options.opacity
+    });
+
+    this._ready = true;
+    this.fire('ready', {}, true);
+
+    this._maplibreGL.on('styleLoaded', function () {
+      this._setupAttribution();
+      // additionally modify the style object with the user's optional style override function
+      if (this.options.style && typeof this.options.style === 'function') {
+        this._maplibreGL._glMap.setStyle(this.options.style(this._maplibreGL._glMap.getStyle()));
+      }
+    }.bind(this));
   },
 
   onAdd: function (map) {
