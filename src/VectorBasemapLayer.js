@@ -105,9 +105,9 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
    * @param {string} key
    */
   _getAttributionUrls: function (key) {
-    if (key.indexOf('OSM:') === 0) {
+    if (key.indexOf('OSM:') === 0 || (key.indexOf('osm/') === 0)) {
       return ['https://static.arcgis.com/attribution/Vector/OpenStreetMap_v2'];
-    } else if (key.indexOf('ArcGIS:Imagery') === 0) {
+    } else if (key.indexOf('ArcGIS:Imagery') === 0 || key.indexOf('arcgis/imagery') === 0) {
       return [
         'https://static.arcgis.com/attribution/World_Imagery',
         'https://static.arcgis.com/attribution/Vector/World_Basemap_v2'
