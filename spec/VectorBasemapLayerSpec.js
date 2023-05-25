@@ -137,13 +137,14 @@ describe('VectorBasemapLayer', function () {
         apikey:apikey,
         language:language
       });
-    }).to.throw('The language parameter is only supported by the basemap styles service v2. Set version:2 to use this property.');
+    }).to.throw('The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
   });
 
   it('should not accept a v2 style enumeration when accessing the v1 service', function () {
     expect(function () {
       L.esri.Vector.vectorBasemapLayer(basemapKeyV2, {
-        apikey:apikey
+        apikey:apikey,
+        version:1
       });
     }).to.throw(basemapKeyV2 + ' is a v2 style enumeration. Set version:2 to request this style')
   })
