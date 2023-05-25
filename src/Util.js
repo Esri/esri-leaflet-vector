@@ -26,7 +26,7 @@ export function getBasemapStyleV2Url (style, apikey, language) {
   }
 
   let url = 'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/';
-  if (style.length === 32) {
+  if (!(style.indexOf('osm/') === 0 || style.indexOf('arcgis/') === 0) && style.length === 32) {
     // style is an itemID
     url = url + 'items/' + style;
 

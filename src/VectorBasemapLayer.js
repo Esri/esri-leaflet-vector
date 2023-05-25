@@ -12,7 +12,8 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
   initialize: function (key, options) {
     // Default to the v1 service endpoint
     if (!options.version) {
-      options.version = 1;
+      if (key.includes('/')) options.version = 2;
+      else options.version = 1;
     }
     if (!key) {
       // Default style enum if none provided
@@ -25,14 +26,14 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
     // Validate language param
     if (options.language) {
       if (options.version !== 2) {
-        throw new Error('The language parameter is only supported by the basemap styles service v2. Set version:2 to use this property.');
+        throw new Error('The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
       }
     }
     // Determine layer order
     if (!options.pane) {
-      if (key.indexOf(':Label') > -1 || key.indexOf('/label') > -1) {
+      if (key.includes(':Label') || key.includes('/label')) {
         options.pane = 'esri-labels';
-      } else if (key.indexOf(':Detail') > -1 || key.indexOf('/detail') > -1) {
+      } else if (key.includes(':Detail') || key.includes('/detail')) {
         options.pane = 'esri-detail';
       } else {
         // Create layer in the tilePane by default
@@ -54,7 +55,7 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
     } else {
       styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
     }
-
+    console.log(styleUrl);
     this._createMaplibreLayer(styleUrl);
   },
 
