@@ -81,13 +81,11 @@ export var VectorTileLayer = Layer.extend({
     // then attempt to rely on the attribution of the last source in the style object
     // and add it to the map's attribution control
     // (otherwise it would have already been added by leaflet to the attribution control)
-    const sources = this._maplibreGL.getMaplibreMap().style.stylesheet.sources;
-    console.log(this.getAttribution());
     if (!this.getAttribution()) {
+      const sources = this._maplibreGL.getMaplibreMap().style.stylesheet.sources;
       const sourcesKeys = Object.keys(sources);
       this.options.attribution =
       sources[sourcesKeys[sourcesKeys.length - 1]].attribution;
-      console.log(this.getAttribution());
       if (this._map && this._map.attributionControl) {
         // NOTE: if attribution is an empty string (or otherwise falsy) at this point it would not appear in the attribution control
         this._map.attributionControl.addAttribution(this.getAttribution());

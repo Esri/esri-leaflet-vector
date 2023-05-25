@@ -3,10 +3,6 @@ import { getBasemapStyleUrl, getAttributionData, getBasemapStyleV2Url } from './
 import { VectorTileLayer } from './VectorTileLayer';
 
 export var VectorBasemapLayer = VectorTileLayer.extend({
-  options: {
-    key: 'ArcGIS:Streets' // default style key enum if none provided
-  },
-
   /**
    * Populates "this.options" to be used in the rest of the module.
    *
@@ -14,39 +10,42 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
    * @param {object} options optional
    */
   initialize: function (key, options) {
-    // Set endpoint to the v1 service by default
+    // Default to the v1 service endpoint
     if (!options.version) {
       options.version = 1;
     }
+    if (!key) {
+      // Default style enum if none provided
+      key = options.version === 1 ? 'ArcGIS:Streets' : 'arcgis/streets';
+    }
+    // If no API Key or token is provided (support outdated casing apiKey of apikey)
+    if (!(options.apikey || options.apiKey || options.token)) {
+      throw new Error('An API Key or token is required for vectorBasemapLayer.');
+    }
+    // Validate language param
     if (options.language) {
       if (options.version !== 2) {
         throw new Error('The language parameter is only supported by the basemap styles service v2. Set version:2 to use this property.');
       }
     }
-
-    // If no API Key or token is provided (support outdated casing apiKey of apikey)
-    if (!(options.apikey || options.apiKey || options.token)) {
-      throw new Error('API Key or token is required for vectorBasemapLayer.');
-    }
-
-    // determine layer order
+    // Determine layer order
     if (!options.pane) {
       if (key.indexOf(':Label') > -1 || key.indexOf('/label') > -1) {
         options.pane = 'esri-labels';
       } else if (key.indexOf(':Detail') > -1 || key.indexOf('/detail') > -1) {
         options.pane = 'esri-detail';
       } else {
-        // create layer in the tilePane by default
+        // Create layer in the tilePane by default
         options.pane = 'tilePane';
       }
     }
 
-    // options has been configured, continue on to create the layer:
+    // Options has been configured, continue on to create the layer:
     VectorTileLayer.prototype.initialize.call(this, key, options);
   },
 
   /**
-   * Creates the maplibreGLJSLayer given using "this.options"
+   * Creates the maplibreGLJSLayer using "this.options"
    */
   _createLayer: function () {
     let styleUrl;
