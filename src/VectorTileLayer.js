@@ -59,7 +59,10 @@ export var VectorTileLayer = Layer.extend({
       this.options,
       function (error, style, styleUrl, service) {
         if (error) {
-          throw new Error(error);
+          this.fire('load-error', {
+            value: error
+          });
+          return;
         }
 
         if (!isWebMercator(service.tileInfo.spatialReference.wkid)) {
