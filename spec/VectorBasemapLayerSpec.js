@@ -113,12 +113,20 @@ describe('VectorBasemapLayer', function () {
     expect(layer.options.version).to.equal(2);
   });
 
-  it('should set the service version to \'1\' when a version is not provided', function () {
+  it('should load a v1 basemap from a v1 style key without needing to specify a version', function () {
     const layer = new L.esri.Vector.vectorBasemapLayer(basemapKey, {
       apikey: apikey
     })
 
     expect(layer.options.version).to.equal(1);
+  });
+
+  it('should load a v2 basemap from a v2 style key without needing to specify a version', function () {
+    const layer = new L.esri.Vector.vectorBasemapLayer(basemapKeyV2, {
+      apikey: apikey
+    })
+
+    expect(layer.options.version).to.equal(2);
   });
 
   it('should save the language from the constructor', function () {
