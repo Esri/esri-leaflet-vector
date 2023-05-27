@@ -24,8 +24,8 @@ export var VectorTileLayer = Layer.extend({
       this.options.apikey = this.options.apiKey;
     }
 
-    // if apiKey is passed in, propogate to token
-    // if token is passed in, propogate to apikey
+    // if apiKey is passed in, propagate to token
+    // if token is passed in, propagate to apiKey
     if (this.options.apikey) {
       this.options.token = this.options.apikey;
     } else if (this.options.token) {
