@@ -5,17 +5,47 @@ import { request, Support, Util } from 'esri-leaflet';
   utility to establish a URL for the basemap styles API
   used primarily by VectorBasemapLayer.js
 */
-export function getBasemapStyleUrl (key, apikey) {
+export function getBasemapStyleUrl (style, apikey) {
+  if (style.includes('/')) {
+    throw new Error(style + ' is a v2 style enumeration. Set version:2 to request this style');
+  }
+
   let url =
     'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' +
-    key +
+    style +
     '?type=style';
   if (apikey) {
-    url = url + '&apiKey=' + apikey;
+    url = url + '&token=' + apikey;
   }
   return url;
 }
 
+export function getBasemapStyleV2Url (style, apikey, language) {
+  if (style.includes(':')) {
+    throw new Error(style + ' is a v1 style enumeration. Set version:1 to request this style');
+  }
+
+  let url = 'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/';
+  if (!(style.startsWith('osm/') || style.startsWith('arcgis/')) && style.length === 32) {
+    // style is an itemID
+    url = url + 'items/' + style;
+
+    if (language) {
+      throw new Error('The \'language\' parameter is not supported for custom basemap styles');
+    }
+  } else {
+    url = url + style;
+  }
+
+  if (apikey) {
+    url = url + '?token=' + apikey;
+
+    if (language) {
+      url = url + '&language=' + language;
+    }
+  }
+  return url;
+}
 /*
   utilities to communicate with custom user styles via an ITEM ID or SERVICE URL
   used primarily by VectorTileLayer.js

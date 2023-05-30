@@ -1,13 +1,8 @@
-import { Layer, setOptions } from 'leaflet';
 import { Util } from 'esri-leaflet';
-import { getBasemapStyleUrl, getAttributionData } from './Util';
-import { maplibreGLJSLayer } from './MaplibreGLLayer';
+import { getBasemapStyleUrl, getAttributionData, getBasemapStyleV2Url } from './Util';
+import { VectorTileLayer } from './VectorTileLayer';
 
-export var VectorBasemapLayer = Layer.extend({
-  options: {
-    key: 'ArcGIS:Streets' // default style key enum if none provided
-  },
-
+export var VectorBasemapLayer = VectorTileLayer.extend({
   /**
    * Populates "this.options" to be used in the rest of the module.
    *
@@ -15,58 +10,57 @@ export var VectorBasemapLayer = Layer.extend({
    * @param {object} options optional
    */
   initialize: function (key, options) {
-    if (options) {
-      setOptions(this, options);
+    // Default to the v1 service endpoint
+    if (!options.version) {
+      if (key.includes('/')) options.version = 2;
+      else options.version = 1;
+    }
+    if (!key) {
+      // Default style enum if none provided
+      key = options.version === 1 ? 'ArcGIS:Streets' : 'arcgis/streets';
+    }
+    // If no API Key or token is provided (support outdated casing apiKey of apikey)
+    if (!(options.apikey || options.apiKey || options.token)) {
+      throw new Error('An API Key or token is required for vectorBasemapLayer.');
+    }
+    // Validate language param
+    if (options.language) {
+      if (options.version !== 2) {
+        throw new Error('The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
+      }
+    }
+    // Determine layer order
+    if (!options.pane) {
+      if (key.includes(':Label') || key.includes('/label')) {
+        options.pane = 'esri-labels';
+      } else if (key.includes(':Detail') || key.includes('/detail')) {
+        options.pane = 'esri-detail';
+      } else {
+        // Create layer in the tilePane by default
+        options.pane = 'tilePane';
+      }
     }
 
-    // support outdated casing apiKey of apikey
-    if (this.options.apiKey) {
-      this.options.apikey = this.options.apiKey;
-    }
-
-    // if token is passed in, use it as an apiKey
-    if (this.options.token) {
-      this.options.apikey = this.options.token;
-    }
-
-    // If no API Key or token is required:
-    if (!(this.options.apikey || this.options.token)) {
-      throw new Error('API Key or token is required for vectorBasemapLayer.');
-    }
-
-    // set key onto "this.options" for use elsewhere in the module.
-    if (key) {
-      this.options.key = key;
-    }
-
-    // this.options has been set, continue on to create the layer:
-    this._createLayer();
+    // Options has been configured, continue on to create the layer:
+    VectorTileLayer.prototype.initialize.call(this, key, options);
   },
 
   /**
-   * Creates the maplibreGLJSLayer given using "this.options"
+   * Creates the maplibreGLJSLayer using "this.options"
    */
   _createLayer: function () {
-    const styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
-
-    this._maplibreGL = maplibreGLJSLayer({
-      style: styleUrl,
-      pane: this.options.pane,
-      opacity: this.options.opacity
-    });
-
-    this._ready = true;
-    this.fire('ready', {}, true);
-
-    this._maplibreGL.on('styleLoaded', function (res) {
-      this._setupAttribution();
-    }.bind(this));
+    let styleUrl;
+    if (this.options.version && this.options.version === 2) {
+      styleUrl = getBasemapStyleV2Url(this.options.key, this.options.apikey, this.options.language);
+    } else {
+      styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
+    }
+    this._createMaplibreLayer(styleUrl);
   },
 
   _setupAttribution: function () {
-    const map = this._map;
     // Set attribution
-    Util.setEsriAttribution(map);
+    Util.setEsriAttribution(this._map);
 
     if (this.options.key.length === 32) {
       // this is an itemId
@@ -79,7 +73,7 @@ export var VectorBasemapLayer = Layer.extend({
         }
       });
 
-      map.attributionControl.addAttribution('<span class="">' + allAttributions.join(', ') + '</span>');
+      this._map.attributionControl.addAttribution('<span class="">' + allAttributions.join(', ') + '</span>');
     } else {
       // this is an enum
       if (!this.options.attributionUrls) {
@@ -94,10 +88,10 @@ export var VectorBasemapLayer = Layer.extend({
             index++
           ) {
             const attributionUrl = this.options.attributionUrls[index];
-            getAttributionData(attributionUrl, map);
+            getAttributionData(attributionUrl, this._map);
           }
 
-          map.attributionControl.addAttribution(
+          this._map.attributionControl.addAttribution(
             '<span class="esri-dynamic-attribution"></span>'
           );
         }
@@ -111,9 +105,9 @@ export var VectorBasemapLayer = Layer.extend({
    * @param {string} key
    */
   _getAttributionUrls: function (key) {
-    if (key.indexOf('OSM:') === 0) {
+    if (key.indexOf('OSM:') === 0 || (key.indexOf('osm/') === 0)) {
       return ['https://static.arcgis.com/attribution/Vector/OpenStreetMap_v2'];
-    } else if (key.indexOf('ArcGIS:Imagery') === 0) {
+    } else if (key.indexOf('ArcGIS:Imagery') === 0 || key.indexOf('arcgis/imagery') === 0) {
       return [
         'https://static.arcgis.com/attribution/World_Imagery',
         'https://static.arcgis.com/attribution/Vector/World_Basemap_v2'
@@ -124,38 +118,18 @@ export var VectorBasemapLayer = Layer.extend({
     return ['https://static.arcgis.com/attribution/Vector/World_Basemap_v2'];
   },
 
-  onAdd: function (map) {
-    this._map = map;
-
-    this._initPane();
-
-    if (this._ready) {
-      this._asyncAdd();
-    } else {
-      this.once(
-        'ready',
-        function () {
-          this._asyncAdd();
-        },
-        this
-      );
-    }
-  },
-
   _initPane: function () {
-    // if the layer is a "label" layer, should use the "esri-label" pane.
-    if (!this.options.pane) {
-      if (this.options.key.indexOf(':Labels') > -1) {
-        this.options.pane = 'esri-labels';
-      } else {
-        this.options.pane = 'tilePane';
-      }
-    }
-
     if (!this._map.getPane(this.options.pane)) {
       const pane = this._map.createPane(this.options.pane);
       pane.style.pointerEvents = 'none';
-      pane.style.zIndex = this.options.pane === 'esri-labels' ? 550 : 500;
+
+      let zIndex = 500;
+      if (this.options.pane === 'esri-detail') {
+        zIndex = 250;
+      } else if (this.options.pane === 'esri-labels') {
+        zIndex = 300;
+      }
+      pane.style.zIndex = zIndex;
     }
   },
 
@@ -176,6 +150,7 @@ export var VectorBasemapLayer = Layer.extend({
 
   _asyncAdd: function () {
     const map = this._map;
+    this._initPane();
     map.on('moveend', Util._updateMapAttribution);
     this._maplibreGL.addTo(map, this);
   }
