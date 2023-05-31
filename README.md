@@ -28,7 +28,7 @@ Take a look at the [live demo](https://developers.arcgis.com/esri-leaflet/sample
 
     <!-- Esri Leaflet and Esri Leaflet Vector -->
     <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
-    <script src="https://unpkg.com/esri-leaflet-vector@3/dist/esri-leaflet-vector.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-vector@4/dist/esri-leaflet-vector.js"></script>
 
     <style>
       body {
