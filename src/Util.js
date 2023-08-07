@@ -287,3 +287,9 @@ const WEB_MERCATOR_WKIDS = [3857, 102100, 102113];
 export function isWebMercator (wkid) {
   return WEB_MERCATOR_WKIDS.indexOf(wkid) >= 0;
 }
+
+export var EsriUtil = {
+  formatStyle: formatStyle
+};
+
+export default EsriUtil;
