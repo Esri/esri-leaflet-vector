@@ -7,7 +7,9 @@ import { request, Support, Util } from 'esri-leaflet';
 */
 export function getBasemapStyleUrl (style, apikey) {
   if (style.includes('/')) {
-    throw new Error(style + ' is a v2 style enumeration. Set version:2 to request this style');
+    throw new Error(
+      style + ' is a v2 style enumeration. Set version:2 to request this style'
+    );
   }
 
   let url =
@@ -22,16 +24,24 @@ export function getBasemapStyleUrl (style, apikey) {
 
 export function getBasemapStyleV2Url (style, apikey, language) {
   if (style.includes(':')) {
-    throw new Error(style + ' is a v1 style enumeration. Set version:1 to request this style');
+    throw new Error(
+      style + ' is a v1 style enumeration. Set version:1 to request this style'
+    );
   }
 
-  let url = 'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/';
-  if (!(style.startsWith('osm/') || style.startsWith('arcgis/')) && style.length === 32) {
+  let url =
+    'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/';
+  if (
+    !(style.startsWith('osm/') || style.startsWith('arcgis/')) &&
+    style.length === 32
+  ) {
     // style is an itemID
     url = url + 'items/' + style;
 
     if (language) {
-      throw new Error('The \'language\' parameter is not supported for custom basemap styles');
+      throw new Error(
+        "The 'language' parameter is not supported for custom basemap styles"
+      );
     }
   } else {
     url = url + style;
