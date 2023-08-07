@@ -220,10 +220,9 @@ export function formatStyle (style, styleUrl, metadata, token) {
       'styles/root.json',
       style.sprite.replace('../', '')
     );
-
-    // add the token to the style.sprite property as a query param
-    style.sprite += token ? '?token=' + token : '';
   }
+  // add the token to the style.sprite property as a query param
+  style.sprite += token ? '?token=' + token : '';
 
   if (style.glyphs && style.glyphs.indexOf('http') === -1) {
     // resolve absolute URL for style.glyphs
