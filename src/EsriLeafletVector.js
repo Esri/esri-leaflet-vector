@@ -1,6 +1,6 @@
 // export version
 import packageInfo from '../package.json';
-var version = packageInfo.version;
+const version = packageInfo.version;
 export { version as VERSION };
 
 export { VectorBasemapLayer, vectorBasemapLayer } from './VectorBasemapLayer';
