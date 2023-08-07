@@ -210,9 +210,10 @@ export function formatStyle (style, styleUrl, metadata, token) {
       'styles/root.json',
       style.sprite.replace('../', '')
     );
-
+  }
+  if (style.sprite && token) {
     // add the token to the style.sprite property as a query param
-    style.sprite += token ? '?token=' + token : '';
+    style.sprite += '?token=' + token;
   }
 
   if (style.glyphs && style.glyphs.indexOf('http') === -1) {
