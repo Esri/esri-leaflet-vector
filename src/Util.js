@@ -222,9 +222,11 @@ export function formatStyle (style, styleUrl, metadata, token) {
       'styles/root.json',
       style.glyphs.replace('../', '')
     );
+  }
 
+  if (style.glyphs && token) {
     // add the token to the style.glyphs property as a query param
-    style.glyphs += token ? '?token=' + token : '';
+    style.glyphs += '?token=' + token;
   }
 
   return style;
