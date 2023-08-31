@@ -157,6 +157,21 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
 6. Open `examples/quickstart-dev.html` or `examples/quickstart-prod.html` to see local changes in action.
 7. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) if you'd like to share your work.
 
+### Tracker Development Instructions
+1. clone this fork at src/vendorSourceCode. if you don't have this folder, please create at src folder
+2. open terminal as administrator
+```ps
+nvm use 19.5.0
+cd D:\txmap\tracker\src\vendorSourceCode\esri-leaflet-vector\
+npm install
+nvm use 10.18.1
+```
+3. open terminal as administrator
+```ps
+cd D:\txmap\tracker\src\
+.\vectorWatcher.ps1
+```
+
 ## Dependencies
 
 - Leaflet version [1.5.0](https://github.com/Leaflet/Leaflet/releases/tag/v1.5.0) (or higher) is required.
