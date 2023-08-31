@@ -74,6 +74,13 @@ export var VectorTileLayer = Layer.extend({
         // once style object is loaded it must be transformed to be compliant with maplibreGLJSLayer
         style = formatStyle(style, styleUrl, service, this.options.token);
 
+        if(this.options.proxy) {
+          style.sources.esri.tiles[0] = this.options.proxy + '?' + style.sources.esri.tiles[0];
+          style.sources.esri.url = this.options.proxy + '?' + style.sources.esri.url;
+          style.sprite = this.options.proxy + '?' + style.sprite;
+          style.glyphs = this.options.proxy + '?' + style.glyphs;
+        }
+
         this._createMaplibreLayer(style);
       }.bind(this)
     );

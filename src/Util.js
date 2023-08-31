@@ -65,12 +65,13 @@ export function loadStyle (idOrUrl, options, callback) {
 
 export function loadService (serviceUrl, options, callback) {
   const params = options.token ? { token: options.token } : {};
+  serviceUrl = (options.proxy ? options.proxy  + '?' : '') + serviceUrl;
   request(serviceUrl, params, callback);
 }
 
 function loadItem (itemId, options, callback) {
   const params = options.token ? { token: options.token } : {};
-  const url = options.portalUrl + '/sharing/rest/content/items/' + itemId;
+  const url =  (options.proxy ? options.proxy  + '?' : '') + options.portalUrl + '/sharing/rest/content/items/' + itemId;
   request(url, params, callback);
 }
 
@@ -139,6 +140,7 @@ function loadStyleFromService (serviceUrl, options, callback) {
 
 function loadStyleFromUrl (styleUrl, options, callback) {
   const params = options.token ? { token: options.token } : {};
+  styleUrl  =  (options.proxy ? options.proxy  + '?' : '') + styleUrl;
   request(styleUrl, params, callback);
 }
 
