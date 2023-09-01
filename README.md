@@ -107,7 +107,11 @@ L.esri.Vector.vectorTileLayer("ITEM_ID", {
   // change `portalUrl` to the ArcGIS Enterprise base url
   // (this is necessary when specifying an ITEM_ID)
   portalUrl: "https://www.arcgis.com", // default value
-  
+
+  // optional: if your layer is not hosted in the same server with your App,
+  // you can add the proxy url with this property
+  proxy: "...", 
+
   // optional: customize the style with a function that gets the default style from the service
   // and returns the new style to be used
   style: (style) => {
@@ -127,6 +131,10 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
   // change `portalUrl` to the ArcGIS Enterprise base url
   // (this may not be necessary when specifying a SERVICE_URL)
   portalUrl: "https://www.arcgis.com", // default value
+
+  // optional: if your layer is not hosted in the same server with your App,
+  // you can add the proxy url with this property
+  proxy: "...", 
   
   // optional: customize the style with a function that gets the default style from the service
   // and returns the new style to be used
@@ -156,21 +164,6 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
 5. Run `npm test` from the command line to execute tests.
 6. Open `examples/quickstart-dev.html` or `examples/quickstart-prod.html` to see local changes in action.
 7. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) if you'd like to share your work.
-
-### Tracker Development Instructions
-1. clone this fork at src/vendorSourceCode. if you don't have this folder, please create at src folder
-2. open terminal as administrator
-```ps
-nvm use 19.5.0
-cd D:\txmap\tracker\src\vendorSourceCode\esri-leaflet-vector\
-npm install
-nvm use 10.18.1
-```
-3. open terminal as administrator
-```ps
-cd D:\txmap\tracker\src\
-.\vectorWatcher.ps1
-```
 
 ## Dependencies
 
