@@ -107,7 +107,11 @@ L.esri.Vector.vectorTileLayer("ITEM_ID", {
   // change `portalUrl` to the ArcGIS Enterprise base url
   // (this is necessary when specifying an ITEM_ID)
   portalUrl: "https://www.arcgis.com", // default value
-  
+
+  // optional: if you need to use the proxy, use the following property.
+  // it should start with 'http...'
+  proxy: "https://your-domain/...", 
+
   // optional: customize the style with a function that gets the default style from the service
   // and returns the new style to be used
   style: (style) => {
@@ -127,6 +131,10 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
   // change `portalUrl` to the ArcGIS Enterprise base url
   // (this may not be necessary when specifying a SERVICE_URL)
   portalUrl: "https://www.arcgis.com", // default value
+
+  // optional: if you need to use the proxy, use the following property.
+  // it should start with 'http...'
+  proxy: "https://your-domain/...", 
   
   // optional: customize the style with a function that gets the default style from the service
   // and returns the new style to be used
