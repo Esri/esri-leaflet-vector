@@ -128,6 +128,10 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
   // (this may not be necessary when specifying a SERVICE_URL)
   portalUrl: "https://www.arcgis.com", // default value
   
+  // optional: set by default to `false` for performance reasons
+  // set to `true` to resolve WebGL printing issues in Firefox
+  preserveDrawingBuffer: false, // default value
+  
   // optional: customize the style with a function that gets the default style from the service
   // and returns the new style to be used
   style: (style) => {

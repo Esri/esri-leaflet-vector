@@ -5,7 +5,10 @@ import { maplibreGLJSLayer } from './MaplibreGLLayer';
 export var VectorTileLayer = Layer.extend({
   options: {
     // if portalUrl is not provided, default to ArcGIS Online
-    portalUrl: 'https://www.arcgis.com'
+    portalUrl: 'https://www.arcgis.com',
+    // for performance optimization default to `false`
+    // set to `true` to resolve printing issues in Firefox
+    preserveDrawingBuffer: false
   },
 
   /**
@@ -100,7 +103,8 @@ export var VectorTileLayer = Layer.extend({
     this._maplibreGL = maplibreGLJSLayer({
       style: style,
       pane: this.options.pane,
-      opacity: this.options.opacity
+      opacity: this.options.opacity,
+      preserveDrawingBuffer: this.options.preserveDrawingBuffer
     });
 
     this._ready = true;
