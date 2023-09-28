@@ -112,7 +112,7 @@ describe('Util', function () {
     expect(style.glyphs).to.equal(`${fullGlyphUrl}?token=${token}`);
   });
 
-  it('should include the token in the glyph URL when the the URL does start with http', function () {
+  it('should include the token in the glyph URL when the glyph URL start with https', function () {
     const token = 'asdf';
     const glyphUrl = 'https://tiles.arcgis.com/tiles/U2DMZtrcqfn913et/arcgis/rest/services/DynamicConsumerMapWebMercator/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf';
 
