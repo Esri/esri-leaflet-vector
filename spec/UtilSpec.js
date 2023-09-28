@@ -48,7 +48,7 @@ describe('Util', function () {
     expect(style.sprite).to.equal(`${fullSpriteUrl}?token=${token}`);
   });
 
-  it('should include the token in the sprite URL when the the URL does start with http', function () {
+  it('should include the token in the sprite URL when the the sprite URL starts with https', function () {
     const spriteUrl =
       'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120';
     const token = 'asdf';
