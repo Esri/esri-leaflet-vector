@@ -13,7 +13,7 @@ const metadata = {
 };
 
 describe('Util', function () {
-  it('should include the token in the sprite URL when the sprite URL is realative and the style URL starts with https', function () {
+  it('should include the token in the sprite URL when the the URL does not start with http', function () {
     const spriteUrl = '../sprites/sprite';
     const token = 'asdf';
     const styleUrl =
@@ -48,9 +48,11 @@ describe('Util', function () {
     expect(style.sprite).to.equal(`${fullSpriteUrl}?token=${token}`);
   });
 
-  it('should include the token in the sprite URL when the the sprite URL starts with https', function () {
+  it('should include the token in the sprite URL when the the URL does start with http', function () {
     const spriteUrl =
       'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120';
+    const styleUrl =
+      'https://www.arcgis.com/sharing/rest/content/items/asdf/resources/styles/root.json';
     const token = 'asdf';
 
     const style = L.esri.Vector.Util.formatStyle(
@@ -71,7 +73,7 @@ describe('Util', function () {
         },
         layers: []
       },
-      'nope',
+      styleUrl,
       metadata,
       token
     );
@@ -79,7 +81,7 @@ describe('Util', function () {
     expect(style.sprite).to.equal(`${spriteUrl}?token=${token}`);
   });
 
-  it('should include the token in the glyph URL when the glyph URL is relative and the style URL starts with https', function () {
+  it('should include the token in the glyph URL when the the URL does not start with http', function () {
     const token = 'asdf';
     const styleUrl =
       'https://tiles.arcgis.com/tiles/test/arcgis/rest/services/test/VectorTileServer/resources/styles/root.json';
@@ -112,9 +114,11 @@ describe('Util', function () {
     expect(style.glyphs).to.equal(`${fullGlyphUrl}?token=${token}`);
   });
 
-  it('should include the token in the glyph URL when the glyph URL start with https', function () {
+  it('should include the token in the glyph URL when the the URL does start with http', function () {
     const token = 'asdf';
-    const glyphUrl = 'https://tiles.arcgis.com/tiles/U2DMZtrcqfn913et/arcgis/rest/services/DynamicConsumerMapWebMercator/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf';
+    const glyphUrl = 'https://www.arcgis.com/sharing/rest/content/items/123456789//resources/fonts/{fontstack}/{range}.pbf';
+    const styleUrl =
+      'https://www.arcgis.com/sharing/rest/content/items/asdf/resources/styles/root.json';
 
     const style = L.esri.Vector.Util.formatStyle(
       {
@@ -134,7 +138,7 @@ describe('Util', function () {
         },
         layers: []
       },
-      'nope',
+      styleUrl,
       metadata,
       token
     );

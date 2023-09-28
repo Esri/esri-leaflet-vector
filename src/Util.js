@@ -142,6 +142,10 @@ function loadStyleFromUrl (styleUrl, options, callback) {
   request(styleUrl, params, callback);
 }
 
+function isSameTLD (url1, url2) {
+  return (new URL(url1)).hostname === (new URL(url2)).hostname;
+}
+
 export function formatStyle (style, styleUrl, metadata, token) {
   // transforms style object in place and also returns it
 
@@ -212,8 +216,12 @@ export function formatStyle (style, styleUrl, metadata, token) {
     );
   }
   if (style.sprite && token) {
-    // add the token to the style.sprite property as a query param
-    style.sprite += '?token=' + token;
+    // add the token to the style.sprite property as a query param, only if same domain (for token security)
+    if (isSameTLD(styleUrl, style.sprite)) {
+      style.sprite += '?token=' + token;
+    } else {
+      console.warn('Passing a token but sprite URL is not on same base URL, so you must pass the token manually.');
+    }
   }
 
   if (style.glyphs && style.glyphs.indexOf('http') === -1) {
@@ -226,7 +234,11 @@ export function formatStyle (style, styleUrl, metadata, token) {
 
   if (style.glyphs && token) {
     // add the token to the style.glyphs property as a query param
-    style.glyphs += '?token=' + token;
+    if (isSameTLD(styleUrl, style.glyphs)) {
+      style.glyphs += '?token=' + token;
+    } else {
+      console.warn('Passing a token but glyph URL is not on same base URL, so you must pass the token manually.');
+    }
   }
 
   return style;
