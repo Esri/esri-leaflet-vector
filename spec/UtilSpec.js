@@ -79,7 +79,7 @@ describe('Util', function () {
     expect(style.sprite).to.equal(`${spriteUrl}?token=${token}`);
   });
 
-  it('should include the token in the glyph URL when the the URL does not start with http', function () {
+  it('should include the token in the glyph URL when the glyph URL is relative and the style URL starts with https', function () {
     const token = 'asdf';
     const styleUrl =
       'https://tiles.arcgis.com/tiles/test/arcgis/rest/services/test/VectorTileServer/resources/styles/root.json';
