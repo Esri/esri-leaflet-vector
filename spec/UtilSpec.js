@@ -13,7 +13,7 @@ const metadata = {
 };
 
 describe('Util', function () {
-  it('should include the token in the sprite URL when the the URL does not start with http', function () {
+  it('should include the token in the sprite URL when the sprite URL is realative and the style URL starts with https', function () {
     const spriteUrl = '../sprites/sprite';
     const token = 'asdf';
     const styleUrl =
