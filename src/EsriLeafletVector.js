@@ -5,3 +5,4 @@ export { version as VERSION };
 
 export { VectorBasemapLayer, vectorBasemapLayer } from './VectorBasemapLayer';
 export { VectorTileLayer, vectorTileLayer } from './VectorTileLayer';
+export { MaplibreGLJSLayer, maplibreGLJSLayer } from './MaplibreGLLayer';
