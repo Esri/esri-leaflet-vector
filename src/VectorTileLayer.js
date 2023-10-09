@@ -63,7 +63,7 @@ export var VectorTileLayer = Layer.extend({
           this.fire('load-error', {
             value: error
           });
-          console.log('An error occured: ' + error.message);
+          console.log('An error occurred: ' + error.message);
           return;
         }
 
