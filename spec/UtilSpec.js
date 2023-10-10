@@ -13,7 +13,7 @@ const metadata = {
 };
 
 describe('Util', function () {
-  it('should include the token in the sprite URL when the the URL does not start with http', function () {
+  it('should include the token in the sprite URL when the sprite URL is relative', function () {
     const spriteUrl = '../sprites/sprite';
     const token = 'asdf';
     const styleUrl =
@@ -48,7 +48,7 @@ describe('Util', function () {
     expect(style.sprite).to.equal(`${fullSpriteUrl}?token=${token}`);
   });
 
-  it('should include the token in the sprite URL when the the URL does start with http', function () {
+  it('should include the token in the sprite URL when the sprite URL starts with https', function () {
     const spriteUrl =
       'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120';
     const styleUrl =
@@ -81,8 +81,9 @@ describe('Util', function () {
     expect(style.sprite).to.equal(`${spriteUrl}?token=${token}`);
   });
 
-  it('should include the token in the glyph URL when the the URL does not start with http', function () {
+  it('should include the token in the glyph URL when the glyph URL is relative', function () {
     const token = 'asdf';
+    const glyphUrl = '../fonts/{fontstack}/{range}.pbf';
     const styleUrl =
       'https://tiles.arcgis.com/tiles/test/arcgis/rest/services/test/VectorTileServer/resources/styles/root.json';
     const fullGlyphUrl =
@@ -92,7 +93,7 @@ describe('Util', function () {
       {
         version: 8,
         sprite: 'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120',
-        glyphs: '../fonts/{fontstack}/{range}.pbf',
+        glyphs: glyphUrl,
         sources: {
           esri: {
             type: 'vector',
@@ -114,7 +115,7 @@ describe('Util', function () {
     expect(style.glyphs).to.equal(`${fullGlyphUrl}?token=${token}`);
   });
 
-  it('should include the token in the glyph URL when the the URL does start with http', function () {
+  it('should include the token in the glyph URL when the glyph URL starts with https', function () {
     const token = 'asdf';
     const glyphUrl = 'https://www.arcgis.com/sharing/rest/content/items/123456789//resources/fonts/{fontstack}/{range}.pbf';
     const styleUrl =
