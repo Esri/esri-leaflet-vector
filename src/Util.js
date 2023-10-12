@@ -142,6 +142,10 @@ function loadStyleFromUrl (styleUrl, options, callback) {
   request(styleUrl, params, callback);
 }
 
+function isSameTLD (url1, url2) {
+  return (new URL(url1)).hostname === (new URL(url2)).hostname;
+}
+
 export function formatStyle (style, styleUrl, metadata, token) {
   // transforms style object in place and also returns it
 
@@ -210,9 +214,14 @@ export function formatStyle (style, styleUrl, metadata, token) {
       'styles/root.json',
       style.sprite.replace('../', '')
     );
-
-    // add the token to the style.sprite property as a query param
-    style.sprite += token ? '?token=' + token : '';
+  }
+  if (style.sprite && token) {
+    // add the token to the style.sprite property as a query param, only if same domain (for token security)
+    if (isSameTLD(styleUrl, style.sprite)) {
+      style.sprite += '?token=' + token;
+    } else {
+      console.warn('Passing a token but sprite URL is not on same base URL, so you must pass the token manually.');
+    }
   }
 
   if (style.glyphs && style.glyphs.indexOf('http') === -1) {
@@ -221,9 +230,15 @@ export function formatStyle (style, styleUrl, metadata, token) {
       'styles/root.json',
       style.glyphs.replace('../', '')
     );
+  }
 
+  if (style.glyphs && token) {
     // add the token to the style.glyphs property as a query param
-    style.glyphs += token ? '?token=' + token : '';
+    if (isSameTLD(styleUrl, style.glyphs)) {
+      style.glyphs += '?token=' + token;
+    } else {
+      console.warn('Passing a token but glyph URL is not on same base URL, so you must pass the token manually.');
+    }
   }
 
   return style;
@@ -277,3 +292,9 @@ const WEB_MERCATOR_WKIDS = [3857, 102100, 102113];
 export function isWebMercator (wkid) {
   return WEB_MERCATOR_WKIDS.indexOf(wkid) >= 0;
 }
+
+export var EsriUtil = {
+  formatStyle: formatStyle
+};
+
+export default EsriUtil;
