@@ -44,7 +44,7 @@
       }).setView([35.7088, 48.8790], 4);
 
 
-      const apiKey = "< YOUR VALID API KEY HERE >";
+      const apiKey = "< YOUR ARCGIS API KEY HERE >";
 
       const basemapStyle = "arcgis/outdoor";
 
@@ -97,6 +97,9 @@
       };
 
       L.control.layers(basemapLayers, null, { collapsed: false }).addTo(map);
+
+      // Support RTL languages such as Arabic and Hebrew
+      L.esri.Vector.setRTLTextPlugin('https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js');
 
     </script>
 

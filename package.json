@@ -6,7 +6,8 @@
   "contributors": [
     "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
     "Gavin Rehkemper <grehkemper@esri.com> (https://gavinr.com)",
-    "Jacob Wasilkowski (https://jwasilgeo.github.io)"
+    "Jacob Wasilkowski (https://jwasilgeo.github.io)",
+    "George Owen (https://geowen.dev/)"
   ],
   "bugs": {
     "url": "https://github.com/Esri/esri-leaflet-vector/issues"
