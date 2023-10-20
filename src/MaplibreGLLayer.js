@@ -9,6 +9,10 @@ import {
 } from 'leaflet';
 import maplibregl from 'maplibre-gl';
 
+export const setRTLTextPlugin = (url, callback, deferred) => {
+  maplibregl.setRTLTextPlugin(url, callback, deferred);
+};
+
 export var MaplibreGLJSLayer = Layer.extend({
   options: {
     updateInterval: 32,
