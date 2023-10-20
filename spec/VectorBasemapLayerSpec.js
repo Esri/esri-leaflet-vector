@@ -225,4 +225,71 @@ describe('VectorBasemapLayer', function () {
       expect(attributionUrls[0]).to.equal('https://static.arcgis.com/attribution/Vector/World_Basemap_v2');
     });
   });
+
+  describe('_setupAttribution', function () {
+    it('should add attribution for non itemId item', function () {
+      const key = 'ArcGIS:Streets';
+      const layer = new L.esri.Vector.VectorBasemapLayer(key, {
+        token: apikey
+      });
+      layer._ready = false;
+      let attributionValue = '';
+      const fakeMap = {
+        attributionControl: {
+          _container: { className: '', querySelector: () => {} },
+          addAttribution: function () {
+            attributionValue = arguments[0];
+          }
+        },
+        getSize: function () {
+          return { x: 0, y: 0 };
+        },
+        on: function () {}
+      };
+      layer.onAdd(fakeMap);
+      layer._setupAttribution();
+      expect(attributionValue).to.be.equal('<span class="esri-dynamic-attribution"></span>');
+    });
+
+    it('should add attribution for itemId item', function () {
+      const key = '3e1a00aeae81496587988075fe529f71';
+      const layer = new L.esri.Vector.VectorBasemapLayer(key, {
+        token: apikey
+      });
+      layer._ready = false;
+      let attributionValue = '?';
+      const fakeMap = {
+        attributionControl: {
+          _container: { className: '', querySelector: () => {} },
+          addAttribution: function () {
+            console.warn('addAttribution', arguments);
+            attributionValue = arguments[0];
+          }
+        },
+        getSize: function () {
+          return { x: 0, y: 0 };
+        },
+        on: function () {}
+      };
+      layer.onAdd(fakeMap);
+      layer._maplibreGL.getMaplibreMap = function () {
+        return {
+          style: {
+            stylesheet: {
+              sources: {
+                one: {
+                  attribution: '@ my attribution',
+                  copyrightText: '@ my copyright text'
+                }
+              }
+            }
+          }
+        };
+      };
+
+      layer._setupAttribution();
+      const expectedAttributionValue = '<span class="esri-dynamic-attribution">@ my attribution, @ my copyright text</span>';
+      expect(attributionValue).to.be.equal(expectedAttributionValue);
+    });
+  });
 });

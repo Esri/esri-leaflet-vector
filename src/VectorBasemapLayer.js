@@ -73,7 +73,7 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
         }
       });
 
-      this._map.attributionControl.addAttribution('<span class="">' + allAttributions.join(', ') + '</span>');
+      this._map.attributionControl.addAttribution(`<span class="esri-dynamic-attribution">${allAttributions.join(', ')}</span>`);
     } else {
       // this is an enum
       if (!this.options.attributionUrls) {
@@ -142,8 +142,11 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
 
       if (element && element.length > 0) {
         const vectorAttribution = element[0].outerHTML;
-        // this doesn't work, not sure why.
+        // call removeAttribution twice here
+        // this is needed due to the 2 different ways that addAttribution is called inside _setupAttribution.
+        // leaflet attributionControl.removeAttribution method ignore a call when the attribution sent is not present there
         map.attributionControl.removeAttribution(vectorAttribution);
+        map.attributionControl.removeAttribution('<span class="esri-dynamic-attribution"></span>');
       }
     }
   },
