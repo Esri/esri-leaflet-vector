@@ -1,3 +1,4 @@
+
 /* eslint-env mocha */
 const itemId = '287c07ef752246d08bb4712fd4b74438';
 const apikey = '1234';
@@ -236,6 +237,7 @@ describe('VectorBasemapLayer', function () {
       let attributionValue = '';
       const fakeMap = {
         attributionControl: {
+          setPrefix: function () {},
           _container: { className: '', querySelector: () => {} },
           addAttribution: function () {
             attributionValue = arguments[0];
@@ -260,6 +262,7 @@ describe('VectorBasemapLayer', function () {
       let attributionValue = '?';
       const fakeMap = {
         attributionControl: {
+          setPrefix: function () {},
           _container: { className: '', querySelector: () => {} },
           addAttribution: function () {
             console.warn('addAttribution', arguments);
