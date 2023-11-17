@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Esri Leaflet Vector: Display basemap places</title>
+
+  <!-- Load Leaflet from CDN or local node_modules -->
+  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+  <script src="../node_modules/leaflet/dist/leaflet.js"></script>
+
+  <!--
+    Load maplibre-gl from CDN or local node_modules for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
+    (note also that loading maplibre-gl.css is not necessary)
+  -->
+  <script src="../node_modules/maplibre-gl/dist/maplibre-gl.js"></script>
+
+  <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
+  <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
+  <script src="../dist/esri-leaflet-vector-debug.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        color: #323232;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      const map = L.map("map", {
+        minZoom: 2
+      }).setView([35.7088, 48.8790], 4);
+      
+      const apiKey = "AAPKcc58d292d8d24415af677a38d7adbcc1vMHlBBqqnttVrFKhCQWB8nT8YPjlQs3HPY3fKeV7-__w6LuMKgmag1MubRUgaAaA";
+
+      const basemapStyle = "arcgis/light-gray";
+
+      const getLayer = worldview => {
+        return L.esri.Vector.vectorBasemapLayer(basemapStyle, {
+            apiKey: apiKey,
+            version: 2,
+            worldview:worldview
+        })
+      }
+      const worldviewOptions = {
+        "china":getLayer("china").addTo(map),
+        "india":getLayer("india"),
+        "israel":getLayer("israel"),
+        "japan":getLayer("japan"),
+        "morocco":getLayer("morocco"),
+        "pakistan":getLayer("pakistan"),
+        "southKorea":getLayer("southKorea"),
+        "unitedArabEmirates":getLayer("unitedArabEmirates"),
+        "vietnam":getLayer("vietnam")
+      };
+
+      L.control.layers(worldviewOptions, null, { collapsed: false }).addTo(map);
+
+      map.on('baselayerchange', e=>{
+        console.log(e);
+      })
+    </script>
+
+  </body>
+</html>
