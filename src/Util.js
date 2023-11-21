@@ -46,9 +46,9 @@ export function getBasemapStyleV2Url (style, token, options) {
   if (options.worldview) {
     url = url + '&worldview=' + options.worldview;
   }
-  /* if (options.places) {
+  if (options.places) {
     url = url + '&places=' + options.places;
-  } */
+  }
   return url;
 }
 /*

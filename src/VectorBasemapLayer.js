@@ -31,9 +31,9 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
       if (options.worldview) {
         throw new Error('The worldview parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
       }
-      /* if (options.places) {
+      if (options.places) {
         throw new Error('The places parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
-      } */
+      }
     }
     // Determine layer order
     if (!options.pane) {
@@ -59,8 +59,8 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
     if (this.options.version && this.options.version === 2) {
       styleUrl = getBasemapStyleV2Url(this.options.key, this.options.apikey, {
         language: this.options.language,
-        worldview: this.options.worldview
-        // places: this.options.places
+        worldview: this.options.worldview,
+        places: this.options.places
       });
     } else {
       styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
