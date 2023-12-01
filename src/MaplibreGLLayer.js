@@ -82,7 +82,7 @@ export var MaplibreGLJSLayer = Layer.extend({
   getEvents: function () {
     return {
       move: this._throttledUpdate, // sensibly throttle updating while panning
-      zoomanim: this._animateZoom, // applys the zoom animation to the <canvas>
+      zoomanim: this._animateZoom, // applies the zoom animation to the <canvas>
       zoom: this._pinchZoom, // animate every zoom event for smoother pinch-zooming
       zoomstart: this._zoomStart, // flag starting a zoom to disable panning
       zoomend: this._zoomEnd,
@@ -129,6 +129,10 @@ export var MaplibreGLJSLayer = Layer.extend({
     return this._map.getPane(this.options.pane)
       ? this.options.pane
       : 'tilePane';
+  },
+
+  _resize: function () {
+    return this._glMap._resize;
   },
 
   _initContainer: function () {
@@ -198,7 +202,7 @@ export var MaplibreGLJSLayer = Layer.extend({
   },
 
   _update: function (e) {
-    // update the offset so we can correct for it later when we zoom
+    // update the offset, so we can correct for it later when we zoom
     this._offset = this._map.containerPointToLayerPoint([0, 0]);
 
     if (this._zooming) {
