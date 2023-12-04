@@ -38,34 +38,29 @@
   </head>
   <body>
     <div id="map"></div>
-    <script>
+    <script type="module">
       const map = L.map("map", {
         minZoom: 2
       }).setView([35.7088, 48.8790], 4);
       
-      const apiKey = "<YOUR ARCGIS API KEY HERE>";
+      const apiKey = "< YOUR ARCGIS API KEY HERE >";
 
       const basemapStyle = "arcgis/light-gray";
 
-      const getLayer = worldview => {
+      const getLayer = code => {
         return L.esri.Vector.vectorBasemapLayer(basemapStyle, {
             apiKey: apiKey,
             version: 2,
-            worldview:worldview
+            worldview:code
         })
       }
-      const worldviewOptions = {
-        "china":getLayer("china").addTo(map),
-        "india":getLayer("india"),
-        "israel":getLayer("israel"),
-        "japan":getLayer("japan"),
-        "morocco":getLayer("morocco"),
-        "pakistan":getLayer("pakistan"),
-        "southKorea":getLayer("southKorea"),
-        "unitedArabEmirates":getLayer("unitedArabEmirates"),
-        "vietnam":getLayer("vietnam")
-      };
 
+      // Retrieve list of supported worldviews from /self url
+      const selfUrl = 'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/self'
+      const worldviews = (await (await fetch(selfUrl, {method:'GET'})).json()).worldviews;
+
+      // Add leaflet control to map
+      const worldviewOptions = Object.fromEntries(worldviews.map(worldview => [worldview.name,getLayer(worldview.code)]));
       L.control.layers(worldviewOptions, null, { collapsed: false }).addTo(map);
 
       map.on('baselayerchange', e=>{

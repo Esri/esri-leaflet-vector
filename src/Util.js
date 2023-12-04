@@ -23,8 +23,8 @@ export function getBasemapStyleUrl (style, apikey) {
 /**
  * Utility to establish a URL for the basemap styles API v2
  *
- * @param {string} style 
- * @param {string} token 
+ * @param {string} style
+ * @param {string} token
  * @param {Object} [options] Optional list of options: language, worldview, or places.
  * @returns {string} the URL
  */
