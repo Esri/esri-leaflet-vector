@@ -20,6 +20,14 @@ export function getBasemapStyleUrl (style, apikey) {
   return url;
 }
 
+/**
+ * Utility to establish a URL for the basemap styles API v2
+ *
+ * @param {string} style 
+ * @param {string} token 
+ * @param {Object} [options] Optional list of options: language, worldview, or places.
+ * @returns {string} the URL
+ */
 export function getBasemapStyleV2Url (style, token, options) {
   if (style.includes(':')) {
     throw new Error(style + ' is a v1 style enumeration. Set version:1 to request this style');
