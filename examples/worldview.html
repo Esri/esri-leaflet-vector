@@ -56,13 +56,12 @@
       }
 
       // Retrieve list of supported worldviews from /self url
-      const selfUrl = 'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/self'
-      const worldviews = (await (await fetch(selfUrl, {method:'GET'})).json()).worldviews;
-
-      // Add leaflet control to map
-      const worldviewOptions = Object.fromEntries(worldviews.map(worldview => [worldview.name,getLayer(worldview.code)]));
-      L.control.layers(worldviewOptions, null, { collapsed: false }).addTo(map);
-
+      L.esri.get('https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/self',{}, (error,response)=>{
+        // Add leaflet control to map
+        const worldviewOptions = Object.fromEntries(response.worldviews.map(worldview => [worldview.name,getLayer(worldview.code)]));
+        L.control.layers(worldviewOptions, null, { collapsed: false }).addTo(map);
+      })
+      
       map.on('baselayerchange', e=>{
         console.log(e);
       })
