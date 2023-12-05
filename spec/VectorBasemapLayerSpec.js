@@ -5,6 +5,8 @@ const basemapKey = 'ArcGIS:Streets';
 const basemapKeyV2 = 'arcgis/streets';
 const customBasemap = 'f04f33b9626240f084cb52f0b08758ef';
 const language = 'zh_s';
+const worldview = 'morocco';
+const places = 'attributed';
 
 describe('VectorBasemapLayer', function () {
   it('should have a L.esri.vectorBasemapLayer alias', function () {
@@ -129,14 +131,18 @@ describe('VectorBasemapLayer', function () {
     expect(layer.options.version).to.equal(2);
   });
 
-  it('should save the language from the constructor', function () {
+  it('should save the language and worldview parameters from the constructor', function () {
     const layer = new L.esri.Vector.vectorBasemapLayer(basemapKeyV2, {
       apikey: apikey,
       version: 2,
-      language: language
+      language: language,
+      worldview: worldview,
+      places: places
     });
 
     expect(layer.options.language).to.equal(language);
+    expect(layer.options.worldview).to.equal(worldview);
+    expect(layer.options.places).to.equal(places);
   });
 
   it('should error if a language is provided when accessing the v1 service', function () {
@@ -146,6 +152,24 @@ describe('VectorBasemapLayer', function () {
         language: language
       });
     }).to.throw('The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
+  });
+
+  it('should error if a worldview is provided when accessing the v1 service', function () {
+    expect(function () {
+      L.esri.Vector.vectorBasemapLayer(basemapKey, {
+        apikey: apikey,
+        worldview: worldview
+      });
+    }).to.throw('The worldview parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
+  });
+
+  it('should error if a places parameter is provided when accessing the v1 service', function () {
+    expect(function () {
+      L.esri.Vector.vectorBasemapLayer(basemapKey, {
+        apikey: apikey,
+        places: places
+      });
+    }).to.throw('The places parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
   });
 
   it('should not accept a v2 style enumeration when accessing the v1 service', function () {

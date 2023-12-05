@@ -20,7 +20,15 @@ export function getBasemapStyleUrl (style, apikey) {
   return url;
 }
 
-export function getBasemapStyleV2Url (style, apikey, language) {
+/**
+ * Utility to establish a URL for the basemap styles API v2
+ *
+ * @param {string} style
+ * @param {string} token
+ * @param {Object} [options] Optional list of options: language, worldview, or places.
+ * @returns {string} the URL
+ */
+export function getBasemapStyleV2Url (style, token, options) {
   if (style.includes(':')) {
     throw new Error(style + ' is a v1 style enumeration. Set version:1 to request this style');
   }
@@ -30,19 +38,24 @@ export function getBasemapStyleV2Url (style, apikey, language) {
     // style is an itemID
     url = url + 'items/' + style;
 
-    if (language) {
+    if (options.language) {
       throw new Error('The \'language\' parameter is not supported for custom basemap styles');
     }
   } else {
     url = url + style;
   }
 
-  if (apikey) {
-    url = url + '?token=' + apikey;
+  if (!token) throw new Error('A token is required to access basemap styles.');
 
-    if (language) {
-      url = url + '&language=' + language;
-    }
+  url = url + '?token=' + token;
+  if (options.language) {
+    url = url + '&language=' + options.language;
+  }
+  if (options.worldview) {
+    url = url + '&worldview=' + options.worldview;
+  }
+  if (options.places) {
+    url = url + '&places=' + options.places;
   }
   return url;
 }
