@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [4.2.3] - 2023-12-07
+
+### Added
+
+* Added worldview and places params ([#214](https://github.com/Esri/esri-leaflet-vector/pull/214))
+
+### Fixed
+
+* Fixed `wrong listener type: undefined` console warning ([#211](https://github.com/Esri/esri-leaflet-vector/pull/211))
+
 ## [4.2.2] - 2023-10-23
 
 ### Fixed
@@ -254,8 +264,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.2...HEAD
-[4.2.1]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.1...v4.2.2
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.3...HEAD
+[4.2.1]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.2...v4.2.3
 [4.2.0]: https://github.com/esri/esri-leaflet-vector/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.2...v4.1.0
 [4.0.2]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.1...v4.0.2
