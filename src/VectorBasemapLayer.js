@@ -138,7 +138,8 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
     map.removeLayer(this._maplibreGL);
 
     if (map.attributionControl) {
-      Util.removeEsriAttribution(map);
+      if (Util.removeEsriAttribution) Util.removeEsriAttribution(map);
+
       const element = document.getElementsByClassName('esri-dynamic-attribution');
 
       if (element && element.length > 0) {
