@@ -1,3 +1,4 @@
+
 /* eslint-env mocha */
 const itemId = '287c07ef752246d08bb4712fd4b74438';
 const apikey = '1234';
@@ -247,6 +248,104 @@ describe('VectorBasemapLayer', function () {
       const attributionUrls = layer._getAttributionUrls(key);
       expect(attributionUrls.length).to.equal(1);
       expect(attributionUrls[0]).to.equal('https://static.arcgis.com/attribution/Vector/World_Basemap_v2');
+    });
+  });
+
+  describe('_setupAttribution', function () {
+    it('should add attribution for non itemId item', function () {
+      const key = 'ArcGIS:Streets';
+      const layer = new L.esri.Vector.VectorBasemapLayer(key, {
+        token: apikey
+      });
+      layer._ready = false;
+      let attributionValue = '';
+      const fakeMap = {
+        attributionControl: {
+          setPrefix: function () {},
+          _container: { className: '', querySelector: () => {} },
+          addAttribution: function () {
+            attributionValue = arguments[0];
+          }
+        },
+        getSize: function () {
+          return { x: 0, y: 0 };
+        },
+        on: function () {}
+      };
+      layer.onAdd(fakeMap);
+      layer._setupAttribution();
+      expect(attributionValue).to.be.equal('<span class="esri-dynamic-attribution"></span>');
+    });
+
+    it('should add attribution for itemId item', function () {
+      const key = '3e1a00aeae81496587988075fe529f71';
+      const layer = new L.esri.Vector.VectorBasemapLayer(key, {
+        token: apikey
+      });
+      layer._ready = false;
+      let attributionValue = '?';
+      const fakeMap = {
+        attributionControl: {
+          setPrefix: function () {},
+          _container: { className: '', querySelector: () => {} },
+          addAttribution: function () {
+            attributionValue = arguments[0];
+          }
+        },
+        getSize: function () {
+          return { x: 0, y: 0 };
+        },
+        on: function () {}
+      };
+      layer.onAdd(fakeMap);
+      layer._maplibreGL.getMaplibreMap = function () {
+        return {
+          style: {
+            stylesheet: {
+              sources: {
+                one: {
+                  attribution: '@ my attribution',
+                  copyrightText: '@ my copyright text'
+                }
+              }
+            }
+          }
+        };
+      };
+
+      layer._setupAttribution();
+      const expectedAttributionValue = '<span class="esri-dynamic-attribution">@ my attribution, @ my copyright text</span>';
+      expect(attributionValue).to.be.equal(expectedAttributionValue);
+    });
+  });
+
+  describe('onRemove', function () {
+    it('should call esri-leaflet and attributionControl remove attribution methods', function () {
+      const key = 'ArcGIS:Streets';
+      const layer = new L.esri.Vector.VectorBasemapLayer(key, {
+        token: apikey
+      });
+      layer._ready = false;
+      const fakeMap = {
+        attributionControl: {
+          removeAttribution: function () {}
+        },
+        off: function () {},
+        removeLayer: function () {}
+      };
+
+      const attributionControlSpy = sinon.spy(fakeMap.attributionControl);
+      const utilSpy = sinon.spy(L.esri.Util, 'removeEsriAttribution');
+
+      sinon.stub(document, 'getElementsByClassName').callsFake(function () {
+        return [{ outerHTML: '<div>' }];
+      });
+
+      layer.onRemove(fakeMap);
+      document.getElementsByClassName.restore();
+
+      expect(utilSpy.calledWith(fakeMap)).to.be.true;
+      expect(attributionControlSpy.removeAttribution.callCount).to.be.equal(2);
     });
   });
 });
