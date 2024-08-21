@@ -13,7 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Updated
 
-* Updated maplibre-gl dependency to v4 ([#222](https://github.com/Esri/esri-leaflet-vector/pull/222))
+* Updated maplibre-gl dependency to v4 ([#219](https://github.com/Esri/esri-leaflet-vector/pull/219))
 * Updated dependencies ([#223](https://github.com/Esri/esri-leaflet-vector/pull/223))
 
 ## [4.2.3] - 2023-12-07
