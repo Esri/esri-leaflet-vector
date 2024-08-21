@@ -94,7 +94,7 @@ Please see [the documentation](https://developers.arcgis.com/esri-leaflet/api-re
 
 For custom vector tiles layers published from user data. Extends [L.Layer](https://leafletjs.com/reference#layer).
 
-:warning: This only supports services using the Web Mercator projection because it [relies directly upon `maplibre-gl-js`](#dependencies). Otherwise, the layer is not guaranteed to display properly. More information is available at [Maplibre custom coordinate system](https://roadmap.maplibre.org/c/91-custom-coordinate-system-epsg-non-mercator-projection).
+:warning: This only supports services using the Web Mercator projection because it [relies directly upon `maplibre-gl-js`](#dependencies). Otherwise, the layer is not guaranteed to display properly. More information is available at [Maplibre custom coordinate system](https://maplibre.org/roadmap/non-mercator-projection/).
 
 ```javascript
 // example using an ITEM_ID
