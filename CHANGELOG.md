@@ -5,6 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [4.2.4] - 2024-08-21
+
+### Fixed
+
+* Fixed issue where Esri Attribution was not removed when VectorBasemapLayer was removed ([#208](https://github.com/Esri/esri-leaflet-vector/pull/208))
+
+### Updated
+
+* Updated maplibre-gl dependency to v4 ([#222](https://github.com/Esri/esri-leaflet-vector/pull/222))
+* Updated dependencies ([#223](https://github.com/Esri/esri-leaflet-vector/pull/223))
+
 ## [4.2.3] - 2023-12-07
 
 ### Added
@@ -264,8 +275,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.3...HEAD
-[4.2.1]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.2...v4.2.3
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.4...HEAD
+[4.2.4]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.3...v4.2.4
+[4.2.3]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.2...v4.2.3
+[4.2.2]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.1...v4.2.2
+[4.2.1]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.0...v4.2.1
 [4.2.0]: https://github.com/esri/esri-leaflet-vector/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.2...v4.1.0
 [4.0.2]: https://github.com/esri/esri-leaflet-vector/compare/v4.0.1...v4.0.2
