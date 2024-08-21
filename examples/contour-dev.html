@@ -43,7 +43,7 @@
       "L.version": L.version,
       "L.esri.VERSION": L.esri.VERSION,
       "L.esri.Vector.VERSION": L.esri.Vector.VERSION,
-      "maplibregl.version": maplibregl.version
+      "maplibregl.version": maplibregl.version || maplibregl.getVersion() // at maplibre-gl@4, must call getVersion
     });
 
     var map = L.map("map", {}).setView([34.0739, -118.2400], 15);
