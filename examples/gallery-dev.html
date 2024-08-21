@@ -42,7 +42,7 @@
       "L.version": L.version,
       "L.esri.VERSION": L.esri.VERSION,
       "L.esri.Vector.VERSION": L.esri.Vector.VERSION,
-      "maplibregl.version": maplibregl.version
+      "maplibregl.version": maplibregl.version || maplibregl.getVersion() // at maplibre-gl@4, must call getVersion
     });
 
     // deeper than zoom level 15, missing tiles may be encountered
