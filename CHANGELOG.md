@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.2.4] - 2024-08-21
 
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `4.5.0`.
+
 ### Fixed
 
 * Fixed issue where Esri Attribution was not removed when VectorBasemapLayer was removed ([#208](https://github.com/Esri/esri-leaflet-vector/pull/208))
@@ -18,6 +20,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.2.3] - 2023-12-07
 
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `3.3.1`.
+
 ### Added
 
 * Added worldview and places params ([#214](https://github.com/Esri/esri-leaflet-vector/pull/214))
@@ -28,17 +32,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.2.2] - 2023-10-23
 
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `3.3.1`.
+
 ### Fixed
 
 * Adds support for RTL language labels by exposing the maplibre `setRTLTextPlugin` method ([#207](https://github.com/Esri/esri-leaflet-vector/pull/207))
 
 ## [4.2.1] - 2023-10-18
 
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `3.3.1`.
+
 ### Updated
 
 * Updated maplibre-gl dependency to v3 ([#201](https://github.com/Esri/esri-leaflet-vector/pull/201))
 
 ## [4.2.0] - 2023-10-17
+
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `2.3.0`.
 
 ### Added
 
@@ -51,6 +61,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Export of package version ([#187](https://github.com/Esri/esri-leaflet-vector/pull/187))
 
 ## [4.1.0] - 2023-05-31
+
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `2.3.0`.
 
 ### Added
 
@@ -67,12 +79,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.0.2] - 2023-04-04
 
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `2.3.0`.
+
 ### Fixed
 
 * Fixed layer invisible at certain zoom levels using minLOD/maxLOD ([#166](https://github.com/Esri/esri-leaflet-vector/pull/166))
 * Added `index.d.ts` to release ([#167](https://github.com/Esri/esri-leaflet-vector/pull/167))
 
 ## [4.0.1] - 2023-02-23
+
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `2.3.0`.
 
 ### Fixed
 
@@ -83,6 +99,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Updated dependencies ([#163](https://github.com/Esri/esri-leaflet-vector/pull/163))
 
 ## [4.0.0] - 2022-09-02
+
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `2.3.0`.
 
 ### Updated
 
