@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [4.2.5] - 2024-08-26
+
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `4.6.0`.
+
 ## [4.2.4] - 2024-08-21
 
 ### Fixed
@@ -275,7 +279,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.4...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.5...HEAD
+[4.2.5]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.4...v4.2.5
 [4.2.4]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.3...v4.2.4
 [4.2.3]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.2...v4.2.3
 [4.2.2]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.1...v4.2.2
