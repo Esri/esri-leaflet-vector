@@ -329,6 +329,6 @@ export var MaplibreGLJSLayer = Layer.extend({
   }
 });
 
-export function maplibreGLJSLayer(options) {
+export function maplibreGLJSLayer (options) {
   return new MaplibreGLJSLayer(options);
 }
