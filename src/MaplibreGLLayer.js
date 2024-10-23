@@ -168,6 +168,13 @@ export var MaplibreGLJSLayer = Layer.extend({
 
     this._glMap = new maplibregl.Map(options);
 
+    // Listen for style data error (401 Unauthorized)
+    this._glMap.on('error', function (error) {
+      if (error.error && error.error.status === 401) {
+        console.warn('Invalid API key. Please check your ArcGIS API key.');
+      }
+    });
+
     // Fire event for Maplibre "styledata" event.
     this._glMap.once(
       'styledata',
@@ -322,6 +329,6 @@ export var MaplibreGLJSLayer = Layer.extend({
   }
 });
 
-export function maplibreGLJSLayer (options) {
+export function maplibreGLJSLayer(options) {
   return new MaplibreGLJSLayer(options);
 }
