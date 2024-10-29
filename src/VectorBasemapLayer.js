@@ -65,6 +65,19 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
     } else {
       styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
     }
+    // show error warning on successful response
+    fetch(styleUrl)
+      .then(response => {
+        return response.json();
+      })
+      .then(styleData => {
+        if (styleData.error) {
+          console.warn('Error:', styleData.error.message);
+        }
+      })
+      .catch(err => {
+        console.warn('Error:', err.message);
+      });
     this._createMaplibreLayer(styleUrl);
   },
 
