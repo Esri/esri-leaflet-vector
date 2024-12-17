@@ -2,6 +2,8 @@ import { Util } from 'esri-leaflet';
 import { getBasemapStyleUrl, getAttributionData, getBasemapStyleV2Url } from './Util';
 import { VectorTileLayer } from './VectorTileLayer';
 
+const POWERED_BY_ESRI_ATTRIBUTION_STRING = 'Powered by <a href="https://www.esri.com">Esri</a>';
+
 export var VectorBasemapLayer = VectorTileLayer.extend({
   /**
    * Populates "this.options" to be used in the rest of the module.
@@ -69,9 +71,6 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
   },
 
   _setupAttribution: function () {
-    // Set attribution
-    Util.setEsriAttribution(this._map);
-
     if (this.options.key.length === 32) {
       // this is an itemId
       const sources = this._maplibreGL.getMaplibreMap().style.stylesheet.sources;
@@ -83,7 +82,10 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
         }
       });
 
-      this._map.attributionControl.addAttribution(`<span class="esri-dynamic-attribution">${allAttributions.join(', ')}</span>`);
+      // In the case of an enum, since the attribution is dynamic, Esri Leaflet
+      // will add the "Powered by Esri" string. But in this case we are not
+      // dynamic so we must add it ourselves.
+      this._map.attributionControl.addAttribution(`<span class="esri-dynamic-attribution">${POWERED_BY_ESRI_ATTRIBUTION_STRING} | ${allAttributions.join(', ')}</span>`);
     } else {
       // this is an enum
       if (!this.options.attributionUrls) {

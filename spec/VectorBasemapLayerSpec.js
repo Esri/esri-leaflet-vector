@@ -314,7 +314,7 @@ describe('VectorBasemapLayer', function () {
       };
 
       layer._setupAttribution();
-      const expectedAttributionValue = '<span class="esri-dynamic-attribution">@ my attribution, @ my copyright text</span>';
+      const expectedAttributionValue = '<span class="esri-dynamic-attribution">Powered by <a href="https://www.esri.com">Esri</a> | @ my attribution, @ my copyright text</span>';
       expect(attributionValue).to.be.equal(expectedAttributionValue);
     });
   });
