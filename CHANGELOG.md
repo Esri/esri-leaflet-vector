@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+### Updated
+
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `4.7.1`.
+
 ## [4.2.6] - 2024-12-17
 
 MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `4.6.0`.
