@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [4.2.6] - 2024-12-17
+
+MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `4.6.0`.
+
+### Fixed
+
+* Fixed issue where Esri Attribution was not added properly when using vectorBasemapLayer using an item ID ([#229](https://github.com/Esri/esri-leaflet-vector/pull/229))
+
 ## [4.2.5] - 2024-08-26
 
 MapLibre GL JS version that is included with this version of Esri Leaflet Vector: `4.6.0`.
@@ -297,7 +305,8 @@ MapLibre GL JS version that is included with this version of Esri Leaflet Vector
 
 * Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.5...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.6...HEAD
+[4.2.6]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.5...v4.2.6
 [4.2.5]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.4...v4.2.5
 [4.2.4]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.3...v4.2.4
 [4.2.3]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.2...v4.2.3
