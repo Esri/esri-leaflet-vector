@@ -168,6 +168,13 @@ export var MaplibreGLJSLayer = Layer.extend({
 
     this._glMap = new maplibregl.Map(options);
 
+    // Listen for style data error (401 Unauthorized)
+    this._glMap.on('error', function (error) {
+      if (error.error && error.error.status === 401) {
+        console.warn('Invalid or expired API key. Please check that API key is not expired and has the basemaps privilege assigned.');
+      }
+    });
+
     // Fire event for Maplibre "styledata" event.
     this._glMap.once(
       'styledata',
