@@ -65,19 +65,21 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
     } else {
       styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
     }
-    // show error warning on successful response
-    fetch(styleUrl)
-      .then(response => {
-        return response.json();
-      })
-      .then(styleData => {
-        if (styleData.error) {
-          console.warn('Error:', styleData.error.message);
-        }
-      })
-      .catch(err => {
-        console.warn('Error:', err.message);
-      });
+    // show error warning on successful response for previous version(1)
+    if (this.options.version && this.options.version === 1) {
+      fetch(styleUrl)
+        .then(response => {
+          return response.json();
+        })
+        .then(styleData => {
+          if (styleData.error) {
+            console.warn('Error:', styleData.error.message);
+          }
+        })
+        .catch(error => {
+          console.warn('Error:', error.message);
+        });
+    }
     this._createMaplibreLayer(styleUrl);
   },
 
