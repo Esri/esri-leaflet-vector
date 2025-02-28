@@ -1,10 +1,10 @@
-import { Util } from "esri-leaflet";
+import { Util } from 'esri-leaflet';
 import {
   getBasemapStyleUrl,
   getAttributionData,
-  getBasemapStyleV2Url,
-} from "./Util";
-import { VectorTileLayer } from "./VectorTileLayer";
+  getBasemapStyleV2Url
+} from './Util';
+import { VectorTileLayer } from './VectorTileLayer';
 
 const POWERED_BY_ESRI_ATTRIBUTION_STRING =
   'Powered by <a href="https://www.esri.com">Esri</a>';
@@ -19,46 +19,46 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
   initialize: function (key, options) {
     // Default to the v1 service endpoint
     if (!options.version) {
-      if (key.includes("/")) options.version = 2;
+      if (key.includes('/')) options.version = 2;
       else options.version = 1;
     }
     if (!key) {
       // Default style enum if none provided
-      key = options.version === 1 ? "ArcGIS:Streets" : "arcgis/streets";
+      key = options.version === 1 ? 'ArcGIS:Streets' : 'arcgis/streets';
     }
     // If no API Key or token is provided (support outdated casing apiKey of apikey)
     if (!(options.apikey || options.apiKey || options.token)) {
       throw new Error(
-        "An API Key or token is required for vectorBasemapLayer."
+        'An API Key or token is required for vectorBasemapLayer.'
       );
     }
     // Validate v2 service params
     if (options.version !== 2) {
       if (options.language) {
         throw new Error(
-          "The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option."
+          'The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.'
         );
       }
       if (options.worldview) {
         throw new Error(
-          "The worldview parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option."
+          'The worldview parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.'
         );
       }
       if (options.places) {
         throw new Error(
-          "The places parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option."
+          'The places parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.'
         );
       }
     }
     // Determine layer order
     if (!options.pane) {
-      if (key.includes(":Label") || key.includes("/label")) {
-        options.pane = "esri-labels";
-      } else if (key.includes(":Detail") || key.includes("/detail")) {
-        options.pane = "esri-detail";
+      if (key.includes(':Label') || key.includes('/label')) {
+        options.pane = 'esri-labels';
+      } else if (key.includes(':Detail') || key.includes('/detail')) {
+        options.pane = 'esri-detail';
       } else {
         // Create layer in the tilePane by default
-        options.pane = "tilePane";
+        options.pane = 'tilePane';
       }
     }
 
@@ -75,7 +75,7 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
       styleUrl = getBasemapStyleV2Url(this.options.key, this.options.apikey, {
         language: this.options.language,
         worldview: this.options.worldview,
-        places: this.options.places,
+        places: this.options.places
       });
     } else {
       styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
@@ -88,11 +88,11 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
         })
         .then((styleData) => {
           if (styleData.error) {
-            console.warn("Error:", styleData.error.message);
+            console.warn('Error:', styleData.error.message);
           }
         })
         .catch((error) => {
-          console.warn("Error:", error.message);
+          console.warn('Error:', error.message);
         });
     }
     this._createMaplibreLayer(styleUrl);
@@ -109,7 +109,7 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
         if (
           sources[key].copyrightText &&
           sources[key].copyrightText &&
-          sources[key].copyrightText !== "" &&
+          sources[key].copyrightText !== '' &&
           sources[key].attribution !== sources[key].copyrightText
         ) {
           allAttributions.push(sources[key].copyrightText);
@@ -121,7 +121,7 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
       // dynamic so we must add it ourselves.
       this._map.attributionControl.addAttribution(
         `<span class="esri-dynamic-attribution">${POWERED_BY_ESRI_ATTRIBUTION_STRING} | ${allAttributions.join(
-          ", "
+          ', '
         )}</span>`
       );
     } else {
@@ -160,31 +160,31 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
    * @param {string} key
    */
   _getAttributionUrls: function (key) {
-    if (key.indexOf("OSM:") === 0 || key.indexOf("osm/") === 0) {
-      return ["https://static.arcgis.com/attribution/Vector/OpenStreetMap_v2"];
+    if (key.indexOf('OSM:') === 0 || key.indexOf('osm/') === 0) {
+      return ['https://static.arcgis.com/attribution/Vector/OpenStreetMap_v2'];
     } else if (
-      key.indexOf("ArcGIS:Imagery") === 0 ||
-      key.indexOf("arcgis/imagery") === 0
+      key.indexOf('ArcGIS:Imagery') === 0 ||
+      key.indexOf('arcgis/imagery') === 0
     ) {
       return [
-        "https://static.arcgis.com/attribution/World_Imagery",
-        "https://static.arcgis.com/attribution/Vector/World_Basemap_v2",
+        'https://static.arcgis.com/attribution/World_Imagery',
+        'https://static.arcgis.com/attribution/Vector/World_Basemap_v2'
       ];
     }
 
     // default:
-    return ["https://static.arcgis.com/attribution/Vector/World_Basemap_v2"];
+    return ['https://static.arcgis.com/attribution/Vector/World_Basemap_v2'];
   },
 
   _initPane: function () {
     if (!this._map.getPane(this.options.pane)) {
       const pane = this._map.createPane(this.options.pane);
-      pane.style.pointerEvents = "none";
+      pane.style.pointerEvents = 'none';
 
       let zIndex = 500;
-      if (this.options.pane === "esri-detail") {
+      if (this.options.pane === 'esri-detail') {
         zIndex = 250;
-      } else if (this.options.pane === "esri-labels") {
+      } else if (this.options.pane === 'esri-labels') {
         zIndex = 300;
       }
       pane.style.zIndex = zIndex;
@@ -192,14 +192,14 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
   },
 
   onRemove: function (map) {
-    map.off("moveend", Util._updateMapAttribution);
+    map.off('moveend', Util._updateMapAttribution);
     map.removeLayer(this._maplibreGL);
 
     if (map.attributionControl) {
       if (Util.removeEsriAttribution) Util.removeEsriAttribution(map);
 
       const element = document.getElementsByClassName(
-        "esri-dynamic-attribution"
+        'esri-dynamic-attribution'
       );
 
       if (element && element.length > 0) {
@@ -218,12 +218,12 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
   _asyncAdd: function () {
     const map = this._map;
     this._initPane();
-    map.on("moveend", Util._updateMapAttribution);
+    map.on('moveend', Util._updateMapAttribution);
     this._maplibreGL.addTo(map, this);
-  },
+  }
 });
 
-export function vectorBasemapLayer(key, options) {
+export function vectorBasemapLayer (key, options) {
   return new VectorBasemapLayer(key, options);
 }
 
