@@ -184,8 +184,10 @@ export var MaplibreGLJSLayer = Layer.extend({
     );
 
     // allow GL base map to pan beyond min/max latitudes
-    this._glMap.transform.latRange = null;
-    this._glMap.transform.maxValidLatitude = Infinity;
+    // TODO: PR NOTE: THIS DOES NOT WORK WITH MAPLIBRE GL v5 SO THIS ISSUE IS BACK
+    // ... NEED TO RESOLVE BEFORE MERGING PR?
+    // this._glMap.transform.latRange = null;
+    // this._glMap.transform.maxValidLatitude = Infinity;
 
     this._transformGL(this._glMap);
 
@@ -225,23 +227,6 @@ export var MaplibreGLJSLayer = Layer.extend({
     DomUtil.setPosition(container, topLeft);
 
     this._transformGL(gl);
-
-    if (gl.transform.width !== size.x || gl.transform.height !== size.y) {
-      container.style.width = size.x + 'px';
-      container.style.height = size.y + 'px';
-      if (gl._resize !== null && gl._resize !== undefined) {
-        gl._resize();
-      } else {
-        gl.resize();
-      }
-    } else {
-      // older versions of mapbox-gl surfaced update publicly
-      if (gl._update !== null && gl._update !== undefined) {
-        gl._update();
-      } else {
-        gl.update();
-      }
-    }
   },
 
   _transformGL: function (gl) {
@@ -250,9 +235,11 @@ export var MaplibreGLJSLayer = Layer.extend({
     // gl.setView([center.lat, center.lng], this._map.getZoom() - 1, 0);
     // calling setView directly causes sync issues because it uses requestAnimFrame
 
-    const tr = gl.transform;
-    tr.center = maplibregl.LngLat.convert([center.lng, center.lat]);
-    tr.zoom = this._map.getZoom() - 1;
+    const tr = gl._getTransformForUpdate(); // .clone() ?
+    tr.setCenter(maplibregl.LngLat.convert([center.lng, center.lat]));
+    tr.setZoom(this._map.getZoom() - 1);
+    gl.transform.apply(tr);
+    gl._fireMoveEvents();
   },
 
   // update the map constantly during a pinch zoom
