@@ -98,11 +98,12 @@ function loadItem (itemId, options, callback) {
 }
 
 function loadStyleFromItem (itemId, options, callback) {
-  const itemStyleUrl =
+  const itemStyleUrl = toCdnUrl(
     options.portalUrl +
-    '/sharing/rest/content/items/' +
-    itemId +
-    '/resources/styles/root.json';
+      '/sharing/rest/content/items/' +
+      itemId +
+      '/resources/styles/root.json'
+  );
 
   loadStyleFromUrl(itemStyleUrl, options, function (error, style) {
     if (error) {
