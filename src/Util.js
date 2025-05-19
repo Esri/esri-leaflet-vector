@@ -45,7 +45,7 @@ export function getBasemapStyleV2Url(style, token, options) {
 
   let url =
     options.baseUrl ||
-    "https://basemapstylesdev-api.arcgis.com/arcgis/rest/services/styles/v2/styles/";
+    "https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/";
 
   if (
     !(
