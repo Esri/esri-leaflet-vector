@@ -7,7 +7,9 @@ import { request, Support, Util } from 'esri-leaflet';
 */
 export function getBasemapStyleUrl (style, apikey) {
   if (style.includes('/')) {
-    throw new Error(style + ' is a v2 style enumeration. Set version:2 to request this style');
+    throw new Error(
+      style + ' is a v2 style enumeration. Set version:2 to request this style'
+    );
   }
 
   let url =
@@ -30,16 +32,24 @@ export function getBasemapStyleUrl (style, apikey) {
  */
 export function getBasemapStyleV2Url (style, token, options) {
   if (style.includes(':')) {
-    throw new Error(style + ' is a v1 style enumeration. Set version:1 to request this style');
+    throw new Error(
+      style + ' is a v1 style enumeration. Set version:1 to request this style'
+    );
   }
 
-  let url = 'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/';
-  if (!(style.startsWith('osm/') || style.startsWith('arcgis/')) && style.length === 32) {
+  let url =
+    'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/';
+  if (
+    !(style.startsWith('osm/') || style.startsWith('arcgis/')) &&
+    style.length === 32
+  ) {
     // style is an itemID
     url = url + 'items/' + style;
 
     if (options.language) {
-      throw new Error('The \'language\' parameter is not supported for custom basemap styles');
+      throw new Error(
+        "The 'language' parameter is not supported for custom basemap styles"
+      );
     }
   } else {
     url = url + style;
@@ -88,11 +98,12 @@ function loadItem (itemId, options, callback) {
 }
 
 function loadStyleFromItem (itemId, options, callback) {
-  const itemStyleUrl =
+  const itemStyleUrl = toCdnUrl(
     options.portalUrl +
-    '/sharing/rest/content/items/' +
-    itemId +
-    '/resources/styles/root.json';
+      '/sharing/rest/content/items/' +
+      itemId +
+      '/resources/styles/root.json'
+  );
 
   loadStyleFromUrl(itemStyleUrl, options, function (error, style) {
     if (error) {
@@ -156,7 +167,62 @@ function loadStyleFromUrl (styleUrl, options, callback) {
 }
 
 function isSameTLD (url1, url2) {
-  return (new URL(url1)).hostname === (new URL(url2)).hostname;
+  return new URL(url1).hostname === new URL(url2).hostname;
+}
+
+/**
+ * Converts an ArcGIS Online URL to a CDN URL to reduce latency and server load. This will not
+ * convert a ArcGIS Enterprise URL since they will be hosting their own resources.
+ *
+ * Borrowed from the JS API.
+ */
+function toCdnUrl (url) {
+  if (!url) {
+    return url || null;
+  }
+
+  let outUrl = url;
+
+  if (outUrl) {
+    outUrl = normalizeArcGISOnlineOrgDomain(outUrl);
+    outUrl = outUrl.replace(
+      /^https?:\/\/www\.arcgis\.com/,
+      'https://cdn.arcgis.com'
+    );
+    outUrl = outUrl.replace(
+      /^https?:\/\/devext\.arcgis\.com/,
+      'https://cdndev.arcgis.com'
+    );
+    outUrl = outUrl.replace(
+      /^https?:\/\/qaext\.arcgis\.com/,
+      'https://cdnqa.arcgis.com'
+    );
+  }
+
+  return outUrl;
+}
+
+/**
+ * Replaces the AGOL org domains with non-org domains.
+ *
+ * Borrowed from the JS API.
+ */
+function normalizeArcGISOnlineOrgDomain (url) {
+  const prdOrg = /^https?:\/\/(?:cdn|[a-z\d-]+\.maps)\.arcgis\.com/i; // https://cdn.arcgis.com or https://x.maps.arcgis.com
+  const devextOrg =
+    /^https?:\/\/(?:cdndev|[a-z\d-]+\.mapsdevext)\.arcgis\.com/i; // https://cdndev.arcgis.com or https://x.mapsdevext.arcgis.com
+  const qaOrg = /^https?:\/\/(?:cdnqa|[a-z\d-]+\.mapsqa)\.arcgis\.com/i; // https://cdnqa.arcgis.com or https://x.mapsqa.arcgis.com
+
+  // replace AGOL org domains with non-org domains
+  if (prdOrg.test(url)) {
+    url = url.replace(prdOrg, 'https://www.arcgis.com');
+  } else if (devextOrg.test(url)) {
+    url = url.replace(devextOrg, 'https://devext.arcgis.com');
+  } else if (qaOrg.test(url)) {
+    url = url.replace(qaOrg, 'https://qaext.arcgis.com');
+  }
+
+  return url;
 }
 
 export function formatStyle (style, styleUrl, metadata, token) {
@@ -164,6 +230,7 @@ export function formatStyle (style, styleUrl, metadata, token) {
 
   // modify each source in style.sources
   const sourcesKeys = Object.keys(style.sources);
+
   for (let sourceIndex = 0; sourceIndex < sourcesKeys.length; sourceIndex++) {
     const source = style.sources[sourcesKeys[sourceIndex]];
 
@@ -228,12 +295,25 @@ export function formatStyle (style, styleUrl, metadata, token) {
       style.sprite.replace('../', '')
     );
   }
+
+  // Convert the style.glyphs and style.sprite URLs to CDN URLs if possable
+  if (style.glyphs) {
+    style.glyphs = toCdnUrl(style.glyphs);
+  }
+
+  if (style.sprite) {
+    style.sprite = toCdnUrl(style.sprite);
+  }
+
+  // a trailing "/" may create invalid paths
   if (style.sprite && token) {
     // add the token to the style.sprite property as a query param, only if same domain (for token security)
     if (isSameTLD(styleUrl, style.sprite)) {
       style.sprite += '?token=' + token;
     } else {
-      console.warn('Passing a token but sprite URL is not on same base URL, so you must pass the token manually.');
+      console.warn(
+        'Passing a token but sprite URL is not on same base URL, so you must pass the token manually.'
+      );
     }
   }
 
@@ -250,7 +330,9 @@ export function formatStyle (style, styleUrl, metadata, token) {
     if (isSameTLD(styleUrl, style.glyphs)) {
       style.glyphs += '?token=' + token;
     } else {
-      console.warn('Passing a token but glyph URL is not on same base URL, so you must pass the token manually.');
+      console.warn(
+        'Passing a token but glyph URL is not on same base URL, so you must pass the token manually.'
+      );
     }
   }
 

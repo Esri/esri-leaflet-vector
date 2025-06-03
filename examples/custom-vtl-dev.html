@@ -1,67 +1,69 @@
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Esri Leaflet Vector Custom Vector Tile Layer</title>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Esri Leaflet Vector Custom Vector Tile Layer</title>
+    <!-- Load Leaflet from CDN or local node_modules -->
+    <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+    <script src="../node_modules/leaflet/dist/leaflet.js"></script>
 
-  <!-- Load Leaflet from CDN or local node_modules -->
-  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
-  <script src="../node_modules/leaflet/dist/leaflet.js"></script>
-
-  <!--
+    <!--
     Load maplibre-gl from CDN or local node_modules for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
     (note also that loading maplibre-gl.css is not necessary)
   -->
-  <script src="../node_modules/maplibre-gl/dist/maplibre-gl.js"></script>
+    <script src="../node_modules/maplibre-gl/dist/maplibre-gl.js"></script>
 
-  <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
-  <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
-  <script src="../dist/esri-leaflet-vector-debug.js"></script>
+    <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
+    <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
+    <script src="../dist/esri-leaflet-vector-debug.js"></script>
 
-  <!-- But note that maplibre-gl is bundled in Esri Leaflet Vector's production code -->
-  <!-- <script src="../dist/esri-leaflet-vector.js"></script> -->
+    <!-- But note that maplibre-gl is bundled in Esri Leaflet Vector's production code -->
+    <!-- <script src="../dist/esri-leaflet-vector.js"></script> -->
 
-  <style>
-    html,
-    body {
-      margin: 0;
-    }
+    <style>
+      html,
+      body {
+        margin: 0;
+      }
 
-    #map {
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-</head>
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
 
-<body>
-  <div id="map"></div>
+  <body>
+    <div id="map"></div>
 
-  <script>
-    console.table({
-      "L.version": L.version,
-      "L.esri.VERSION": L.esri.VERSION,
-      "L.esri.Vector.VERSION": L.esri.Vector.VERSION,
-      "maplibregl.version": maplibregl.version || maplibregl.getVersion() // at maplibre-gl@4, must call getVersion
-    });
+    <script>
+      console.table({
+        "L.version": L.version,
+        "L.esri.VERSION": L.esri.VERSION,
+        "L.esri.Vector.VERSION": L.esri.Vector.VERSION,
+        "maplibregl.version": maplibregl.version || maplibregl.getVersion(), // at maplibre-gl@4, must call getVersion
+      });
 
-    var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
+      var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
 
-    // L.esri.Vector.vectorTileLayer("< ITEM ID or SERVICE URL >", {
-    //   token: "< YOUR VALID TOKEN HERE >",
-    //   style: function(style) {
-    //     return style;
-    //   }
-    // }).addTo(map);
+      // L.esri.Vector.vectorTileLayer("< ITEM ID or SERVICE URL >", {
+      //   token: "< YOUR VALID TOKEN HERE >",
+      //   style: function(style) {
+      //     return style;
+      //   }
+      // }).addTo(map);
 
-    // AGOL content item: https://esri.maps.arcgis.com/home/item.html?id=1c365daf37a744fbad748b67aa69dac8
-    L.esri.Vector.vectorTileLayer("1c365daf37a744fbad748b67aa69dac8").addTo(map);
+      // AGOL content item: https://esri.maps.arcgis.com/home/item.html?id=1c365daf37a744fbad748b67aa69dac8
+      L.esri.Vector.vectorTileLayer("4cf7e1fb9f254dcda9c8fbadb15cf0f8").addTo(
+        map
+      );
 
-    // the following 2 are identical ways to load the layer at this AGOL content item: https://esri.maps.arcgis.com/home/item.html?id=f40326b0dea54330ae39584012807126
-    // L.esri.Vector.vectorTileLayer("f40326b0dea54330ae39584012807126").addTo(map);
-    L.esri.Vector.vectorTileLayer("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer").addTo(map);
-  </script>
-</body>
-
+      // the following 2 are identical ways to load the layer at this AGOL content item: https://esri.maps.arcgis.com/home/item.html?id=f40326b0dea54330ae39584012807126
+      // L.esri.Vector.vectorTileLayer("f40326b0dea54330ae39584012807126").addTo(map);
+      // L.esri.Vector.vectorTileLayer(
+      //   "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer"
+      // ).addTo(map);
+    </script>
+  </body>
 </html>

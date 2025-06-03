@@ -49,16 +49,15 @@ describe('Util', function () {
   });
 
   it('should include the token in the sprite URL when the sprite URL starts with https', function () {
-    const spriteUrl =
-      'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120';
     const styleUrl =
-      'https://www.arcgis.com/sharing/rest/content/items/asdf/resources/styles/root.json';
+      'https://cdn.arcgis.com/sharing/rest/content/items/asdf/resources/styles/root.json';
     const token = 'asdf';
 
     const style = L.esri.Vector.Util.formatStyle(
       {
         version: 8,
-        sprite: spriteUrl,
+        sprite:
+          'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120',
         glyphs: '../fonts/{fontstack}/{range}.pbf',
         sources: {
           esri: {
@@ -77,8 +76,10 @@ describe('Util', function () {
       metadata,
       token
     );
-
-    expect(style.sprite).to.equal(`${spriteUrl}?token=${token}`);
+    console.log(style.sprite); // cdn.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120
+    https: expect(style.sprite).to.equal(
+      `https://cdn.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120?token=${token}`
+    );
   });
 
   it('should include the token in the glyph URL when the glyph URL is relative', function () {
@@ -92,7 +93,8 @@ describe('Util', function () {
     const style = L.esri.Vector.Util.formatStyle(
       {
         version: 8,
-        sprite: 'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120',
+        sprite:
+          'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120',
         glyphs: glyphUrl,
         sources: {
           esri: {
@@ -117,15 +119,16 @@ describe('Util', function () {
 
   it('should include the token in the glyph URL when the glyph URL starts with https', function () {
     const token = 'asdf';
-    const glyphUrl = 'https://www.arcgis.com/sharing/rest/content/items/123456789//resources/fonts/{fontstack}/{range}.pbf';
     const styleUrl =
-      'https://www.arcgis.com/sharing/rest/content/items/asdf/resources/styles/root.json';
+      'https://cdn.arcgis.com/sharing/rest/content/items/asdf/resources/styles/root.json';
 
     const style = L.esri.Vector.Util.formatStyle(
       {
         version: 8,
-        sprite: 'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120',
-        glyphs: glyphUrl,
+        sprite:
+          'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120',
+        glyphs:
+          'https://www.arcgis.com/sharing/rest/content/items/123456789/resources/fonts/{fontstack}/{range}.pbf',
         sources: {
           esri: {
             type: 'vector',
@@ -144,6 +147,8 @@ describe('Util', function () {
       token
     );
 
-    expect(style.glyphs).to.equal(`${glyphUrl}?token=${token}`);
+    expect(style.glyphs).to.equal(
+      `https://cdn.arcgis.com/sharing/rest/content/items/123456789/resources/fonts/{fontstack}/{range}.pbf?token=${token}`
+    );
   });
 });
