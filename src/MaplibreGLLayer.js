@@ -13,7 +13,7 @@ export const setRTLTextPlugin = (url, callback, deferred) => {
   maplibregl.setRTLTextPlugin(url, callback, deferred);
 };
 
-export var MaplibreGLJSLayer = Layer.extend({
+export const MaplibreGLJSLayer = Layer.extend({
   options: {
     updateInterval: 32,
     // How much to extend the overlay view (relative to map size)
@@ -147,7 +147,9 @@ export var MaplibreGLJSLayer = Layer.extend({
     this._container.style.width = size.x + 'px';
     this._container.style.height = size.y + 'px';
 
-    const topLeft = this._map.containerPointToLayerPoint([0, 0]).subtract(offset);
+    const topLeft = this._map
+      .containerPointToLayerPoint([0, 0])
+      .subtract(offset);
 
     DomUtil.setPosition(this._container, topLeft);
   },
@@ -171,7 +173,9 @@ export var MaplibreGLJSLayer = Layer.extend({
     // Listen for style data error (401 Unauthorized)
     this._glMap.on('error', function (error) {
       if (error.error && error.error.status === 401) {
-        console.warn('Invalid or expired API key. Please check that API key is not expired and has the basemaps privilege assigned.');
+        console.warn(
+          'Invalid or expired API key. Please check that API key is not expired and has the basemaps privilege assigned.'
+        );
       }
     });
 
@@ -220,7 +224,9 @@ export var MaplibreGLJSLayer = Layer.extend({
     const container = this._container;
     const gl = this._glMap;
     const offset = this._map.getSize().multiplyBy(this.options.padding);
-    const topLeft = this._map.containerPointToLayerPoint([0, 0]).subtract(offset);
+    const topLeft = this._map
+      .containerPointToLayerPoint([0, 0])
+      .subtract(offset);
 
     DomUtil.setPosition(container, topLeft);
 
@@ -267,7 +273,9 @@ export var MaplibreGLJSLayer = Layer.extend({
   // https://github.com/Leaflet/Leaflet/blob/master/src/layer/ImageOverlay.js#L139-L144
   _animateZoom: function (e) {
     const scale = this._map.getZoomScale(e.zoom);
-    const padding = this._map.getSize().multiplyBy(this.options.padding * scale);
+    const padding = this._map
+      .getSize()
+      .multiplyBy(this.options.padding * scale);
     const viewHalf = this.getSize()._divideBy(2);
     // corrections for padding (scaled), adapted from
     // https://github.com/Leaflet/Leaflet/blob/master/src/map/Map.js#L1490-L1508

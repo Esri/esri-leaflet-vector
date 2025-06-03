@@ -21,7 +21,6 @@ describe('VectorTileLayer', function () {
 
   afterEach(function () {
     server.restore();
-    map = null;
     sinon.restore();
   });
 
@@ -141,7 +140,7 @@ describe('VectorTileLayer', function () {
       })
     );
 
-    const layer = new L.esri.Vector.vectorTileLayer(
+    const layer = new L.esri.Vector.VectorTileLayer(
       '75f4dfdff19e445395653121a95a85db_WRONG',
       {
         portalUrl: 'https://esri.maps.arcgis.com'
@@ -168,7 +167,7 @@ describe('VectorTileLayer', function () {
       })
     );
 
-    const layer = new L.esri.Vector.vectorTileLayer(
+    const layer = new L.esri.Vector.VectorTileLayer(
       'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints_WRONG/VectorTileServer'
     );
     layer.on('load-error', function (e) {

@@ -31,6 +31,12 @@ export function getBasemapStyleUrl (style, apikey) {
  * @returns {string} the URL
  */
 export function getBasemapStyleV2Url (style, token, options) {
+  if (style.startsWith('osm/')) {
+    console.log(
+      "L.esri.Vector.vectorBasemapLayer: All 'osm/*' styles are retired are no longer receiving updates and were last updated in 2024. Please use 'open/*' styles instead."
+    );
+  }
+
   if (style.includes(':')) {
     throw new Error(
       style + ' is a v1 style enumeration. Set version:1 to request this style'
@@ -38,9 +44,15 @@ export function getBasemapStyleV2Url (style, token, options) {
   }
 
   let url =
+    options.baseUrl ||
     'https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/';
+
   if (
-    !(style.startsWith('osm/') || style.startsWith('arcgis/')) &&
+    !(
+      style.startsWith('open/') ||
+      style.startsWith('osm/') ||
+      style.startsWith('arcgis/')
+    ) &&
     style.length === 32
   ) {
     // style is an itemID
@@ -388,7 +400,7 @@ export function isWebMercator (wkid) {
   return WEB_MERCATOR_WKIDS.indexOf(wkid) >= 0;
 }
 
-export var EsriUtil = {
+export const EsriUtil = {
   formatStyle: formatStyle
 };
 

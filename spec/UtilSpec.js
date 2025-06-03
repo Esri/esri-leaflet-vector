@@ -76,8 +76,8 @@ describe('Util', function () {
       metadata,
       token
     );
-    console.log(style.sprite); // cdn.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120
-    https: expect(style.sprite).to.equal(
+
+    expect(style.sprite).to.equal(
       `https://cdn.arcgis.com/sharing/rest/content/items/123456789/resources/sprites/sprite-1679474043120?token=${token}`
     );
   });

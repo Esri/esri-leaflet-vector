@@ -9,7 +9,7 @@ import { VectorTileLayer } from './VectorTileLayer';
 const POWERED_BY_ESRI_ATTRIBUTION_STRING =
   'Powered by <a href="https://www.esri.com">Esri</a>';
 
-export var VectorBasemapLayer = VectorTileLayer.extend({
+export const VectorBasemapLayer = VectorTileLayer.extend({
   /**
    * Populates "this.options" to be used in the rest of the module.
    *
@@ -75,7 +75,8 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
       styleUrl = getBasemapStyleV2Url(this.options.key, this.options.apikey, {
         language: this.options.language,
         worldview: this.options.worldview,
-        places: this.options.places
+        places: this.options.places,
+        baseUrl: this.options.baseUrl
       });
     } else {
       styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
