@@ -75,7 +75,8 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
       styleUrl = getBasemapStyleV2Url(this.options.key, this.options.apikey, {
         language: this.options.language,
         worldview: this.options.worldview,
-        places: this.options.places
+        places: this.options.places,
+        baseUrl: this.options.baseUrl
       });
     } else {
       styleUrl = getBasemapStyleUrl(this.options.key, this.options.apikey);
