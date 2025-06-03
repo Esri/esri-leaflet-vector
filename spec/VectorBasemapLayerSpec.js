@@ -1,4 +1,3 @@
-
 /* eslint-env mocha */
 const itemId = '287c07ef752246d08bb4712fd4b74438';
 const apikey = '1234';
@@ -11,11 +10,16 @@ const places = 'attributed';
 
 describe('VectorBasemapLayer', function () {
   it('should have a L.esri.vectorBasemapLayer alias', function () {
-    console.log('L.esri.Vector.vectorBasemapLayer', L.esri.Vector.vectorBasemapLayer);
+    console.log(
+      'L.esri.Vector.vectorBasemapLayer',
+      L.esri.Vector.vectorBasemapLayer
+    );
 
-    expect(L.esri.Vector.vectorBasemapLayer(itemId, {
-      apikey: apikey
-    })).to.be.instanceof(L.esri.Vector.VectorBasemapLayer);
+    expect(
+      L.esri.Vector.vectorBasemapLayer(itemId, {
+        apikey: apikey
+      })
+    ).to.be.instanceof(L.esri.Vector.VectorBasemapLayer);
   });
 
   it('should save the key from the constructor - itemID', function () {
@@ -49,18 +53,18 @@ describe('VectorBasemapLayer', function () {
   });
 
   it('should save the token as apikey from the constructor', function () {
-    const layer = new L.esri.Vector.vectorBasemapLayer(basemapKey, {
+    const layer = new L.esri.Vector.VectorBasemapLayer(basemapKey, {
       token: apikey
     });
 
     expect(layer.options.apikey).to.equal(apikey);
   });
 
-  it('should create basemap styles in the \'tilePane\' by default', function () {
-    const layer = new L.esri.Vector.vectorBasemapLayer(basemapKey, {
+  it("should create basemap styles in the 'tilePane' by default", function () {
+    const layer = new L.esri.Vector.VectorBasemapLayer(basemapKey, {
       apikey: apikey
     });
-    const layerV2 = new L.esri.Vector.vectorBasemapLayer(basemapKeyV2, {
+    const layerV2 = new L.esri.Vector.VectorBasemapLayer(basemapKeyV2, {
       apikey: apikey,
       version: 2
     });
@@ -69,24 +73,36 @@ describe('VectorBasemapLayer', function () {
     expect(layerV2.options.pane).to.equal('tilePane');
   });
 
-  it('should add \'Labels\' styles to the \'esri-labels\' pane by default', function () {
-    const layer = new L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery:Labels', {
-      apikey: apikey
-    });
+  it("should add 'Labels' styles to the 'esri-labels' pane by default", function () {
+    const layer = new L.esri.Vector.VectorBasemapLayer(
+      'ArcGIS:Imagery:Labels',
+      {
+        apikey: apikey
+      }
+    );
 
-    const layerV2 = new L.esri.Vector.vectorBasemapLayer('arcgis/imagery/labels', {
-      apikey: apikey,
-      version: 2
-    });
+    const layerV2 = new L.esri.Vector.VectorBasemapLayer(
+      'arcgis/imagery/labels',
+      {
+        apikey: apikey,
+        version: 2
+      }
+    );
 
     // These label styles use a different endpoint (/label instead of /labels, for some reason)
-    const humanGeoLayer = new L.esri.Vector.vectorBasemapLayer('ArcGIS:HumanGeography:Label', {
-      apikey: apikey
-    });
-    const humanGeoLayerV2 = new L.esri.Vector.vectorBasemapLayer('arcgis/human-geography/label', {
-      apikey: apikey,
-      version: 2
-    });
+    const humanGeoLayer = new L.esri.Vector.VectorBasemapLayer(
+      'ArcGIS:HumanGeography:Label',
+      {
+        apikey: apikey
+      }
+    );
+    const humanGeoLayerV2 = new L.esri.Vector.VectorBasemapLayer(
+      'arcgis/human-geography/label',
+      {
+        apikey: apikey,
+        version: 2
+      }
+    );
 
     expect(layer.options.pane).to.equal('esri-labels');
     expect(layerV2.options.pane).to.equal('esri-labels');
@@ -94,21 +110,27 @@ describe('VectorBasemapLayer', function () {
     expect(humanGeoLayerV2.options.pane).to.equal('esri-labels');
   });
 
-  it('should add \'Detail\' styles to the \'esri-detail\' pane by default', function () {
-    const layer = new L.esri.Vector.vectorBasemapLayer('ArcGIS:Terrain:Detail', {
-      apikey: apikey
-    });
-    const layerV2 = new L.esri.Vector.vectorBasemapLayer('arcgis/terrain/detail', {
-      apikey: apikey,
-      version: 2
-    });
+  it("should add 'Detail' styles to the 'esri-detail' pane by default", function () {
+    const layer = new L.esri.Vector.VectorBasemapLayer(
+      'ArcGIS:Terrain:Detail',
+      {
+        apikey: apikey
+      }
+    );
+    const layerV2 = new L.esri.Vector.VectorBasemapLayer(
+      'arcgis/terrain/detail',
+      {
+        apikey: apikey,
+        version: 2
+      }
+    );
 
     expect(layer.options.pane).to.equal('esri-detail');
     expect(layerV2.options.pane).to.equal('esri-detail');
   });
 
   it('should save the service version from the constructor', function () {
-    const layer = new L.esri.Vector.vectorBasemapLayer(basemapKeyV2, {
+    const layer = new L.esri.Vector.VectorBasemapLayer(basemapKeyV2, {
       apikey: apikey,
       version: 2
     });
@@ -117,7 +139,7 @@ describe('VectorBasemapLayer', function () {
   });
 
   it('should load a v1 basemap from a v1 style key without needing to specify a version', function () {
-    const layer = new L.esri.Vector.vectorBasemapLayer(basemapKey, {
+    const layer = new L.esri.Vector.VectorBasemapLayer(basemapKey, {
       apikey: apikey
     });
 
@@ -125,7 +147,7 @@ describe('VectorBasemapLayer', function () {
   });
 
   it('should load a v2 basemap from a v2 style key without needing to specify a version', function () {
-    const layer = new L.esri.Vector.vectorBasemapLayer(basemapKeyV2, {
+    const layer = new L.esri.Vector.VectorBasemapLayer(basemapKeyV2, {
       apikey: apikey
     });
 
@@ -133,7 +155,7 @@ describe('VectorBasemapLayer', function () {
   });
 
   it('should save the language and worldview parameters from the constructor', function () {
-    const layer = new L.esri.Vector.vectorBasemapLayer(basemapKeyV2, {
+    const layer = new L.esri.Vector.VectorBasemapLayer(basemapKeyV2, {
       apikey: apikey,
       version: 2,
       language: language,
@@ -152,7 +174,9 @@ describe('VectorBasemapLayer', function () {
         apikey: apikey,
         language: language
       });
-    }).to.throw('The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
+    }).to.throw(
+      'The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.'
+    );
   });
 
   it('should error if a worldview is provided when accessing the v1 service', function () {
@@ -161,7 +185,9 @@ describe('VectorBasemapLayer', function () {
         apikey: apikey,
         worldview: worldview
       });
-    }).to.throw('The worldview parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
+    }).to.throw(
+      'The worldview parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.'
+    );
   });
 
   it('should error if a places parameter is provided when accessing the v1 service', function () {
@@ -170,7 +196,9 @@ describe('VectorBasemapLayer', function () {
         apikey: apikey,
         places: places
       });
-    }).to.throw('The places parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
+    }).to.throw(
+      'The places parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.'
+    );
   });
 
   it('should not accept a v2 style enumeration when accessing the v1 service', function () {
@@ -179,7 +207,10 @@ describe('VectorBasemapLayer', function () {
         apikey: apikey,
         version: 1
       });
-    }).to.throw(basemapKeyV2 + ' is a v2 style enumeration. Set version:2 to request this style');
+    }).to.throw(
+      basemapKeyV2 +
+        ' is a v2 style enumeration. Set version:2 to request this style'
+    );
   });
 
   it('should not accept a v1 style enumeration when accessing the v2 service', function () {
@@ -188,7 +219,10 @@ describe('VectorBasemapLayer', function () {
         apikey: apikey,
         version: 2
       });
-    }).to.throw(basemapKey + ' is a v1 style enumeration. Set version:1 to request this style');
+    }).to.throw(
+      basemapKey +
+        ' is a v1 style enumeration. Set version:1 to request this style'
+    );
   });
 
   it('should load a custom basemap style from an item ID when using the v1 service', function () {
@@ -196,7 +230,9 @@ describe('VectorBasemapLayer', function () {
       apikey: apikey,
       version: 1
     });
-    expect(customLayer._maplibreGL.options.style).to.equal(`https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${customBasemap}?type=style&token=${apikey}`);
+    expect(customLayer._maplibreGL.options.style).to.equal(
+      `https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${customBasemap}?type=style&token=${apikey}`
+    );
   });
 
   it('should load a custom basemap style from an item ID when using the v2 service', function () {
@@ -204,18 +240,21 @@ describe('VectorBasemapLayer', function () {
       apikey: apikey,
       version: 2
     });
-    expect(customLayer._maplibreGL.options.style).to.equal(`https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/items/${customBasemap}?token=${apikey}`);
+    expect(customLayer._maplibreGL.options.style).to.equal(
+      `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/items/${customBasemap}?token=${apikey}`
+    );
   });
 
   it('should error if a language is provided when loading a custom basemap style', function () {
     expect(function () {
       L.esri.Vector.vectorBasemapLayer(customBasemap, {
         apikey,
-        apikey,
         version: 2,
         language: language
       });
-    }).to.throw('The \'language\' parameter is not supported for custom basemap styles');
+    }).to.throw(
+      "The 'language' parameter is not supported for custom basemap styles"
+    );
   });
 
   describe('_getAttributionUrls', function () {
@@ -226,7 +265,9 @@ describe('VectorBasemapLayer', function () {
       });
       const attributionUrls = layer._getAttributionUrls(key);
       expect(attributionUrls.length).to.equal(1);
-      expect(attributionUrls[0]).to.equal('https://static.arcgis.com/attribution/Vector/OpenStreetMap_v2');
+      expect(attributionUrls[0]).to.equal(
+        'https://static.arcgis.com/attribution/Vector/OpenStreetMap_v2'
+      );
     });
 
     it('should handle ArcGIS Imagery keys', function () {
@@ -236,8 +277,12 @@ describe('VectorBasemapLayer', function () {
       });
       const attributionUrls = layer._getAttributionUrls(key);
       expect(attributionUrls.length).to.equal(2);
-      expect(attributionUrls[0]).to.equal('https://static.arcgis.com/attribution/World_Imagery');
-      expect(attributionUrls[1]).to.equal('https://static.arcgis.com/attribution/Vector/World_Basemap_v2');
+      expect(attributionUrls[0]).to.equal(
+        'https://static.arcgis.com/attribution/World_Imagery'
+      );
+      expect(attributionUrls[1]).to.equal(
+        'https://static.arcgis.com/attribution/Vector/World_Basemap_v2'
+      );
     });
 
     it('should handle ArcGIS non-Imagery keys', function () {
@@ -247,7 +292,9 @@ describe('VectorBasemapLayer', function () {
       });
       const attributionUrls = layer._getAttributionUrls(key);
       expect(attributionUrls.length).to.equal(1);
-      expect(attributionUrls[0]).to.equal('https://static.arcgis.com/attribution/Vector/World_Basemap_v2');
+      expect(attributionUrls[0]).to.equal(
+        'https://static.arcgis.com/attribution/Vector/World_Basemap_v2'
+      );
     });
   });
 
@@ -274,7 +321,9 @@ describe('VectorBasemapLayer', function () {
       };
       layer.onAdd(fakeMap);
       layer._setupAttribution();
-      expect(attributionValue).to.be.equal('<span class="esri-dynamic-attribution"></span>');
+      expect(attributionValue).to.be.equal(
+        '<span class="esri-dynamic-attribution"></span>'
+      );
     });
 
     it('should add attribution for itemId item', function () {
@@ -314,7 +363,8 @@ describe('VectorBasemapLayer', function () {
       };
 
       layer._setupAttribution();
-      const expectedAttributionValue = '<span class="esri-dynamic-attribution">Powered by <a href="https://www.esri.com">Esri</a> | @ my attribution, @ my copyright text</span>';
+      const expectedAttributionValue =
+        '<span class="esri-dynamic-attribution">Powered by <a href="https://www.esri.com">Esri</a> | @ my attribution, @ my copyright text</span>';
       expect(attributionValue).to.be.equal(expectedAttributionValue);
     });
   });
@@ -344,7 +394,7 @@ describe('VectorBasemapLayer', function () {
       layer.onRemove(fakeMap);
       document.getElementsByClassName.restore();
 
-      expect(utilSpy.calledWith(fakeMap)).to.be.true;
+      expect(utilSpy.calledWith(fakeMap)).to.be.equal(true);
       expect(attributionControlSpy.removeAttribution.callCount).to.be.equal(2);
     });
   });

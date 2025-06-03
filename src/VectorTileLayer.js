@@ -2,7 +2,7 @@ import { Layer, setOptions } from 'leaflet';
 import { loadStyle, formatStyle, isWebMercator } from './Util';
 import { maplibreGLJSLayer } from './MaplibreGLLayer';
 
-export var VectorTileLayer = Layer.extend({
+export const VectorTileLayer = Layer.extend({
   options: {
     // if portalUrl is not provided, default to ArcGIS Online
     portalUrl: 'https://www.arcgis.com',
@@ -88,10 +88,11 @@ export var VectorTileLayer = Layer.extend({
     // and add it to the map's attribution control
     // (otherwise it would have already been added by leaflet to the attribution control)
     if (!this.getAttribution()) {
-      const sources = this._maplibreGL.getMaplibreMap().style.stylesheet.sources;
+      const sources =
+        this._maplibreGL.getMaplibreMap().style.stylesheet.sources;
       const sourcesKeys = Object.keys(sources);
       this.options.attribution =
-      sources[sourcesKeys[sourcesKeys.length - 1]].attribution;
+        sources[sourcesKeys[sourcesKeys.length - 1]].attribution;
       if (this._map && this._map.attributionControl) {
         // NOTE: if attribution is an empty string (or otherwise falsy) at this point it would not appear in the attribution control
         this._map.attributionControl.addAttribution(this.getAttribution());
@@ -110,13 +111,18 @@ export var VectorTileLayer = Layer.extend({
     this._ready = true;
     this.fire('ready', {}, true);
 
-    this._maplibreGL.on('styleLoaded', function () {
-      this._setupAttribution();
-      // additionally modify the style object with the user's optional style override function
-      if (this.options.style && typeof this.options.style === 'function') {
-        this._maplibreGL._glMap.setStyle(this.options.style(this._maplibreGL._glMap.getStyle()));
-      }
-    }.bind(this));
+    this._maplibreGL.on(
+      'styleLoaded',
+      function () {
+        this._setupAttribution();
+        // additionally modify the style object with the user's optional style override function
+        if (this.options.style && typeof this.options.style === 'function') {
+          this._maplibreGL._glMap.setStyle(
+            this.options.style(this._maplibreGL._glMap.getStyle())
+          );
+        }
+      }.bind(this)
+    );
   },
 
   onAdd: function (map) {

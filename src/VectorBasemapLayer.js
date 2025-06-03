@@ -9,7 +9,7 @@ import { VectorTileLayer } from './VectorTileLayer';
 const POWERED_BY_ESRI_ATTRIBUTION_STRING =
   'Powered by <a href="https://www.esri.com">Esri</a>';
 
-export var VectorBasemapLayer = VectorTileLayer.extend({
+export const VectorBasemapLayer = VectorTileLayer.extend({
   /**
    * Populates "this.options" to be used in the rest of the module.
    *
