@@ -8,18 +8,9 @@
     <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
     <script src="../node_modules/leaflet/dist/leaflet.js"></script>
 
-    <!--
-    Load maplibre-gl from CDN or local node_modules for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
-    (note also that loading maplibre-gl.css is not necessary)
-  -->
-    <script src="../node_modules/maplibre-gl/dist/maplibre-gl.js"></script>
-
-    <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
+    <!-- Load Esri Leaflet and Esri Leaflet Vector plugin CSP build -->
     <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
-    <script src="../dist/esri-leaflet-vector-debug.js"></script>
-
-    <!-- But note that maplibre-gl is bundled in Esri Leaflet Vector's production code -->
-    <!-- <script src="../dist/esri-leaflet-vector.js"></script> -->
+    <script src="../dist/esri-leaflet-vector-csp.js"></script>
 
     <style>
       html,
@@ -42,13 +33,15 @@
         "L.version": L.version,
         "L.esri.VERSION": L.esri.VERSION,
         "L.esri.Vector.VERSION": L.esri.Vector.VERSION,
-        "maplibregl.version": maplibregl.version || maplibregl.getVersion(), // at maplibre-gl@4, must call getVersion
       });
+
+      // Since we are using the CSP build we need to point to where the worker file is hosted relative to our application code
+      L.esri.Vector.setWorkerUrl("../dist/esri-leaflet-vector-csp-worker.js");
 
       var map = L.map("map", {}).setView([34.0522, -118.2437], 15);
 
       L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
-        apiKey: "< YOUR VALID API KEY HERE >",
+        apiKey: "YOUR API KEY",
       }).addTo(map);
     </script>
   </body>

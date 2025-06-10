@@ -7,10 +7,16 @@ import {
   setOptions,
   Util
 } from 'leaflet';
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
+
+console.log({ maplibregl });
 
 export const setRTLTextPlugin = (url, callback, deferred) => {
   maplibregl.setRTLTextPlugin(url, callback, deferred);
+};
+
+export const setWorkerUrl = (...args) => {
+  maplibregl.setWorkerUrl(...args);
 };
 
 export const MaplibreGLJSLayer = Layer.extend({
