@@ -6,11 +6,11 @@ config.output.file = 'dist/esri-leaflet-vector.js';
 config.output.sourcemap = true;
 
 // use a Regex to preserve copyright text
-config.plugins.push(terser({ format: { comments: /Institute, Inc/ } }));
+config.plugins.push(terser({format: {comments: /Institute, Inc/}}));
 
 // bundle maplibre-gl for production
 config.plugins.push(
-  commonjs()
+	commonjs()
 );
 
 export default config;
