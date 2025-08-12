@@ -53,11 +53,10 @@ Take a look at the [live demo](https://developers.arcgis.com/esri-leaflet/sample
       var map = L.map("map").setView([40.706, -73.926], 14);
 
       L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
-        apikey: "< YOUR VALID API KEY HERE >"
+        apikey: "< YOUR VALID API KEY HERE >",
       }).addTo(map);
     </script>
   </body>
-
 </html>
 ```
 
@@ -67,13 +66,12 @@ Take a look at the [live demo](https://developers.arcgis.com/esri-leaflet/sample
 
 For rendering basemap layers which use the Esri Basemap Styles API internally. Extends [L.Layer](https://leafletjs.com/reference#layer).
 
-
 ```javascript
 // example using an Esri Basemap Styles API name
 L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
   // provide either `apikey` or `token`
   apikey: "...",
-  token: "..."
+  token: "...",
 }).addTo(map);
 ```
 
@@ -82,7 +80,7 @@ L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
 L.esri.Vector.vectorBasemapLayer("ITEM_ID", {
   // provide either `apikey` or `token`
   apikey: "...",
-  token: "..."
+  token: "...",
 }).addTo(map);
 ```
 
@@ -107,12 +105,12 @@ L.esri.Vector.vectorTileLayer("ITEM_ID", {
   // change `portalUrl` to the ArcGIS Enterprise base url
   // (this is necessary when specifying an ITEM_ID)
   portalUrl: "https://www.arcgis.com", // default value
-  
+
   // optional: customize the style with a function that gets the default style from the service
   // and returns the new style to be used
   style: (style) => {
     return newStyle;
-  }
+  },
 }).addTo(map);
 ```
 
@@ -127,16 +125,16 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
   // change `portalUrl` to the ArcGIS Enterprise base url
   // (this may not be necessary when specifying a SERVICE_URL)
   portalUrl: "https://www.arcgis.com", // default value
-  
+
   // optional: set by default to `false` for performance reasons
   // set to `true` to resolve WebGL printing issues in Firefox
   preserveDrawingBuffer: false, // default value
-  
+
   // optional: customize the style with a function that gets the default style from the service
   // and returns the new style to be used
   style: (style) => {
     return newStyle;
-  }
+  },
 }).addTo(map);
 ```
 

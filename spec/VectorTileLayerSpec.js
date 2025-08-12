@@ -1,179 +1,179 @@
 /* eslint-env mocha */
 
-describe('VectorTileLayer', () => {
-	// These must be vars (instead of const) due to how the unit tests are run:
-	const itemId = '1c365daf37a744fbad748b67aa69dac8';
-	const apikey = 'dcba4321';
-	const serviceUrl =
-    'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
-	const token = '1234abcd';
-	let server;
+describe("VectorTileLayer", () => {
+  // These must be vars (instead of const) due to how the unit tests are run:
+  const itemId = "1c365daf37a744fbad748b67aa69dac8";
+  const apikey = "dcba4321";
+  const serviceUrl =
+    "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer";
+  const token = "1234abcd";
+  let server;
 
-	// for layers hosted in ArcGIS Enterprise instead of ArcGIS Online
-	const onPremisePortalUrl = 'https://PATH/TO/ARCGIS/ENTERPRISE'; // defaults to https://www.arcgis.com
-	const onPremiseItemId = '1c365daf37a744fbad748b67aa69dac8';
-	const onPremiseServiceUrl =
-    'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer';
+  // for layers hosted in ArcGIS Enterprise instead of ArcGIS Online
+  const onPremisePortalUrl = "https://PATH/TO/ARCGIS/ENTERPRISE"; // defaults to https://www.arcgis.com
+  const onPremiseItemId = "1c365daf37a744fbad748b67aa69dac8";
+  const onPremiseServiceUrl =
+    "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer";
 
-	beforeEach(() => {
-		server = sinon.fakeServer.create();
-	});
+  beforeEach(() => {
+    server = sinon.fakeServer.create();
+  });
 
-	afterEach(() => {
-		server.restore();
-		sinon.restore();
-	});
+  afterEach(() => {
+    server.restore();
+    sinon.restore();
+  });
 
-	it('should have a L.esri.vectorTileLayer alias', () => {
-		console.log('L.esri.Vector.vectorTileLayer', L.esri.Vector.vectorTileLayer);
+  it("should have a L.esri.vectorTileLayer alias", () => {
+    console.log("L.esri.Vector.vectorTileLayer", L.esri.Vector.vectorTileLayer);
 
-		expect(L.esri.Vector.vectorTileLayer(itemId)).to.be.instanceof(
-			L.esri.Vector.VectorTileLayer
-		);
-	});
+    expect(L.esri.Vector.vectorTileLayer(itemId)).to.be.instanceof(
+      L.esri.Vector.VectorTileLayer,
+    );
+  });
 
-	it('should save the key from the constructor - itemId', () => {
-		const layer = L.esri.Vector.vectorTileLayer(itemId);
+  it("should save the key from the constructor - itemId", () => {
+    const layer = L.esri.Vector.vectorTileLayer(itemId);
 
-		expect(layer.options.key).to.equal(itemId);
-	});
+    expect(layer.options.key).to.equal(itemId);
+  });
 
-	it('should save the key from the constructor - serviceUrl', () => {
-		const layer = L.esri.Vector.vectorTileLayer(serviceUrl);
+  it("should save the key from the constructor - serviceUrl", () => {
+    const layer = L.esri.Vector.vectorTileLayer(serviceUrl);
 
-		expect(layer.options.key).to.equal(serviceUrl);
-	});
+    expect(layer.options.key).to.equal(serviceUrl);
+  });
 
-	it('should error if no key itemId or serviceUrl', () => {
-		expect(() => {
-			L.esri.Vector.vectorTileLayer();
-		}).to.throw('An ITEM ID or SERVICE URL is required for vectorTileLayer.');
+  it("should error if no key itemId or serviceUrl", () => {
+    expect(() => {
+      L.esri.Vector.vectorTileLayer();
+    }).to.throw("An ITEM ID or SERVICE URL is required for vectorTileLayer.");
 
-		expect(() => {
-			L.esri.Vector.vectorTileLayer(false, {});
-		}).to.throw('An ITEM ID or SERVICE URL is required for vectorTileLayer.');
-	});
+    expect(() => {
+      L.esri.Vector.vectorTileLayer(false, {});
+    }).to.throw("An ITEM ID or SERVICE URL is required for vectorTileLayer.");
+  });
 
-	it('should save the token from the constructor', () => {
-		const layer = new L.esri.Vector.VectorTileLayer(itemId, {
-			token
-		});
+  it("should save the token from the constructor", () => {
+    const layer = new L.esri.Vector.VectorTileLayer(itemId, {
+      token,
+    });
 
-		expect(layer.options.token).to.equal(token);
-	});
+    expect(layer.options.token).to.equal(token);
+  });
 
-	it('should save the api key as token from the constructor', () => {
-		const layer = L.esri.Vector.vectorTileLayer(itemId, {
-			apikey
-		});
+  it("should save the api key as token from the constructor", () => {
+    const layer = L.esri.Vector.vectorTileLayer(itemId, {
+      apikey,
+    });
 
-		expect(layer.options.token).to.equal(apikey);
-	});
+    expect(layer.options.token).to.equal(apikey);
+  });
 
-	it('should default to the "overlayPane"', () => {
-		const layer = L.esri.Vector.vectorTileLayer(itemId);
+  it('should default to the "overlayPane"', () => {
+    const layer = L.esri.Vector.vectorTileLayer(itemId);
 
-		expect(layer.options.pane).to.equal('overlayPane');
-	});
+    expect(layer.options.pane).to.equal("overlayPane");
+  });
 
-	it('should let the default pane be changed in the constructor', () => {
-		const otherPane = 'shadowPane';
-		const layer = L.esri.Vector.vectorTileLayer(itemId, {
-			pane: otherPane
-		});
+  it("should let the default pane be changed in the constructor", () => {
+    const otherPane = "shadowPane";
+    const layer = L.esri.Vector.vectorTileLayer(itemId, {
+      pane: otherPane,
+    });
 
-		expect(layer.options.pane).to.equal(otherPane);
-	});
+    expect(layer.options.pane).to.equal(otherPane);
+  });
 
-	it('should default to ArcGIS Online as the base "portalUrl" for loading the style - itemId', () => {
-		const layer = L.esri.Vector.vectorTileLayer(itemId);
+  it('should default to ArcGIS Online as the base "portalUrl" for loading the style - itemId', () => {
+    const layer = L.esri.Vector.vectorTileLayer(itemId);
 
-		expect(layer.options.portalUrl).to.equal('https://www.arcgis.com');
-	});
+    expect(layer.options.portalUrl).to.equal("https://www.arcgis.com");
+  });
 
-	it('should default to ArcGIS Online as the base "portalUrl" for loading the style - serviceUrl', () => {
-		const layer = L.esri.Vector.vectorTileLayer(serviceUrl);
+  it('should default to ArcGIS Online as the base "portalUrl" for loading the style - serviceUrl', () => {
+    const layer = L.esri.Vector.vectorTileLayer(serviceUrl);
 
-		expect(layer.options.portalUrl).to.equal('https://www.arcgis.com');
-	});
+    expect(layer.options.portalUrl).to.equal("https://www.arcgis.com");
+  });
 
-	it('should let the base "portalUrl" be changed in the constructor for loading an on-premise style - itemId', () => {
-		const layer = L.esri.Vector.vectorTileLayer(onPremiseItemId, {
-			portalUrl: onPremisePortalUrl
-		});
+  it('should let the base "portalUrl" be changed in the constructor for loading an on-premise style - itemId', () => {
+    const layer = L.esri.Vector.vectorTileLayer(onPremiseItemId, {
+      portalUrl: onPremisePortalUrl,
+    });
 
-		expect(layer.options.portalUrl).to.equal(onPremisePortalUrl);
-	});
+    expect(layer.options.portalUrl).to.equal(onPremisePortalUrl);
+  });
 
-	it('should let the base "portalUrl" be changed in the constructor for loading an on-premise style - serviceUrl', () => {
-		const layer = L.esri.Vector.vectorTileLayer(onPremiseServiceUrl, {
-			portalUrl: onPremisePortalUrl
-		});
+  it('should let the base "portalUrl" be changed in the constructor for loading an on-premise style - serviceUrl', () => {
+    const layer = L.esri.Vector.vectorTileLayer(onPremiseServiceUrl, {
+      portalUrl: onPremisePortalUrl,
+    });
 
-		expect(layer.options.portalUrl).to.equal(onPremisePortalUrl);
-	});
+    expect(layer.options.portalUrl).to.equal(onPremisePortalUrl);
+  });
 
-	it('should emit load-error for invalid itemID', (done) => {
-		server.respondWith(
-			'GET',
-			'https://esri.maps.arcgis.com/sharing/rest/content/items/75f4dfdff19e445395653121a95a85db_WRONG/resources/styles/root.json?f=json',
-			JSON.stringify({
-				error: {
-					code: 400,
-					messageCode: 'CONT_0001',
-					message: 'Item does not exist or is inaccessible.',
-					details: []
-				}
-			})
-		);
+  it("should emit load-error for invalid itemID", (done) => {
+    server.respondWith(
+      "GET",
+      "https://esri.maps.arcgis.com/sharing/rest/content/items/75f4dfdff19e445395653121a95a85db_WRONG/resources/styles/root.json?f=json",
+      JSON.stringify({
+        error: {
+          code: 400,
+          messageCode: "CONT_0001",
+          message: "Item does not exist or is inaccessible.",
+          details: [],
+        },
+      }),
+    );
 
-		server.respondWith(
-			'GET',
-			'https://esri.maps.arcgis.com/sharing/rest/content/items/75f4dfdff19e445395653121a95a85db_WRONG?f=json',
-			JSON.stringify({
-				error: {
-					code: 400,
-					messageCode: 'CONT_0001',
-					message: 'Item does not exist or is inaccessible.',
-					details: []
-				}
-			})
-		);
+    server.respondWith(
+      "GET",
+      "https://esri.maps.arcgis.com/sharing/rest/content/items/75f4dfdff19e445395653121a95a85db_WRONG?f=json",
+      JSON.stringify({
+        error: {
+          code: 400,
+          messageCode: "CONT_0001",
+          message: "Item does not exist or is inaccessible.",
+          details: [],
+        },
+      }),
+    );
 
-		const layer = new L.esri.Vector.VectorTileLayer(
-			'75f4dfdff19e445395653121a95a85db_WRONG',
-			{
-				portalUrl: 'https://esri.maps.arcgis.com'
-			}
-		);
-		layer.on('load-error', (e) => {
-			expect(e.type).to.equal('load-error');
-			done();
-		});
-		server.respond();
-		server.respond();
-	});
+    const layer = new L.esri.Vector.VectorTileLayer(
+      "75f4dfdff19e445395653121a95a85db_WRONG",
+      {
+        portalUrl: "https://esri.maps.arcgis.com",
+      },
+    );
+    layer.on("load-error", (e) => {
+      expect(e.type).to.equal("load-error");
+      done();
+    });
+    server.respond();
+    server.respond();
+  });
 
-	it('should emit load-error for bad service url', (done) => {
-		server.respondWith(
-			'GET',
-			'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints_WRONG/VectorTileServer?f=json',
-			JSON.stringify({
-				error: {
-					code: 404,
-					message: 'Requested Service not available.',
-					details: null
-				}
-			})
-		);
+  it("should emit load-error for bad service url", (done) => {
+    server.respondWith(
+      "GET",
+      "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints_WRONG/VectorTileServer?f=json",
+      JSON.stringify({
+        error: {
+          code: 404,
+          message: "Requested Service not available.",
+          details: null,
+        },
+      }),
+    );
 
-		const layer = new L.esri.Vector.VectorTileLayer(
-			'https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints_WRONG/VectorTileServer'
-		);
-		layer.on('load-error', (e) => {
-			expect(e.type).to.equal('load-error');
-			done();
-		});
-		server.respond();
-	});
+    const layer = new L.esri.Vector.VectorTileLayer(
+      "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints_WRONG/VectorTileServer",
+    );
+    layer.on("load-error", (e) => {
+      expect(e.type).to.equal("load-error");
+      done();
+    });
+    server.respond();
+  });
 });

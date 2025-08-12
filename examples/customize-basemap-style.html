@@ -1,22 +1,25 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
     <title>Esri Leaflet Vector: Customize the basemap style</title>
 
-  <!-- Load Leaflet from CDN or local node_modules -->
-  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
-  <script src="../node_modules/leaflet/dist/leaflet.js"></script>
+    <!-- Load Leaflet from CDN or local node_modules -->
+    <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+    <script src="../node_modules/leaflet/dist/leaflet.js"></script>
 
-  <!--
+    <!--
     Load maplibre-gl from CDN or local node_modules for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
     (note also that loading maplibre-gl.css is not necessary)
   -->
-  <script src="../node_modules/maplibre-gl/dist/maplibre-gl.js"></script>
+    <script src="../node_modules/maplibre-gl/dist/maplibre-gl.js"></script>
 
-  <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
-  <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
-  <script src="../dist/esri-leaflet-vector-debug.js"></script>
+    <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
+    <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
+    <script src="../dist/esri-leaflet-vector-debug.js"></script>
 
     <style>
       body {
@@ -37,37 +40,44 @@
   </head>
 
   <body>
-    <div id='map'></div>
+    <div id="map"></div>
     <script>
-      const map = L.map('map', {
-        minZoom: 2
-      }).setView([33.97, -118.15],9);
-
+      const map = L.map("map", {
+        minZoom: 2,
+      }).setView([33.97, -118.15], 9);
 
       const apiKey = "< YOUR VALID API KEY HERE >";
-      
+
       const props = {
         apiKey: apiKey,
         style: function (style) {
           for (const [i, layer] of style.layers.entries()) {
-            if (layer.type === 'fill' && layer.id.match(/(Land|Military|Indigenous)/)) {
-              style.layers[i].paint['fill-color'] = '#393D3F';
-            } 
-            if (layer.type === 'fill' && layer.id.match(/(Vegetation|Park|park|forest)/)) {
-              style.layers[i].paint['fill-color'] = '#4E5356';
+            if (
+              layer.type === "fill" &&
+              layer.id.match(/(Land|Military|Indigenous)/)
+            ) {
+              style.layers[i].paint["fill-color"] = "#393D3F";
             }
-            if (layer.type === 'fill' && layer.id.match(/(Water|Marine|Bathymetry|background)/)) {
-              style.layers[i].paint['fill-color'] = '#C6C5B9';
+            if (
+              layer.type === "fill" &&
+              layer.id.match(/(Vegetation|Park|park|forest)/)
+            ) {
+              style.layers[i].paint["fill-color"] = "#4E5356";
+            }
+            if (
+              layer.type === "fill" &&
+              layer.id.match(/(Water|Marine|Bathymetry|background)/)
+            ) {
+              style.layers[i].paint["fill-color"] = "#C6C5B9";
             }
           }
           return style;
-        }
-      }
+        },
+      };
 
-      const basemapStyle = 'ArcGIS:DarkGray';
-      const basemap = L.esri.Vector.vectorBasemapLayer(basemapStyle, props)
+      const basemapStyle = "ArcGIS:DarkGray";
+      const basemap = L.esri.Vector.vectorBasemapLayer(basemapStyle, props);
       basemap.addTo(map);
-
     </script>
   </body>
 </html>
