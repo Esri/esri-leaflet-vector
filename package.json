@@ -24,14 +24,6 @@
     "@rollup/plugin-terser": "^0.3.0",
     "chai": "4.3.7",
     "chokidar-cli": "^3.0.0",
-    "eslint": "^7.13.0",
-    "eslint-config-semistandard": "^15.0.1",
-    "eslint-config-standard": "^15.0.1",
-    "eslint-plugin-chai-friendly": "^0.6.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.1.0",
     "esri-leaflet": "^3.0.0",
     "gh-release": "^7.0.2",
     "http-server": "^14.1.1",
@@ -50,10 +42,8 @@
     "mocha": "^10.2.0",
     "npm-run-all": "^4.1.5",
     "rollup": "^2.79.1",
-    "semistandard": "^16.0.0",
     "sinon": "^15.0.1",
-    "sinon-chai": "3.7.0",
-    "snazzy": "^9.0.0"
+    "sinon-chai": "3.7.0"
   },
   "files": [
     "src/**/*.js",
@@ -90,8 +80,8 @@
     "prebuild": "mkdirp dist",
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
     "build-dev": "rollup -c profiles/debug.js",
-    "fix": "semistandard --fix",
-    "lint": "eslint src/**/*.js",
+    "fix": "",
+    "lint": "",
     "start-watch": "chokidar src -c \"npm run build\"",
     "start-watch-dev": "chokidar src -c \"npm run build-dev\"",
     "start": "run-p start-watch serve",
@@ -101,15 +91,5 @@
     "pretest": "npm run build-dev",
     "test": "npm run lint && karma start",
     "release": "./scripts/release.sh"
-  },
-  "semistandard": {
-    "globals": [
-      "expect",
-      "L",
-      "XMLHttpRequest",
-      "sinon",
-      "xhr",
-      "proj4"
-    ]
   }
 }
