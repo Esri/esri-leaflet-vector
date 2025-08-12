@@ -1,6 +1,7 @@
 import {defineConfig} from 'eslint/config';
 import importPlugin from 'eslint-plugin-import-x';
 import globals from 'globals';
+import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 // We are using eslint-config-mourner to be consistent with the Leaflet project:
 // https://github.com/Leaflet/Leaflet/blob/main/eslint.config.js
@@ -63,4 +64,5 @@ export default defineConfig([
 			'no-unused-expressions': 'off'
 		}
 	},
+	eslintConfigPrettier
 ]);
