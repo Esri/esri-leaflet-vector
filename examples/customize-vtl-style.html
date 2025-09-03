@@ -10,7 +10,10 @@ https://developers.arcgis.com/documentation/mapping-apis-and-services/get-starte
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
     <title>Esri Leaflet: Customize a vector tile layer style</title>
 
     <!-- Load Leaflet from CDN or local node_modules -->
@@ -26,7 +29,6 @@ https://developers.arcgis.com/documentation/mapping-apis-and-services/get-starte
     <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
     <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
     <script src="../dist/esri-leaflet-vector-debug.js"></script>
-
 
     <style>
       body {
@@ -50,30 +52,29 @@ https://developers.arcgis.com/documentation/mapping-apis-and-services/get-starte
     <div id="map"></div>
 
     <script type="module">
+      const apiKey = "< YOUR VALID API KEY HERE >";
 
-    const apiKey = "< YOUR VALID API KEY HERE >";
+      const basemapEnum = "ArcGIS:Streets";
 
-    const basemapEnum = "ArcGIS:Streets";
+      const map = L.map("map", {
+        minZoom: 2,
+      }).setView([34.02, -118.805], 13);
 
-    const map = L.map("map", {
-    minZoom: 2
-    }).setView([34.02, -118.805], 13);
+      const basemap = L.esri.Vector.vectorBasemapLayer(basemapEnum, {
+        apiKey: apiKey,
+        pane: "tilePane",
+      }).addTo(map);
 
-
-    const basemap = L.esri.Vector.vectorBasemapLayer(basemapEnum, {
-      apiKey: apiKey,
-      pane: "tilePane"
-    }).addTo(map);
-
-
-    const vtl = L.esri.Vector.vectorTileLayer(
-    "https://vectortileservices3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Santa_Monica_Mountains_Parcels_VTL/VectorTileServer", {
-        style: function (style) {
+      const vtl = L.esri.Vector.vectorTileLayer(
+        "https://vectortileservices3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Santa_Monica_Mountains_Parcels_VTL/VectorTileServer",
+        {
+          style: function (style) {
             console.log(style);
-            style.layers[0].paint['fill-color'] = '#ff0000';
+            style.layers[0].paint["fill-color"] = "#ff0000";
             return style;
-        }
-    }).addTo(map);
-  </script>
+          },
+        },
+      ).addTo(map);
+    </script>
   </body>
 </html>

@@ -1,14 +1,14 @@
-import { Layer, setOptions } from 'leaflet';
-import { loadStyle, formatStyle, isWebMercator } from './Util';
-import { maplibreGLJSLayer } from './MaplibreGLLayer';
+import { Layer, setOptions } from "leaflet";
+import { loadStyle, formatStyle, isWebMercator } from "./Util.js";
+import { maplibreGLJSLayer } from "./MaplibreGLLayer.js";
 
 export const VectorTileLayer = Layer.extend({
   options: {
     // if portalUrl is not provided, default to ArcGIS Online
-    portalUrl: 'https://www.arcgis.com',
+    portalUrl: "https://www.arcgis.com",
     // for performance optimization default to `false`
     // set to `true` to resolve printing issues in Firefox
-    preserveDrawingBuffer: false
+    preserveDrawingBuffer: false,
   },
 
   /**
@@ -17,7 +17,7 @@ export const VectorTileLayer = Layer.extend({
    * @param {string} key an ITEM ID or SERVICE URL
    * @param {object} options optional
    */
-  initialize: function (key, options) {
+  initialize(key, options) {
     if (options) {
       setOptions(this, options);
     }
@@ -38,7 +38,7 @@ export const VectorTileLayer = Layer.extend({
     // if no key passed in
     if (!key) {
       throw new Error(
-        'An ITEM ID or SERVICE URL is required for vectorTileLayer.'
+        "An ITEM ID or SERVICE URL is required for vectorTileLayer.",
       );
     }
 
@@ -54,14 +54,14 @@ export const VectorTileLayer = Layer.extend({
   /**
    * Creates the maplibreGLJSLayer given using "this.options"
    */
-  _createLayer: function () {
+  _createLayer() {
     loadStyle(
       this.options.key,
       this.options,
-      function (error, style, styleUrl, service) {
+      (error, style, styleUrl, service) => {
         if (error) {
-          this.fire('load-error', {
-            value: error
+          this.fire("load-error", {
+            value: error,
           });
           return;
         }
@@ -70,7 +70,7 @@ export const VectorTileLayer = Layer.extend({
           console.warn(
             'This layer is not guaranteed to display properly because its service does not use the Web Mercator projection. The "tileInfo.spatialReference" property is:',
             service.tileInfo.spatialReference,
-            '\nMore information is available at https://github.com/maplibre/maplibre-gl-js/issues/168 and https://github.com/Esri/esri-leaflet-vector/issues/94.'
+            "\nMore information is available at https://github.com/maplibre/maplibre-gl-js/issues/168 and https://github.com/Esri/esri-leaflet-vector/issues/94.",
           );
         }
 
@@ -78,11 +78,11 @@ export const VectorTileLayer = Layer.extend({
         style = formatStyle(style, styleUrl, service, this.options.token);
 
         this._createMaplibreLayer(style);
-      }.bind(this)
+      },
     );
   },
 
-  _setupAttribution: function () {
+  _setupAttribution() {
     // if a custom attribution was not provided in the options,
     // then attempt to rely on the attribution of the last source in the style object
     // and add it to the map's attribution control
@@ -100,58 +100,55 @@ export const VectorTileLayer = Layer.extend({
     }
   },
 
-  _createMaplibreLayer: function (style) {
+  _createMaplibreLayer(style) {
     this._maplibreGL = maplibreGLJSLayer({
-      style: style,
+      style,
       pane: this.options.pane,
       opacity: this.options.opacity,
-      preserveDrawingBuffer: this.options.preserveDrawingBuffer
+      preserveDrawingBuffer: this.options.preserveDrawingBuffer,
     });
 
     this._ready = true;
-    this.fire('ready', {}, true);
+    this.fire("ready", {}, true);
 
-    this._maplibreGL.on(
-      'styleLoaded',
-      function () {
-        this._setupAttribution();
-        // additionally modify the style object with the user's optional style override function
-        if (this.options.style && typeof this.options.style === 'function') {
-          this._maplibreGL._glMap.setStyle(
-            this.options.style(this._maplibreGL._glMap.getStyle())
-          );
-        }
-      }.bind(this)
-    );
+    this._maplibreGL.on("styleLoaded", () => {
+      this._setupAttribution();
+      // additionally modify the style object with the user's optional style override function
+      if (this.options.style && typeof this.options.style === "function") {
+        this._maplibreGL._glMap.setStyle(
+          this.options.style(this._maplibreGL._glMap.getStyle()),
+        );
+      }
+    });
   },
 
-  onAdd: function (map) {
+  onAdd(map) {
     this._map = map;
 
     if (this._ready) {
       this._asyncAdd();
     } else {
       this.once(
-        'ready',
+        "ready",
         function () {
           this._asyncAdd();
         },
-        this
+        this,
       );
     }
   },
 
-  onRemove: function (map) {
+  onRemove(map) {
     map.removeLayer(this._maplibreGL);
   },
 
-  _asyncAdd: function () {
+  _asyncAdd() {
     const map = this._map;
     this._maplibreGL.addTo(map, this);
-  }
+  },
 });
 
-export function vectorTileLayer (key, options) {
+export function vectorTileLayer(key, options) {
   return new VectorTileLayer(key, options);
 }
 
