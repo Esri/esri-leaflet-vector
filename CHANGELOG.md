@@ -5,9 +5,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [4.3.2] - 2025-10-24
+
+### Fixed
+
+- Cannot read properties of null ([#243](https://github.com/Esri/esri-leaflet-vector/pull/243)).
+
 ## [4.3.1] - 2025-09-03
 
-Update to Prettier ([#240](https://github.com/Esri/esri-leaflet-vector/pull/240)).
+- Update to Prettier ([#240](https://github.com/Esri/esri-leaflet-vector/pull/240)).
 
 ## [4.3.0] - 2025-06-03
 
@@ -323,7 +329,8 @@ MapLibre GL JS version that is included with this version of Esri Leaflet Vector
 
 - Initial Release
 
-[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.3.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet-vector/compare/v4.3.2...HEAD
+[4.3.1]: https://github.com/esri/esri-leaflet-vector/compare/v4.3.1...v4.3.2
 [4.3.1]: https://github.com/esri/esri-leaflet-vector/compare/v4.3.0...v4.3.1
 [4.3.0]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.7...v4.3.0
 [4.2.7]: https://github.com/esri/esri-leaflet-vector/compare/v4.2.6...v4.2.7
