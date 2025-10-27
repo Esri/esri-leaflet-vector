@@ -52,7 +52,7 @@ Take a look at the [live demo](https://developers.arcgis.com/esri-leaflet/sample
     <script>
       var map = L.map("map").setView([40.706, -73.926], 14);
 
-      L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
+      L.esri.Vector.vectorBasemapLayer("arcgis/outdoor", {
         apikey: "< YOUR VALID API KEY HERE >",
       }).addTo(map);
     </script>
