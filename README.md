@@ -68,7 +68,7 @@ For rendering basemap layers which use the Esri Basemap Styles API internally. E
 
 ```javascript
 // example using an Esri Basemap Styles API name
-L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", {
+L.esri.Vector.vectorBasemapLayer("arcgis/outdoor", {
   // provide either `apikey` or `token`
   apikey: "...",
   token: "...",
