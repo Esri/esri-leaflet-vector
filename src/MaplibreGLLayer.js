@@ -307,6 +307,9 @@ export const MaplibreGLJSLayer = Layer.extend({
 
   _transitionEnd() {
     Util.requestAnimFrame(function () {
+      if (!this._map) {
+        return;
+      }
       const zoom = this._map.getZoom();
       const center = this._map.getCenter();
       const offset = this._map.latLngToContainerPoint(
