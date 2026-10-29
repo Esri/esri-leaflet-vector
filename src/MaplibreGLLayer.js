@@ -172,6 +172,14 @@ export const MaplibreGLJSLayer = Layer.extend({
       attributionControl: false,
     });
 
+    // Keep MapLibre from constraining the camera independently of Leaflet.
+    if (
+      typeof Map.prototype.setTransformConstrain === "function" &&
+      options.transformConstrain === undefined
+    ) {
+      options.transformConstrain = (center, zoom) => ({ center, zoom });
+    }
+
     this._glMap = new Map(options);
 
     // Listen for style data error (401 Unauthorized)
