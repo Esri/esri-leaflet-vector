@@ -7,10 +7,12 @@ import {
   setOptions,
   Util,
 } from "leaflet";
-import maplibregl from "maplibre-gl";
+
+import { setRTLTextPlugin as maplibreSetRTLTextPlugin, Map, LngLat } from "maplibre-gl";
 
 export const setRTLTextPlugin = (url, callback, deferred) => {
-  maplibregl.setRTLTextPlugin(url, callback, deferred);
+  // Deprecated in 6.x versions of maplibre-gl, but still available for backward compatibility
+  maplibreSetRTLTextPlugin(url, callback, deferred);
 };
 
 export const MaplibreGLJSLayer = Layer.extend({
@@ -132,7 +134,9 @@ export const MaplibreGLJSLayer = Layer.extend({
   },
 
   _resize() {
-    return this._glMap._resize;
+    if (this._glMap) {
+      this._glMap.resize();
+    }
   },
 
   _initContainer() {
@@ -168,7 +172,7 @@ export const MaplibreGLJSLayer = Layer.extend({
       attributionControl: false,
     });
 
-    this._glMap = new maplibregl.Map(options);
+    this._glMap = new Map(options);
 
     // Listen for style data error (401 Unauthorized)
     this._glMap.on("error", (error) => {
@@ -184,9 +188,11 @@ export const MaplibreGLJSLayer = Layer.extend({
       this.fire("styleLoaded");
     });
 
-    // allow GL base map to pan beyond min/max latitudes
-    this._glMap.transform.latRange = null;
-    this._glMap.transform.maxValidLatitude = Infinity;
+    // Preserve the latitude override for MapLibre versions that expose transform.
+    if (this._glMap.transform) {
+      this._glMap.transform.latRange = null;
+      this._glMap.transform.maxValidLatitude = Infinity;
+    }
 
     this._transformGL(this._glMap);
 
@@ -232,17 +238,29 @@ export const MaplibreGLJSLayer = Layer.extend({
 
     this._transformGL(gl);
 
-    if (gl.transform.width !== size.x || gl.transform.height !== size.y) {
-      container.style.width = `${size.x}px`;
-      container.style.height = `${size.y}px`;
-      if (gl._resize !== null && gl._resize !== undefined) {
-        gl._resize();
+    const transform = gl.transform;
+    if (transform) {
+      if (transform.width !== size.x || transform.height !== size.y) {
+        container.style.width = `${size.x}px`;
+        container.style.height = `${size.y}px`;
+        if (gl._resize !== null && gl._resize !== undefined) {
+          gl._resize();
+        } else {
+          gl.resize();
+        }
       } else {
-        gl.resize();
+        // older versions of mapbox-gl surfaced update publicly
+        gl._update();
       }
     } else {
-      // older versions of mapbox-gl surfaced update publicly
-      gl._update();
+      const width = `${size.x}px`;
+      const height = `${size.y}px`;
+      if (container.style.width !== width || container.style.height !== height) {
+        container.style.width = width;
+        container.style.height = height;
+        gl.resize();
+      }
+      gl.triggerRepaint();
     }
   },
 
@@ -252,9 +270,17 @@ export const MaplibreGLJSLayer = Layer.extend({
     // gl.setView([center.lat, center.lng], this._map.getZoom() - 1, 0);
     // calling setView directly causes sync issues because it uses requestAnimFrame
 
-    const tr = gl.transform;
-    tr.center = maplibregl.LngLat.convert([center.lng, center.lat]);
-    tr.zoom = this._map.getZoom() - 1;
+    const zoom = this._map.getZoom() - 1;
+    const transform = gl.transform;
+    if (transform) {
+      transform.center = LngLat.convert([center.lng, center.lat]);
+      transform.zoom = zoom;
+    } else {
+      gl.jumpTo({
+        center: [center.lng, center.lat],
+        zoom,
+      });
+    }
   },
 
   // update the map constantly during a pinch zoom

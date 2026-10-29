@@ -38,3 +38,4 @@ debug/*.html
 !debug/sample.html
 
 *.code-workspace
+.vscode
