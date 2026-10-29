@@ -15,7 +15,7 @@
         Load maplibre-gl from CDN or local node_modules for dev/debug purposes because it is not bundled in Esri Leaflet Vector's dev/debug code
         (note also that loading maplibre-gl.css is not necessary)
     -->
-    <script src="../node_modules/maplibre-gl/dist/maplibre-gl.js"></script>
+    <script src="../node_modules/maplibre-gl/dist/maplibre-gl.mjs" type="module"></script>
 
     <!-- Load Esri Leaflet and Esri Leaflet Vector plugin dev/debug version -->
     <script src="../node_modules/esri-leaflet/dist/esri-leaflet.js"></script>
@@ -55,6 +55,7 @@
         language: "ar",
       }).addTo(map);
 
+      // Support RTL languages such as Arabic and Hebrew - this method is no longer necessary as of MapLibre 6.0
       L.esri.Vector.setRTLTextPlugin(
         "https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.js",
       );
