@@ -12,5 +12,4 @@ export { EsriUtil as Util } from "./Util.js";
 export {
   MaplibreGLJSLayer,
   maplibreGLJSLayer,
-  setRTLTextPlugin,
 } from "./MaplibreGLLayer.js";

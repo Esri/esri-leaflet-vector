@@ -7,11 +7,8 @@ import {
   setOptions,
   Util,
 } from "leaflet";
-import maplibregl from "maplibre-gl";
 
-export const setRTLTextPlugin = (url, callback, deferred) => {
-  maplibregl.setRTLTextPlugin(url, callback, deferred);
-};
+import { Map } from "maplibre-gl";
 
 export const MaplibreGLJSLayer = Layer.extend({
   options: {
@@ -132,7 +129,9 @@ export const MaplibreGLJSLayer = Layer.extend({
   },
 
   _resize() {
-    return this._glMap._resize;
+    if (this._glMap) {
+      this._glMap.resize();
+    }
   },
 
   _initContainer() {
@@ -168,7 +167,12 @@ export const MaplibreGLJSLayer = Layer.extend({
       attributionControl: false,
     });
 
-    this._glMap = new maplibregl.Map(options);
+    // Keep MapLibre from constraining the camera independently of Leaflet.
+    if (options.transformConstrain === undefined) {
+      options.transformConstrain = (center, zoom) => ({ center, zoom });
+    }
+
+    this._glMap = new Map(options);
 
     // Listen for style data error (401 Unauthorized)
     this._glMap.on("error", (error) => {
@@ -184,21 +188,9 @@ export const MaplibreGLJSLayer = Layer.extend({
       this.fire("styleLoaded");
     });
 
-    // allow GL base map to pan beyond min/max latitudes
-    this._glMap.transform.latRange = null;
-    this._glMap.transform.maxValidLatitude = Infinity;
-
     this._transformGL(this._glMap);
 
-    if (this._glMap._canvas.canvas) {
-      // older versions of mapbox-gl surfaced the canvas differently
-      this._glMap._actualCanvas = this._glMap._canvas.canvas;
-    } else {
-      this._glMap._actualCanvas = this._glMap._canvas;
-    }
-
-    // treat child <canvas> element like L.ImageOverlay
-    const canvas = this._glMap._actualCanvas;
+    const canvas = this.getCanvas();
     DomUtil.addClass(canvas, "leaflet-image-layer");
     DomUtil.addClass(canvas, "leaflet-zoom-animated");
     if (this.options.interactive) {
@@ -232,29 +224,24 @@ export const MaplibreGLJSLayer = Layer.extend({
 
     this._transformGL(gl);
 
-    if (gl.transform.width !== size.x || gl.transform.height !== size.y) {
-      container.style.width = `${size.x}px`;
-      container.style.height = `${size.y}px`;
-      if (gl._resize !== null && gl._resize !== undefined) {
-        gl._resize();
-      } else {
-        gl.resize();
-      }
-    } else {
-      // older versions of mapbox-gl surfaced update publicly
-      gl._update();
+    const width = `${size.x}px`;
+    const height = `${size.y}px`;
+    if (container.style.width !== width || container.style.height !== height) {
+      container.style.width = width;
+      container.style.height = height;
+      gl.resize();
     }
+    gl.triggerRepaint();
   },
 
   _transformGL(gl) {
     const center = this._map.getCenter();
 
-    // gl.setView([center.lat, center.lng], this._map.getZoom() - 1, 0);
-    // calling setView directly causes sync issues because it uses requestAnimFrame
-
-    const tr = gl.transform;
-    tr.center = maplibregl.LngLat.convert([center.lng, center.lat]);
-    tr.zoom = this._map.getZoom() - 1;
+    const zoom = this._map.getZoom() - 1;
+    gl.jumpTo({
+      center: [center.lng, center.lat],
+      zoom,
+    });
   },
 
   // update the map constantly during a pinch zoom
@@ -285,7 +272,7 @@ export const MaplibreGLJSLayer = Layer.extend({
       ._subtract(topLeft);
 
     DomUtil.setTransform(
-      this._glMap._actualCanvas,
+      this.getCanvas(),
       offset.subtract(this._offset),
       scale,
     );
@@ -298,7 +285,7 @@ export const MaplibreGLJSLayer = Layer.extend({
   _zoomEnd() {
     const scale = this._map.getZoomScale(this._map.getZoom());
 
-    DomUtil.setTransform(this._glMap._actualCanvas, null, scale);
+    DomUtil.setTransform(this.getCanvas(), null, scale);
 
     this._zooming = false;
 
@@ -314,7 +301,7 @@ export const MaplibreGLJSLayer = Layer.extend({
       );
 
       // reset the scale and offset
-      DomUtil.setTransform(this._glMap._actualCanvas, offset, 1);
+      DomUtil.setTransform(this.getCanvas(), offset, 1);
 
       // enable panning once the gl map is ready again
       this._glMap.once(
