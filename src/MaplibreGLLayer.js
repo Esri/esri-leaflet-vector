@@ -4,11 +4,18 @@ import {
   extend,
   latLngBounds,
   Layer,
+  point,
   setOptions,
   Util,
 } from "leaflet";
 
-import { setRTLTextPlugin as maplibreSetRTLTextPlugin, Map, LngLat } from "maplibre-gl";
+import {
+  setRTLTextPlugin as maplibreSetRTLTextPlugin,
+  Map,
+  LngLat,
+} from "maplibre-gl";
+
+const PADDING_BUFFER = 64;
 
 export const setRTLTextPlugin = (url, callback, deferred) => {
   // Deprecated in 6.x versions of maplibre-gl, but still available for backward compatibility
@@ -30,6 +37,7 @@ export const MaplibreGLJSLayer = Layer.extend({
 
   initialize(options) {
     setOptions(this, options);
+    this._mapPadding = null;
 
     // setup throttling the update event when panning
     this._throttledUpdate = Util.throttle(
@@ -84,6 +92,7 @@ export const MaplibreGLJSLayer = Layer.extend({
   getEvents() {
     return {
       move: this._throttledUpdate, // sensibly throttle updating while panning
+      moveend: this._resize,
       zoomanim: this._animateZoom, // applies the zoom animation to the <canvas>
       zoom: this._pinchZoom, // animate every zoom event for smoother pinch-zooming
       zoomstart: this._zoomStart, // flag starting a zoom to disable panning
@@ -101,7 +110,27 @@ export const MaplibreGLJSLayer = Layer.extend({
   },
 
   getSize() {
-    return this._map.getSize().multiplyBy(1 + this.options.padding * 2);
+    return this._map.getSize().add(this._getPadding().multiplyBy(2));
+  },
+
+  _getPadding() {
+    const padding = this._map.getSize().multiplyBy(this.options.padding);
+    return this._mapPadding
+      ? point(
+          Math.max(padding.x, this._mapPadding.x),
+          Math.max(padding.y, this._mapPadding.y),
+        )
+      : padding;
+  },
+
+  _getNextPadding(current, required, base) {
+    if (required > current) {
+      return required + PADDING_BUFFER;
+    }
+    if (current - required > PADDING_BUFFER * 2) {
+      return Math.max(base, required);
+    }
+    return current;
   },
 
   getOpacity() {
@@ -135,8 +164,36 @@ export const MaplibreGLJSLayer = Layer.extend({
 
   _resize() {
     if (this._glMap) {
-      this._glMap.resize();
+      this._mapPadding = null;
+      this._update();
     }
+  },
+
+  _resizeGL(size) {
+    const container = this._container;
+    const gl = this._glMap;
+    const transform = gl.transform;
+    const width = `${size.x}px`;
+    const height = `${size.y}px`;
+    if (
+      container.style.width === width &&
+      container.style.height === height &&
+      (!transform ||
+        (transform.width === size.x && transform.height === size.y))
+    ) {
+      return false;
+    }
+
+    container.style.width = width;
+    container.style.height = height;
+
+    if (transform && gl._resize !== null && gl._resize !== undefined) {
+      gl._resize();
+    } else {
+      gl.resize();
+    }
+
+    return true;
   },
 
   _initContainer() {
@@ -147,7 +204,7 @@ export const MaplibreGLJSLayer = Layer.extend({
     this._container = DomUtil.create("div", "leaflet-gl-layer");
 
     const size = this.getSize();
-    const offset = this._map.getSize().multiplyBy(this.options.padding);
+    const offset = this._getPadding();
     this._container.style.width = `${size.x}px`;
     this._container.style.height = `${size.y}px`;
 
@@ -234,40 +291,55 @@ export const MaplibreGLJSLayer = Layer.extend({
       return;
     }
 
-    const size = this.getSize();
+    const mapSize = this._map.getSize();
     const container = this._container;
     const gl = this._glMap;
-    const offset = this._map.getSize().multiplyBy(this.options.padding);
+    let offset = this._getPadding();
+    const size = mapSize.add(offset.multiplyBy(2));
+
+    this._transformGL(gl);
+    let resized = this._resizeGL(size);
+
+    const center = this._map.getCenter();
+    // Keep the anchor within Mercator's valid latitude range.
+    const getCorrection = (padding) =>
+      this._map
+        .latLngToContainerPoint([0, center.lng])
+        .subtract(gl.project([center.lng, 0]))
+        .add(padding);
+    let correction = getCorrection(offset);
+    const basePadding = mapSize.multiplyBy(this.options.padding);
+    const requiredPadding = point(
+      Math.max(basePadding.x, Math.ceil(Math.abs(correction.x)) + 2),
+      Math.max(basePadding.y, Math.ceil(Math.abs(correction.y)) + 2),
+    );
+    const nextPadding = this._mapPadding
+      ? point(
+          this._getNextPadding(offset.x, requiredPadding.x, basePadding.x),
+          this._getNextPadding(offset.y, requiredPadding.y, basePadding.y),
+        )
+      : requiredPadding;
+    this._mapPadding = nextPadding;
+
+    if (nextPadding.x !== offset.x || nextPadding.y !== offset.y) {
+      offset = nextPadding;
+      const size = mapSize.add(offset.multiplyBy(2));
+      this._transformGL(gl);
+      resized = this._resizeGL(size) || resized;
+      correction = getCorrection(offset);
+    }
+
     const topLeft = this._map
       .containerPointToLayerPoint([0, 0])
       .subtract(offset);
+    DomUtil.setPosition(container, topLeft.add(correction));
 
-    DomUtil.setPosition(container, topLeft);
-
-    this._transformGL(gl);
-
-    const transform = gl.transform;
-    if (transform) {
-      if (transform.width !== size.x || transform.height !== size.y) {
-        container.style.width = `${size.x}px`;
-        container.style.height = `${size.y}px`;
-        if (gl._resize !== null && gl._resize !== undefined) {
-          gl._resize();
-        } else {
-          gl.resize();
-        }
-      } else {
+    if (gl.transform) {
+      if (!resized) {
         // older versions of mapbox-gl surfaced update publicly
         gl._update();
       }
     } else {
-      const width = `${size.x}px`;
-      const height = `${size.y}px`;
-      if (container.style.width !== width || container.style.height !== height) {
-        container.style.width = width;
-        container.style.height = height;
-        gl.resize();
-      }
       gl.triggerRepaint();
     }
   },
@@ -303,9 +375,7 @@ export const MaplibreGLJSLayer = Layer.extend({
   // https://github.com/Leaflet/Leaflet/blob/master/src/layer/ImageOverlay.js#L139-L144
   _animateZoom(e) {
     const scale = this._map.getZoomScale(e.zoom);
-    const padding = this._map
-      .getSize()
-      .multiplyBy(this.options.padding * scale);
+    const padding = this._getPadding().multiplyBy(scale);
     const viewHalf = this.getSize()._divideBy(2);
     // corrections for padding (scaled), adapted from
     // https://github.com/Leaflet/Leaflet/blob/master/src/map/Map.js#L1490-L1508
@@ -335,6 +405,7 @@ export const MaplibreGLJSLayer = Layer.extend({
     DomUtil.setTransform(this._glMap._actualCanvas, null, scale);
 
     this._zooming = false;
+    this._mapPadding = null;
 
     this._update();
   },
