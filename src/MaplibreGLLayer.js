@@ -8,7 +8,42 @@ import {
   Util,
 } from "leaflet";
 
-import { Map } from "maplibre-gl";
+import { Map, getWorkerUrl, setWorkerUrl } from "maplibre-gl";
+
+function resolveCurrentScriptUrl() {
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  const currentScript = document.currentScript;
+  if (currentScript && currentScript.src) {
+    return currentScript.src;
+  }
+
+  return null;
+}
+
+export function getMaplibreWorkerUrl() {
+  return getWorkerUrl();
+}
+
+export function setMaplibreWorkerUrl(url) {
+  setWorkerUrl(url);
+}
+
+export function autoSetMaplibreWorkerUrl(scriptUrl) {
+  if (getWorkerUrl()) {
+    return false;
+  }
+
+  const resolvedScriptUrl = scriptUrl || resolveCurrentScriptUrl();
+  if (!resolvedScriptUrl) {
+    return false;
+  }
+
+  setWorkerUrl(new URL("./maplibre-gl-worker.mjs", resolvedScriptUrl).href);
+  return true;
+}
 
 export const MaplibreGLJSLayer = Layer.extend({
   options: {
@@ -158,6 +193,11 @@ export const MaplibreGLJSLayer = Layer.extend({
       return;
     }
 
+    const workerUrl = this.options.maplibreWorkerUrl;
+    if (workerUrl) {
+      setMaplibreWorkerUrl(workerUrl);
+    }
+
     const center = this._map.getCenter();
 
     const options = extend({}, this.options, {
@@ -166,6 +206,8 @@ export const MaplibreGLJSLayer = Layer.extend({
       zoom: this._map.getZoom() - 1,
       attributionControl: false,
     });
+
+    delete options.maplibreWorkerUrl;
 
     // Keep MapLibre from constraining the camera independently of Leaflet.
     if (options.transformConstrain === undefined) {

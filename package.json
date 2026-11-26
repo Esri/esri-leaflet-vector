@@ -77,12 +77,13 @@
     ".": {
       "types": "./index.d.ts",
       "import": "./src/EsriLeafletVector.js",
-      "require": "./dist/esri-leaflet-vector.js"
-    }
+      "require": "./dist/esri-leaflet-vector-bundled.js"
+    },
+    "./dist/esri-leaflet-vector-bundled.js": "./dist/esri-leaflet-vector-bundled.js"
   },
-  "main": "dist/esri-leaflet-vector.js",
+  "main": "dist/esri-leaflet-vector-bundled.js",
   "module": "src/EsriLeafletVector.js",
-  "browser": "dist/esri-leaflet-vector-debug.js",
+  "browser": "dist/esri-leaflet-vector-bundled.js",
   "types": "index.d.ts",
   "readmeFilename": "README.md",
   "repository": {
@@ -91,8 +92,10 @@
   },
   "scripts": {
     "prebuild": "mkdirp dist",
-    "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
-    "build-dev": "rollup -c profiles/debug.js",
+    "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js && npm run copy-maplibre-worker && npm run copy-legacy-cdn-bundle",
+    "build-dev": "rollup -c profiles/debug.js && npm run copy-maplibre-worker",
+    "copy-legacy-cdn-bundle": "cp dist/esri-leaflet-vector-bundled.js dist/esri-leaflet-vector.js && cp dist/esri-leaflet-vector-bundled.js.map dist/esri-leaflet-vector.js.map",
+    "copy-maplibre-worker": "cp node_modules/maplibre-gl/dist/maplibre-gl-worker.mjs dist/maplibre-gl-worker.mjs && cp node_modules/maplibre-gl/dist/maplibre-gl-worker.mjs.map dist/maplibre-gl-worker.mjs.map",
     "lint": "npm run eslint && npm run prettier",
     "eslint": "eslint .",
     "eslintfix": "npm run eslint -- --fix",

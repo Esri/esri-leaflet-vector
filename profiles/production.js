@@ -1,7 +1,7 @@
 import terser from "@rollup/plugin-terser";
 import config from "./base.js";
 
-config.output.file = "dist/esri-leaflet-vector.js";
+config.output.file = "dist/esri-leaflet-vector-bundled.js";
 config.output.sourcemap = true;
 
 // use a Regex to preserve copyright text
