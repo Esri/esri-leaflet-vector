@@ -5,6 +5,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+### Changed
+
+- Updated MapLibre support to v6 and worker handling for ESM worker delivery.
+- The build now copies the MapLibre worker module into `dist/maplibre-gl-worker.mjs`.
+- Added explicit bundled CDN artifact naming: `dist/esri-leaflet-vector-bundled.js`.
+- `dist/esri-leaflet-vector.js` remains as a legacy alias to the bundled CDN artifact for this major release cycle and is now deprecated.
+- The legacy alias `dist/esri-leaflet-vector.js` is planned for removal in the next major release.
+
+### Added
+
+- Added worker helper APIs: `setMaplibreWorkerUrl`, `getMaplibreWorkerUrl`, and `autoSetMaplibreWorkerUrl`.
+- The library now auto-configures a default worker URL to a colocated `maplibre-gl-worker.mjs` file when no worker URL has been configured yet.
+
 ## [4.3.2] - 2025-10-24
 
 ### Fixed

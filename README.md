@@ -28,7 +28,7 @@ Take a look at the [live demo](https://developers.arcgis.com/esri-leaflet/sample
 
     <!-- Esri Leaflet and Esri Leaflet Vector -->
     <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
-    <script src="https://unpkg.com/esri-leaflet-vector@4/dist/esri-leaflet-vector.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-vector@5/dist/esri-leaflet-vector-bundled.js"></script>
 
     <style>
       body {
@@ -164,6 +164,28 @@ L.esri.Vector.vectorTileLayer("SERVICE_URL", {
 - Leaflet version [1.5.0](https://github.com/Leaflet/Leaflet/releases/tag/v1.5.0) (or higher) is required.
 - Esri Leaflet [2.3.0](https://github.com/Esri/esri-leaflet/releases/tag/v2.3.0) (or higher) is required.
 - [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js/)
+
+## MapLibre Worker (v6+)
+
+MapLibre GL JS v6 loads Web Workers from a separate module URL.
+
+- By default, this package treats MapLibre as prebundled and automatically sets the worker URL to `./maplibre-gl-worker.mjs` next to the loaded Esri Leaflet Vector script (for example `dist/esri-leaflet-vector-bundled.js`).
+- Use `dist/esri-leaflet-vector-bundled.js` as the canonical CDN file.
+- `dist/esri-leaflet-vector.js` is kept as a deprecated legacy alias for this major release cycle and is planned for removal in the next major release.
+- If your app provides its own MapLibre/worker distribution, set a custom URL before creating any vector layer. Existing worker URLs are never overwritten.
+- You can also set it manually before creating any vector layer:
+
+```javascript
+L.esri.Vector.setMaplibreWorkerUrl(
+  "https://unpkg.com/esri-leaflet-vector@5/dist/maplibre-gl-worker.mjs",
+);
+```
+
+To inspect the current value:
+
+```javascript
+const workerUrl = L.esri.Vector.getMaplibreWorkerUrl();
+```
 
 ## Resources
 
